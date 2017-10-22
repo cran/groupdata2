@@ -485,3 +485,66 @@ staircase_cumulative_plot +
         axis.text.x = element_text(size=7))
 
 
+## ----echo=FALSE----------------------------------------------------------
+
+
+vec <- c(1:1000)
+
+if (exists ('primes_data')){
+  rm(primes_data)
+  }
+
+for (n in c(2, 5, 11)){
+
+  group_sizes <- plyr::count(group_factor(vec, n, method='primes'))
+
+  data_temp <- data.frame(group_sizes, 'start_at' = factor(n))
+
+  
+  if (exists ('primes_data')) {
+    
+    primes_data <- rbind(primes_data, data_temp)
+    
+  } else {
+    
+    primes_data <- data_temp
+    
+  }
+  
+}
+
+primes_plot <- ggplot(primes_data, aes(x, freq, color=start_at))
+
+primes_plot + 
+  geom_point() +
+  #scale_x_continuous(breaks = round(seq(1, max(data_temp$x), by = 2),1))+
+  labs(x = 'group',
+       y = 'group Size',
+       title = 'Prime numbers method - Elements per groups',
+       color = 'Start at') +
+  theme_bw()+
+  theme(axis.text.y = element_text(size=9),
+        axis.text.x = element_text(size=7))
+
+
+
+
+## ----echo=FALSE----------------------------------------------------------
+
+primes_data <- primes_data %>%
+  group_by(start_at) %>%
+  mutate(cumsum = cumsum(freq))
+
+primes_cumulative_plot <- ggplot(primes_data, aes(x, cumsum, color=start_at))
+
+primes_cumulative_plot + 
+  geom_point() +
+  labs(x = 'group',
+       y = 'Cumulative sum of group sizes',
+       title = 'Primes Cumulative Sum of group Sizes',
+       color = 'Start At') +
+  theme_bw()+
+  theme(axis.text.y = element_text(size=9),
+        axis.text.x = element_text(size=7))
+
+

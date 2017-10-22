@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ludvig Renbo Olsen" />
+
+<meta name="date" content="2017-10-22" />
+
+<title>Cross-validation with groupdata2</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,h1%20%7B%0Afont%2Dsize%3A190%25%3B%0Apadding%2Dtop%3A20px%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%200%2E5px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Aimg%20%7B%0Amargin%2Dtop%3A%2020px%3B%0Amargin%2Dbottom%3A%2020px%3B%0A%7D%0Ap%20%7B%0Apadding%2Dbottom%3A7px%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Cross-validation with groupdata2</h1>
+<h4 class="author"><em>Ludvig Renbo Olsen</em></h4>
+<h4 class="date"><em>2017-10-22</em></h4>
+<div class="abstract">
+<p class="abstract">Abstract</p>
+<p>This vignette is an introduction to the package groupdata2.<br />
+groupdata2 is a set of subsetting methods for easy grouping, windowing, folding and splitting of data.<br />
+We will go through creating balanced partitions for training/test sets and balanced folds for cross-validation.<br />
+ <br />
+For a more extensive description of groupdata2, please see <a href="description_of_groupdata2.html">Description of groupdata2</a>  <br />
+ <br />
+Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk">r-pkgs@ludvigolsen.dk</a>  <br />
+ </p>
+<hr />
+</div>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#groupdata2-functions-in-focus">groupdata2 functions in focus</a></li>
+<li><a href="#what-is-cross-validation">What is cross-validation?</a></li>
+<li><a href="#why-training-and-test-sets">Why training and test sets</a></li>
+<li><a href="#the-data">The data</a></li>
+</ul></li>
+<li><a href="#creating-trainingtest-sets">Creating training/test sets</a><ul>
+<li><a href="#what-is-leakage">What is leakage?</a></li>
+</ul></li>
+<li><a href="#creating-folds-for-cross-validation">Creating folds for cross-validation</a></li>
+<li><a href="#cross-validation">Cross-validation</a><ul>
+<li><a href="#cross-validation-function">Cross-validation function</a></li>
+<li><a href="#linear-regression-models">Linear regression models</a></li>
+</ul></li>
+<li><a href="#outro">Outro</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this vignette we will train a couple of linear regression models on some data. We will use cross-validation with balanced folds to find the best model, and then test that model on a subset of the original data that we haven’t used for training the model.</p>
+<p>Our first task will be to split the dataset into a training set and a test set using <strong>partition</strong>(). Then we will create folds using the <strong>fold</strong>() function. We will code up a simple cross-validation function and put some models to the test!</p>
+<div id="groupdata2-functions-in-focus" class="section level2">
+<h2>groupdata2 functions in focus</h2>
+<p><strong>partition</strong>() creates (optionally) balanced partitions (e.g. training/test sets) from given group sizes. It can balance partitions on one categorical variable (e.g. diagnosis) and/or is able to keep all datapoints with a shared ID (e.g. participant) in the same partition.</p>
+<p><strong>fold</strong>() creates (optionally) balanced folds for cross-validation. It can balance folds on one categorical variable (e.g. diagnosis) and/or is able to keep all datapoints with a shared ID (e.g. participant) in the same fold.</p>
+</div>
+<div id="what-is-cross-validation" class="section level2">
+<h2>What is cross-validation?</h2>
+<p>The essence of cross-validation is to test a model against data that it hasn’t been trained on, i.e. estimating out-of-sample error. It is done by first dividing the data into groups called <em>folds</em>. Say we choose to divide the data into <strong>5</strong> folds. Then, in the first iteration, we <em>train</em> a model on the first four folds and <em>test</em> it on the fifth fold. In the second iteration, we then train on folds 2,3,4,5 and test on fold 1. We continue changing which fold is the test fold until all folds have been test folds (i.e. we train and test 5 times in total). In the end we get the average performance of the models and compare these to other cross-validated models. The model with the least average error is believed to be the best at predicting unseen data from the same population(s) and thus chosen for further interpretation / use. This is a great tool, and <strong>fold</strong>() makes it even more powerful.</p>
+</div>
+<div id="why-training-and-test-sets" class="section level2">
+<h2>Why training and test sets</h2>
+<p>Even with cross-validation we have a risk of overfitting our models to our data. This means, that while we get really good predictions for our current data, it won’t generalize to new data that we might gather in the future. So to test if it’s the case, we keep some data that we <em>don’t touch</em> before we feel confident that we have found the best model. Then we use the model to predict the targets / dependent variable in that data. If the results is much worse for the test set, it likely means that our model is suffering from overfitting! Then we go back and adjust the models, until we’re pretty confident again. Then we try again. Beware though, that if we run this cycle too many times, we might accidentally find a model that is a good predictor for the specific data in the test set, but not in general.</p>
+</div>
+<div id="the-data" class="section level2">
+<h2>The data</h2>
+<p>Let’s say we have scored 10 participants with either of two diagnoses “a” and “b” on a very interesting task, that you’re free to call ‘the task’.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Attach some packages</span>
+<span class="kw">library</span>(groupdata2)
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(knitr) <span class="co"># kable()</span>
+<span class="kw">library</span>(lmerTest) <span class="co">#lmer()</span>
+<span class="kw">library</span>(broom) <span class="co">#tidy()</span>
+<span class="kw">library</span>(hydroGOF) <span class="co"># rmse()</span>
+
+
+<span class="co"># Create dataframe</span>
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.integer</span>(
+                                        <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>,<span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'4'</span>, <span class="st">'5'</span>, 
+                                        <span class="st">'6'</span>, <span class="st">'7'</span>, <span class="st">'8'</span>, <span class="st">'9'</span>, <span class="st">'10'</span>), <span class="dv">3</span>))),
+                <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">20</span>,<span class="dv">23</span>,<span class="dv">27</span>,<span class="dv">21</span>,<span class="dv">32</span>,<span class="dv">31</span>,<span class="dv">43</span>,<span class="dv">21</span>,<span class="dv">34</span>,<span class="dv">32</span>), <span class="dv">3</span>),
+                <span class="st">&quot;diagnosis&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>, 
+                                    <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>), <span class="dv">3</span>),
+                <span class="st">&quot;score&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">24</span>,<span class="dv">15</span>,<span class="dv">35</span>,<span class="dv">24</span>,<span class="dv">14</span>,<span class="dv">11</span>,<span class="dv">16</span>,<span class="dv">33</span>,<span class="dv">29</span>,  <span class="co"># for 1st session</span>
+                            <span class="dv">24</span>,<span class="dv">40</span>,<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">54</span>,<span class="dv">25</span>,<span class="dv">35</span>,<span class="dv">32</span>,<span class="dv">53</span>,<span class="dv">55</span>,  <span class="co"># for 2nd session</span>
+                            <span class="dv">45</span>,<span class="dv">67</span>,<span class="dv">40</span>,<span class="dv">78</span>,<span class="dv">62</span>,<span class="dv">30</span>,<span class="dv">41</span>,<span class="dv">44</span>,<span class="dv">66</span>,<span class="dv">81</span>)) <span class="co"># for 3rd session</span>
+
+<span class="co"># Order by participant</span>
+df &lt;-<span class="st"> </span>df[<span class="kw">order</span>(df<span class="op">$</span>participant),] 
+
+<span class="co"># Remove index</span>
+<span class="kw">rownames</span>(df) &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+<span class="co"># Add session info</span>
+df<span class="op">$</span>session &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>,<span class="st">'2'</span>, <span class="st">'3'</span>), <span class="dv">10</span>))
+
+<span class="co"># Show the dataframe</span>
+<span class="kw">kable</span>(df, <span class="dt">align =</span> <span class="st">'c'</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">20</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">20</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">20</td>
+<td align="center">a</td>
+<td align="center">45</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">23</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">2</td>
+<td align="center">23</td>
+<td align="center">b</td>
+<td align="center">40</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">23</td>
+<td align="center">b</td>
+<td align="center">67</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">27</td>
+<td align="center">a</td>
+<td align="center">15</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">3</td>
+<td align="center">27</td>
+<td align="center">a</td>
+<td align="center">30</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">27</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">21</td>
+<td align="center">b</td>
+<td align="center">35</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">4</td>
+<td align="center">21</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">21</td>
+<td align="center">b</td>
+<td align="center">78</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">54</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">62</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">31</td>
+<td align="center">a</td>
+<td align="center">14</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">6</td>
+<td align="center">31</td>
+<td align="center">a</td>
+<td align="center">25</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">31</td>
+<td align="center">a</td>
+<td align="center">30</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">43</td>
+<td align="center">a</td>
+<td align="center">11</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">7</td>
+<td align="center">43</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">43</td>
+<td align="center">a</td>
+<td align="center">41</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">21</td>
+<td align="center">a</td>
+<td align="center">16</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">8</td>
+<td align="center">21</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">21</td>
+<td align="center">a</td>
+<td align="center">44</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">34</td>
+<td align="center">b</td>
+<td align="center">33</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">9</td>
+<td align="center">34</td>
+<td align="center">b</td>
+<td align="center">53</td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">34</td>
+<td align="center">b</td>
+<td align="center">66</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="center">10</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">81</td>
+<td align="center">3</td>
+</tr>
+</tbody>
+</table>
+<p>As we can see, there are 5 participants for each diagnosis, and they all seem to have gotten better at the task throughout the three sessions they went through.</p>
+</div>
+</div>
+<div id="creating-trainingtest-sets" class="section level1">
+<h1>Creating training/test sets</h1>
+<p>In this step we will split our data into two subsets called train_set and test_set. The main point will be, that we must avoid leakage between the two sets, before it is of any use to us.</p>
+<div id="what-is-leakage" class="section level2">
+<h2>What is leakage?</h2>
+<p>Let’s say we splitted the data randomly. 20 percent of the data goes to the test set, and the rest is used for training. In this case, we would have the same participants in the training set AND the test set. But what we want to know is how good our model is at predicting new, future participants, not how well it knows the ones we already have a diagnosis for. Furthermore, if our model is overfitted to those participants, our test set might not warn us of this, as it simply knows these participants too well. So we could get a really low error on both the test set and the training set, even though our model is useless outside of the data we’re working with. So how do we deal with this? In this case it’s as simple as making sure each participant is only in one of the data sets. We can do this with <strong>partition</strong>() and the <em>id_col</em> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span>
+
+<span class="co"># Split data in 20/80 (percentage)</span>
+<span class="kw">partition</span>(df, <span class="dt">p =</span> <span class="fl">0.2</span>, <span class="dt">id_col =</span> <span class="st">&quot;participant&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>.[<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># See only the test set </span>
+<span class="st">  </span><span class="kw">kable</span>()  <span class="co"># Pretty tables :) </span></code></pre></div>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">participant</th>
+<th align="right">age</th>
+<th align="left">diagnosis</th>
+<th align="right">score</th>
+<th align="right">session</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4</td>
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">29</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">55</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">81</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">24</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">54</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">62</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This is only showing the test set for now. Let’s look at the output. We see that we now have 2 participants (10 and 5) and they each have all 3 sessions in this set, meaning they are not in the training set! Perfect! But ehmm.. if we look at the diagnosis column, they both have the diagnosis ‘b’. If we would like to know how well our future model classifies both of the diagnoses, this won’t do. It would be nicer if we have somewhat the same balance of both diagnoses in both the training set and the test set. This is luckily what the <em>cat_col</em> argument is for. More specifically (behind the scenes), it first subsets the full data by each class in the categorical column, then it creates partitions in each subset and merges the partitions in the end. When using both the id_col and cat_col arguments, it first subsets by class, then partitions by the unique values in id_col. So sometimes the final group sizes might not be exactly as specified, depending on the data. As such it is a good practice to look at the distribution of participants, classes, etc. in the final partitions, which we will do right after we try out that cat_col argument to get our final test and train sets!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span>
+
+<span class="co"># Split data in 20/80 (percentage)</span>
+parts &lt;-<span class="st"> </span><span class="kw">partition</span>(df, <span class="dt">p =</span> <span class="fl">0.2</span>, <span class="dt">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>)
+
+test_set &lt;-<span class="st"> </span>parts[[<span class="dv">1</span>]]
+train_set &lt;-<span class="st"> </span>parts[[<span class="dv">2</span>]]
+
+<span class="co"># Show test_set</span>
+test_set <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">participant</th>
+<th align="right">age</th>
+<th align="left">diagnosis</th>
+<th align="right">score</th>
+<th align="right">session</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">8</td>
+<td align="right">21</td>
+<td align="left">a</td>
+<td align="right">16</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="right">21</td>
+<td align="left">a</td>
+<td align="right">32</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="right">21</td>
+<td align="left">a</td>
+<td align="right">44</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">29</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">55</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">81</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>Now our test set contains 2 participants (8 and 10), and the diagnosis column now contains 50 percent a’s and 50 percent b’s. Let’s count it for the training set instead of looking at it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_set <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">diagnosis</th>
+<th align="center">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">a</td>
+<td align="center">12</td>
+</tr>
+<tr class="even">
+<td align="center">b</td>
+<td align="center">12</td>
+</tr>
+</tbody>
+</table>
+<p>We have 12 rows for each diagnosis in the training set. In this case we know that the rest of the participants are all “fully” in this dataset. But let’s count them just so we will remember to do it in the future.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_set <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">participant</th>
+<th align="center">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">9</td>
+<td align="center">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="creating-folds-for-cross-validation" class="section level1">
+<h1>Creating folds for cross-validation</h1>
+<p>In this section we will create balanced folds for cross-validation. The thoughts behind doing so resemble those of the previous section. <strong>fold</strong>() basically just creates a number of similarly sized partitions. Where <strong>partition</strong>() returned a list of dataframes (this is optional, btw.), <strong>fold</strong>() will return the entire training set but with a new column called “.folds”. This will be used directly in the cross-validation function to subset the data on each iteration - remember, the folds take shifts being the test set (not to be confused with the one we just created before).</p>
+<p>As we’re basically recreating the training / test set scenario that we discussed previously, we still want to avoid leakage between folds. We would also like somewhat balanced distributions of the diagnoses, though this depends on the context. So let’s create our balanced folds.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span>
+
+train_set &lt;-<span class="st"> </span><span class="kw">fold</span>(train_set, <span class="dt">k =</span> <span class="dv">4</span>, <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>, <span class="dt">id_col =</span> <span class="st">'participant'</span>)
+
+<span class="co"># Order by .folds</span>
+train_set &lt;-<span class="st"> </span>train_set[<span class="kw">order</span>(train_set<span class="op">$</span>.folds),]
+
+train_set <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">participant</th>
+<th align="right">age</th>
+<th align="left">diagnosis</th>
+<th align="right">score</th>
+<th align="right">session</th>
+<th align="left">.folds</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">43</td>
+<td align="left">a</td>
+<td align="right">11</td>
+<td align="right">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="right">43</td>
+<td align="left">a</td>
+<td align="right">35</td>
+<td align="right">2</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="right">43</td>
+<td align="left">a</td>
+<td align="right">41</td>
+<td align="right">3</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">23</td>
+<td align="left">b</td>
+<td align="right">24</td>
+<td align="right">1</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="right">23</td>
+<td align="left">b</td>
+<td align="right">40</td>
+<td align="right">2</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">23</td>
+<td align="left">b</td>
+<td align="right">67</td>
+<td align="right">3</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">20</td>
+<td align="left">a</td>
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="right">20</td>
+<td align="left">a</td>
+<td align="right">24</td>
+<td align="right">2</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">20</td>
+<td align="left">a</td>
+<td align="right">45</td>
+<td align="right">3</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">24</td>
+<td align="right">1</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">54</td>
+<td align="right">2</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="right">32</td>
+<td align="left">b</td>
+<td align="right">62</td>
+<td align="right">3</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="right">31</td>
+<td align="left">a</td>
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">31</td>
+<td align="left">a</td>
+<td align="right">25</td>
+<td align="right">2</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="right">31</td>
+<td align="left">a</td>
+<td align="right">30</td>
+<td align="right">3</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">21</td>
+<td align="left">b</td>
+<td align="right">35</td>
+<td align="right">1</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="right">21</td>
+<td align="left">b</td>
+<td align="right">50</td>
+<td align="right">2</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">21</td>
+<td align="left">b</td>
+<td align="right">78</td>
+<td align="right">3</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">27</td>
+<td align="left">a</td>
+<td align="right">15</td>
+<td align="right">1</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="right">27</td>
+<td align="left">a</td>
+<td align="right">30</td>
+<td align="right">2</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">27</td>
+<td align="left">a</td>
+<td align="right">40</td>
+<td align="right">3</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="right">34</td>
+<td align="left">b</td>
+<td align="right">33</td>
+<td align="right">1</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="right">34</td>
+<td align="left">b</td>
+<td align="right">53</td>
+<td align="right">2</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="right">34</td>
+<td align="left">b</td>
+<td align="right">66</td>
+<td align="right">3</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p>The training set now contains the “.folds” column. We can check how many of each diagnosis and participant is in each fold like so:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train_set <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(participant, diagnosis) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">.folds</th>
+<th align="center">participant</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">a</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">a</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">5</td>
+<td align="center">b</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">b</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">3</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">9</td>
+<td align="center">b</td>
+<td align="center">3</td>
+</tr>
+</tbody>
+</table>
+<p>Fold 1 contains particants 2 and 7 with 3 rows each. Participant 2 has the diagnosis ‘b’ and participant 7 is an ‘a’. This pattern is the same for all folds. Of course our data was created for the purpose of showing these functions, so real world data is likely less perfect, which is why you always want to investigate the output to have a sense of what is going on. Also be aware that the max. number of folds is restricted by the number of participants in the classes, if using the id_col and the cat_col arguments together. Remember, first the function subsets the dataset by cat_col, then it creates groups (folds) from the unique values in id_col in each subset and merges the subsets. So if you only have 3 unique participants in one class, this will be the max number of folds you can create.</p>
+</div>
+<div id="cross-validation" class="section level1">
+<h1>Cross-validation</h1>
+<p>What’s left, you ask? Well, now we get to have fun, training and comparing models using cross-validation! If you just came for partition() and fold() you can skip this and start using the functions in your own code instead. But I will move on and walk you (you won’t let me walk alone, will you?) through a simple cross-validation function for testing some models for predicting the scores of the participants.</p>
+<div id="cross-validation-function" class="section level2">
+<h2>Cross-validation function</h2>
+<p>We have 4 folds in our training set, so we want to train our models on 3 of the folds and test on the last fold. This should be done so that all the folds become test fold once. While there are faster alternatives to a for-loop, we will use it to illustrate the process. We will create a simple cross-validation function where we can specify the model to test, and whether it has random effects. The performance of the model will be measured with RMSE (Root Mean Square Error).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">crossvalidate &lt;-<span class="st"> </span><span class="cf">function</span>(data, k, model, dependent, <span class="dt">random =</span> <span class="ot">FALSE</span>){
+  <span class="co"># data is the training set with the &quot;.folds&quot; column</span>
+  <span class="co"># k is the number of folds we have</span>
+  <span class="co"># model is a string describing a linear regression model formula</span>
+  <span class="co"># dependent is a string with the name of the score column we want to predict</span>
+  <span class="co"># random is a logical; do we have random effects in the model?</span>
+  
+  <span class="co"># Initialize empty list for recording performances</span>
+  performances &lt;-<span class="st"> </span><span class="kw">c</span>()
+  
+  <span class="co"># One iteration per fold</span>
+  <span class="cf">for</span> (fold <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>k){
+    
+    <span class="co"># Create training set for this iteration</span>
+    <span class="co"># Subset all the datapoints where .folds does not match the current fold</span>
+    training_set &lt;-<span class="st"> </span>data[data<span class="op">$</span>.folds <span class="op">!=</span><span class="st"> </span>fold,]
+    
+    <span class="co"># Create test set for this iteration</span>
+    <span class="co"># Subset all the datapoints where .folds matches the current fold</span>
+    testing_set &lt;-<span class="st"> </span>data[data<span class="op">$</span>.folds <span class="op">==</span><span class="st"> </span>fold,]
+    
+    ## Train model
+
+    <span class="co"># If there is a random effect,</span>
+    <span class="co"># use lmer() to train model</span>
+    <span class="co"># else use lm()</span>
+
+    <span class="cf">if</span> (<span class="kw">isTRUE</span>(random)){
+
+      <span class="co"># Train linear mixed effects model on training set</span>
+      model &lt;-<span class="st">  </span><span class="kw">lmer</span>(model, training_set, <span class="dt">REML=</span><span class="ot">FALSE</span>)
+
+    } <span class="cf">else</span> {
+
+      <span class="co"># Train linear model on training set</span>
+      model &lt;-<span class="st">  </span><span class="kw">lm</span>(model, training_set)
+
+    }
+
+    ## Test model
+
+    <span class="co"># Predict the dependent variable in the testing_set with the trained model</span>
+    predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(model, testing_set, <span class="dt">allow.new.levels=</span><span class="ot">TRUE</span>)
+
+    <span class="co"># Get the Root Mean Square Error between the predicted and the observed</span>
+    RMSE &lt;-<span class="st"> </span><span class="kw">rmse</span>(predicted, testing_set[[dependent]])
+
+    <span class="co"># Add the RMSE to the performance list</span>
+    performances[fold] &lt;-<span class="st"> </span>RMSE
+
+
+  }
+
+  <span class="co"># Return the mean of the recorded RMSEs</span>
+  <span class="kw">return</span>(<span class="kw">c</span>(<span class="st">'RMSE'</span> =<span class="st"> </span><span class="kw">mean</span>(performances)))
+
+}</code></pre></div>
+</div>
+<div id="linear-regression-models" class="section level2">
+<h2>Linear regression models</h2>
+<p>We could have a hypothesis that people with the diagnosis ‘b’ in general are better at the experiment. This could be tested by a simple linear model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(score<span class="op">~</span>diagnosis, df) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summary</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>()
+<span class="co">#&gt;          term estimate std.error statistic      p.value</span>
+<span class="co">#&gt; 1 (Intercept) 27.46667  4.072166  6.744976 2.527779e-07</span>
+<span class="co">#&gt; 2  diagnosisb 22.60000  5.758913  3.924352 5.145124e-04</span></code></pre></div>
+<p>The linear model supports the hypothesis, as scores of participants with diagnosis ‘b’ are significantly larger than those of participants with diagnosis ‘a’.</p>
+<p>To improve on our model we might want to include the information we have about age and sessions. Perhaps the older participants do better than the younger? And maybe participants with the diagnosis ‘b’ are better at learning over time (session) than those with diagnosis ‘a’? By including such information in our model we might explain more than if we are just looking at the diagnosis. We could also use participant as random effect, to factor out the personal differences.<br />
+Let’s list a bunch of possible models that we will then compare later with cross-validation! The cross-validation function needs the model to be passed in the format below (a string). Instead of looking at summaries for each model, we will find the best model with cross-validation and only look at the summary for that one. Notice that when we want to compare models, we want to keep the same random effects for all the models, so we are only comparing the combination of fixed effects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m0 &lt;-<span class="st"> 'score~1+(1|participant)'</span>
+m1 &lt;-<span class="st"> 'score~diagnosis+(1|participant)'</span>
+m2 &lt;-<span class="st"> 'score~diagnosis+age+(1|participant)'</span>
+m3 &lt;-<span class="st"> 'score~diagnosis+session+(1|participant)'</span>
+m4 &lt;-<span class="st"> 'score~diagnosis*session+(1|participant)'</span>
+m5 &lt;-<span class="st"> 'score~diagnosis*session+age+(1|participant)'</span></code></pre></div>
+<p>Now let’s test the 6 models we specified earlier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m0
+<span class="co">#&gt; [1] &quot;score~1+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m0, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;     RMSE </span>
+<span class="co">#&gt; 18.27222</span>
+
+m1
+<span class="co">#&gt; [1] &quot;score~diagnosis+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m1, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;    RMSE </span>
+<span class="co">#&gt; 14.7661</span>
+
+m2
+<span class="co">#&gt; [1] &quot;score~diagnosis+age+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m2, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;     RMSE </span>
+<span class="co">#&gt; 15.28533</span>
+
+m3
+<span class="co">#&gt; [1] &quot;score~diagnosis+session+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m3, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;     RMSE </span>
+<span class="co">#&gt; 6.176477</span>
+
+m4
+<span class="co">#&gt; [1] &quot;score~diagnosis*session+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m4, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;     RMSE </span>
+<span class="co">#&gt; 5.950014</span>
+
+m5
+<span class="co">#&gt; [1] &quot;score~diagnosis*session+age+(1|participant)&quot;</span>
+<span class="kw">crossvalidate</span>(train_set, <span class="dt">k=</span><span class="dv">4</span>, <span class="dt">model=</span>m5, <span class="dt">dependent=</span><span class="st">'score'</span>, <span class="dt">random=</span><span class="ot">TRUE</span>)
+<span class="co">#&gt;     RMSE </span>
+<span class="co">#&gt; 7.004665</span></code></pre></div>
+<p>The model m4 has the least error on average in its predictions and so, we assume that it is the best predictor of out-of-sample data. To make sure it doesn’t overfit the data, let’s look at the error for the test set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creating the model for the full training set</span>
+model_m4 &lt;-<span class="st"> </span><span class="kw">lmer</span>(m4, train_set, <span class="dt">REML =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># Predict the dependent variable in the test_set with the trained model</span>
+predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(model_m4, test_set, <span class="dt">allow.new.levels=</span><span class="ot">TRUE</span>)
+
+<span class="co"># Get the Root Mean Square Error between the predicted and the observed</span>
+RMSE &lt;-<span class="st"> </span><span class="kw">rmse</span>(predicted, test_set[[<span class="st">'score'</span>]])
+RMSE
+<span class="co">#&gt; [1] 6.418155</span></code></pre></div>
+<p>6.42 is a bit higher than the cross-validated average, but it’s so close that we’re not afraid of overfitting. Be aware that the scale of the RMSE is dependent on the data we have, so you might find some models with much higher RMSEs than this one. What matters is the relative difference between models, so that the best model will have the lowest error.</p>
+<p>Let’s look at its summary:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model_m4 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summary</span>()
+<span class="co">#&gt; Linear mixed model fit by maximum likelihood t-tests use Satterthwaite</span>
+<span class="co">#&gt;   approximations to degrees of freedom [lmerMod]</span>
+<span class="co">#&gt; Formula: score ~ diagnosis * session + (1 | participant)</span>
+<span class="co">#&gt;    Data: train_set</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;      AIC      BIC   logLik deviance df.resid </span>
+<span class="co">#&gt;    157.0    164.1    -72.5    145.0       18 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Scaled residuals: </span>
+<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
+<span class="co">#&gt; -1.8723 -0.6998 -0.0137  0.7042  1.6556 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Random effects:</span>
+<span class="co">#&gt;  Groups      Name        Variance Std.Dev.</span>
+<span class="co">#&gt;  participant (Intercept)  3.714   1.927   </span>
+<span class="co">#&gt;  Residual                21.398   4.626   </span>
+<span class="co">#&gt; Number of obs: 24, groups:  participant, 8</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Fixed effects:</span>
+<span class="co">#&gt;                    Estimate Std. Error      df t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)          0.1667     3.6621 22.2760   0.046   0.9641    </span>
+<span class="co">#&gt; diagnosisb           9.4167     5.1790 22.2760   1.818   0.0825 .  </span>
+<span class="co">#&gt; session             13.2500     1.6355 16.0000   8.102 4.71e-07 ***</span>
+<span class="co">#&gt; diagnosisb:session   6.3750     2.3129 16.0000   2.756   0.0141 *  </span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Correlation of Fixed Effects:</span>
+<span class="co">#&gt;             (Intr) dgnssb sessin</span>
+<span class="co">#&gt; diagnosisb  -0.707              </span>
+<span class="co">#&gt; session     -0.893  0.632       </span>
+<span class="co">#&gt; dgnssb:sssn  0.632 -0.893 -0.707</span></code></pre></div>
+<p>In this model, we have a significant interaction between diagnosis and session. The interpretation of this result would be quite different from that of the first model we tried. Also notice that the cross-validated m3 model is so close to the cross-validated m4 model that we can’t really say there’s a difference. The difference might as well stem from the randomization in the partition() or fold() steps. So we might consider reporting both models or at least seeing if the interpretation of the two models differ a lot. All these things are highly dependent on the context.</p>
+</div>
+</div>
+<div id="outro" class="section level1">
+<h1>Outro</h1>
+<p>Well done, you made it to the end of this introduction to groupdata2! If you want to know more about the various methods and arguments, you can read the <a href="description_of_groupdata2.html">Description of groupdata2</a>.<br />
+If you have any questions or comments to this vignette (tutorial) or groupdata2, please send them to me at<br />
+<a href="mailto:r-pkgs@ludvigolsen.dk">r-pkgs@ludvigolsen.dk</a>, or open an issue on the github page <a href="https://github.com/LudvigOlsen/groupdata2" class="uri">https://github.com/LudvigOlsen/groupdata2</a> so I can make improvements.</p>
+<p>   </p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

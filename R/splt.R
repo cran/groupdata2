@@ -21,8 +21,9 @@
 #' # Using splt()
 #' df_list <- splt(df, 5, method = 'n_dist')
 #'
-splt <- function(data, n, method = 'n_dist', force_equal = FALSE,
-                 allow_zero = FALSE, descending = FALSE, randomize = FALSE){
+splt <- function(data, n, method = 'n_dist', starts_col = NULL, force_equal = FALSE,
+                 allow_zero = FALSE, descending = FALSE, randomize = FALSE,
+                 remove_missing_starts = FALSE){
 
   #
   # Takes dataframe or vector
@@ -42,8 +43,9 @@ splt <- function(data, n, method = 'n_dist', force_equal = FALSE,
   # Check arguments
   # Convert n if given as percentage
   # Check more arguments
-  n <- check_convert_check_(data, n, method, force_equal, allow_zero, descending)
-
+  n <- check_convert_check_(data, n, method, force_equal, allow_zero, descending,
+                            starts_col = starts_col,
+                            remove_missing_starts = remove_missing_starts)
 
   # Force equal
   # .. Some methods have a different way of calculating
@@ -52,7 +54,7 @@ splt <- function(data, n, method = 'n_dist', force_equal = FALSE,
 
   if(isTRUE(force_equal)){
 
-    if(!(method %in% c('staircase'))){
+    if(!(method %in% c('staircase', 'l_sizes', 'l_starts'))){
 
       # If force_equal is set to TRUE,
       # and we don't already have equally sized windows,
@@ -97,11 +99,11 @@ splt <- function(data, n, method = 'n_dist', force_equal = FALSE,
 
   if (is.data.frame(data)){
 
-    return(dsplit_(data, n, method, force_equal, allow_zero, descending, randomize))
+    return(dsplit_(data, n, method, starts_col, force_equal, allow_zero, descending, randomize, remove_missing_starts))
 
   } else {
 
-    return(vsplit_(data, n, method, force_equal, allow_zero, descending, randomize))
+    return(vsplit_(data, n, method, force_equal, allow_zero, descending, randomize, remove_missing_starts))
 
   }
 

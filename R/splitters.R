@@ -1,8 +1,8 @@
 ## Dataframe and vector splitters
 
 #' @importFrom utils head tail
-dsplit_ <- function(data, n, method, force_equal = FALSE, allow_zero = FALSE,
-                   descending = FALSE, randomize = FALSE){
+dsplit_ <- function(data, n, method, starts_col = NULL, force_equal = FALSE, allow_zero = FALSE,
+                   descending = FALSE, randomize = FALSE, remove_missing_starts = FALSE){
 
   #
   # Takes a dataframe
@@ -11,10 +11,11 @@ dsplit_ <- function(data, n, method, force_equal = FALSE, allow_zero = FALSE,
   # Returns a list of dataframes
   #
 
-  if (method == 'staircase') {
+  if (method %in% c('staircase', 'primes', 'l_sizes')) {
 
     # Create grouping factor
-    groups <- group_factor(data[[1]], n, method = method, force_equal = force_equal,
+    groups <- group_factor(data[[1]], n, method = method,
+                           force_equal = force_equal,
                           descending = descending, randomize = randomize)
 
     if (isTRUE(force_equal)){
@@ -23,13 +24,24 @@ dsplit_ <- function(data, n, method, force_equal = FALSE, allow_zero = FALSE,
 
     }
 
+  } else if (method == 'l_starts'){
+
+    groups <- group_factor(data, n, method = method,
+                           starts_col = starts_col,
+                           force_equal = force_equal,
+                           allow_zero = allow_zero,
+                           descending = descending,
+                           randomize = randomize,
+                           remove_missing_starts = remove_missing_starts)
+
   } else {
 
     # Create grouping factor
-    groups <- group_factor(data[[1]], n, method = method, descending = descending,
+    groups <- group_factor(data[[1]], n, method = method,
+                           descending = descending,
                           randomize = randomize)
-
   }
+
   # Split dataframe into a list of dataframes
   data_splitted <- split(data , f = groups)
 
@@ -38,7 +50,7 @@ dsplit_ <- function(data, n, method, force_equal = FALSE, allow_zero = FALSE,
 }
 
 vsplit_ <- function(v, n, method, force_equal = FALSE, allow_zero = FALSE,
-                   descending = FALSE, randomize = FALSE){
+                   descending = FALSE, randomize = FALSE, remove_missing_starts = FALSE){
 
   #
   # Takes a vector
@@ -47,12 +59,12 @@ vsplit_ <- function(v, n, method, force_equal = FALSE, allow_zero = FALSE,
   # Returns a list of vectors
   #
 
-
-  if (method == 'staircase') {
+  if (method %in% c('staircase', 'primes', 'l_sizes')) {
 
     # Create grouping factor
     groups <- group_factor(v, n, method = method, force_equal = force_equal,
                           descending = descending, randomize = randomize)
+
 
     if (isTRUE(force_equal)){
 
@@ -65,7 +77,8 @@ vsplit_ <- function(v, n, method, force_equal = FALSE, allow_zero = FALSE,
 
     # Create grouping factor
     groups <- group_factor(v, n, method = method, descending = descending,
-                          randomize = randomize)
+                          randomize = randomize,
+                          remove_missing_starts = remove_missing_starts)
 
   }
 

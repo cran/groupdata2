@@ -3,10 +3,10 @@
 groupdata2
 ==========
 
-R package: Subsetting Methods for Balanced Cross-Validation, Time Series Windowing, and General Grouping and Splitting of Data.
+R package: Subsetting methods for balanced cross-validation, time series windowing, and general grouping and splitting of data.
 
-By Ludvig R. Olsen
-Cognitive Science, Aarhus University
+By Ludvig R. Olsen,
+Cognitive Science, Aarhus University.
 Started in Oct. 2016
 
 Contact at: <r-pkgs@ludvigolsen.dk>
@@ -16,28 +16,34 @@ Main functions:
 -   group\_factor
 -   group
 -   splt
+-   partition
 -   fold
 
 Other tools:
 
+-   find\_starts
 -   %staircase%
+-   %primes%
 
 Installation
 ------------
 
+CRAN version:
+
+> install.packages("groupdata2")
+
 Development version:
 
-install.packages("devtools")
+> install.packages("devtools")
+> devtools::install\_github("LudvigOlsen/groupdata2")
 
-devtools::install\_github("LudvigOlsen/groupdata2")
+Vignettes
+---------
 
-To do
------
+groupdata2 contains a number of vignettes with relevant use cases and descriptions.
 
--   fold() - implement force\_equal (n.b. should be special for greedy and staircasing)
--   datatables
--   Change version number
--   Send to CRAN
+> vignette(package='groupdata2') \# for an overview
+> vignette("introduction\_to\_groupdata2") \# begin here
 
 Functions
 ---------
@@ -60,6 +66,10 @@ Returns the given data as a dataframe with added grouping factor made with group
 
 Creates the specified groups with group\_factor() and splits the given data by the grouping factor with base::split. Returns the splits in a list.
 
+### partition()
+
+Creates (optionally) balanced partitions (e.g. training/test sets). Balance partitions on one categorical variable and/or make sure that all datapoints sharing an ID is in the same partition.
+
 ### fold()
 
 Creates (optionally) balanced folds for use in cross-validation. Balance folds on one categorical variable and/or make sure that all datapoints sharing an ID is in the same fold.
@@ -67,9 +77,9 @@ Creates (optionally) balanced folds for use in cross-validation. Balance folds o
 Methods
 -------
 
-There are currently 6 methods available. They can be divided into 3 categories.
+There are currently 9 methods available. They can be divided into 5 categories.
 
-Examples of group sizes are based on a vector with 57 elements.
+*Examples of group sizes are based on a vector with 57 elements.*
 
 ### Specify group size
 
@@ -105,6 +115,26 @@ Divides the data into a specified number of groups. Excess data points are place
 
 E.g. group sizes: 12, 11, 11, 11, 12
 
+### Specify list
+
+##### Method: l\_sizes
+
+Uses a list / vector of group sizes to divide up the data.
+Excess data points are placed in an extra group.
+
+E.g. *n = c(11, 11)* returns group sizes: 11, 11, 35
+
+##### Method: l\_starts
+
+Uses a list of starting positions to divide up the data.
+Starting positions are values in a vector (e.g. column in dataframe). Skip to a specific nth appearance of a value by using c(value, skip\_to).
+
+E.g. *n = c(11, 15, 27, 43)* returns group sizes: 10, 4, 12, 16, 15
+
+Identical to *n = list(11, 15, c(27, 1), 43)* where 1 specifies that we want the first appearance of 27 after the previous value 15.
+
+If passing *n = 'auto'* starting posititions are automatically found with find\_starts().
+
 ### Specify step size
 
 ##### Method: staircase
@@ -112,6 +142,15 @@ E.g. group sizes: 12, 11, 11, 11, 12
 Uses step\_size to divide up the data. Group size increases with 1 step for every group, until there is no more data.
 
 E.g. group sizes: 5, 10, 15, 20, 7
+
+### Specify start at
+
+##### Method: primes
+
+Creates groups with sizes corresponding to prime numbers.
+Starts at n (prime number). Increases to the the next prime number until there is no more data.
+
+E.g. group sizes: 5, 7, 11, 13, 17, 4
 
 Examples
 --------
@@ -134,41 +173,69 @@ df <- data.frame("x"=c(1:12),
 
 ``` r
 # Using group()
-group(df, 5, method = 'n_dist') %>%
+group(df, n = 5, method = 'n_dist') %>%
   kable()
 ```
 
 |    x| species |  age| .groups |
 |----:|:--------|----:|:--------|
-|    1| cat     |   44| 1       |
-|    2| pig     |   55| 1       |
-|    3| human   |   13| 2       |
-|    4| cat     |    1| 2       |
-|    5| pig     |   28| 3       |
-|    6| human   |   20| 3       |
-|    7| cat     |   56| 3       |
-|    8| pig     |   99| 4       |
-|    9| human   |   14| 4       |
+|    1| cat     |   81| 1       |
+|    2| pig     |   64| 1       |
+|    3| human   |   48| 2       |
+|    4| cat     |   24| 2       |
+|    5| pig     |   60| 3       |
+|    6| human   |    1| 3       |
+|    7| cat     |   37| 3       |
+|    8| pig     |   74| 4       |
+|    9| human   |   76| 4       |
 |   10| cat     |   47| 5       |
-|   11| pig     |   86| 5       |
-|   12| human   |   82| 5       |
+|   11| pig     |   83| 5       |
+|   12| human   |   68| 5       |
 
 ``` r
 
 # Using group() with dplyr pipeline to get mean age
 df %>%
-  group(5, method = 'n_dist') %>%
+  group(n = 5, method = 'n_dist') %>%
   dplyr::summarise(mean_age = mean(age)) %>%
   kable()
 ```
 
 | .groups |  mean\_age|
 |:--------|----------:|
-| 1       |   49.50000|
-| 2       |    7.00000|
-| 3       |   34.66667|
-| 4       |   56.50000|
-| 5       |   71.66667|
+| 1       |   72.50000|
+| 2       |   36.00000|
+| 3       |   32.66667|
+| 4       |   75.00000|
+| 5       |   66.00000|
+
+``` r
+
+# Using group() with 'l_starts' method
+# Starts group at the first 'cat', 
+# then skips to the second appearance of "pig" after "cat",
+# then starts at the following "cat".
+df %>%
+  group(n = list("cat", c("pig",2), "cat"), 
+        method = 'l_starts',
+        starts_col = "species") %>%
+  kable()
+```
+
+|    x| species |  age| .groups |
+|----:|:--------|----:|:--------|
+|    1| cat     |   81| 1       |
+|    2| pig     |   64| 1       |
+|    3| human   |   48| 1       |
+|    4| cat     |   24| 1       |
+|    5| pig     |   60| 2       |
+|    6| human   |    1| 2       |
+|    7| cat     |   37| 3       |
+|    8| pig     |   74| 3       |
+|    9| human   |   76| 3       |
+|   10| cat     |   47| 3       |
+|   11| pig     |   83| 3       |
+|   12| human   |   68| 3       |
 
 ### fold()
 
@@ -190,7 +257,7 @@ df$session <- rep(c('1','2', '3'), 6)
 set.seed(1)
 
 # Use fold() with cat_col and id_col
-df_folded <- fold(df, 3, cat_col = 'diagnosis',
+df_folded <- fold(df, k = 3, cat_col = 'diagnosis',
                   id_col = 'participant', method = 'n_dist')
 
 # Show df_folded ordered by folds

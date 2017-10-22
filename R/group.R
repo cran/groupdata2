@@ -11,6 +11,8 @@
 #' @param col_name Name of added grouping factor
 #' @return Dataframe grouped by new grouping factor
 #' @family grouping functions
+#' @family staircase tools
+#' @family l_starts tools
 #' @aliases window binning split
 #' @examples
 #' # Attach packages
@@ -30,10 +32,19 @@
 #'  group(5, method = 'n_dist') %>%
 #'  dplyr::summarise(mean_age = mean(age))
 #'
-group <- function(data, n, method = 'n_dist', force_equal = FALSE,
-                  allow_zero = FALSE, return_factor = FALSE,
-                  descending = FALSE, randomize = FALSE,
-                  col_name = '.groups'){
+#' # Using group_factor() with l_starts
+#' # "c('pig',2)" skips to the second appearance of
+#' # "pig" after the first appearance of "cat"
+#' df_grouped <- group(df,
+#'                     list('cat', c('pig',2), 'human'),
+#'                     method = 'l_starts',
+#'                     starts_col = 'species')
+#'
+group <- function(data, n, method = 'n_dist', starts_col = NULL,
+                  force_equal = FALSE, allow_zero = FALSE,
+                  return_factor = FALSE, descending = FALSE,
+                  randomize = FALSE, col_name = '.groups',
+                  remove_missing_starts = FALSE){
 
   #
   # Takes dataframe or vector
@@ -46,9 +57,10 @@ group <- function(data, n, method = 'n_dist', force_equal = FALSE,
   #
 
   # Create grouping factor
-  grouping_factor <- group_factor(data, n, method, force_equal = force_equal,
+  grouping_factor <- group_factor(data, n, method, starts_col, force_equal = force_equal,
                                   allow_zero = allow_zero, descending = descending,
-                                  randomize = randomize)
+                                  randomize = randomize,
+                                  remove_missing_starts = remove_missing_starts)
 
   # If return_factor is set to TRUE
   # .. return the created grouping factor
@@ -93,7 +105,7 @@ group <- function(data, n, method = 'n_dist', force_equal = FALSE,
     data <- replace_col_name(data, '.TempGroupsName', col_name)
 
     # Return data grouped by the grouping factor
-    return(dplyr::group_by_(data, col_name))
+    return(dplyr::group_by(data, !! as.name(col_name)))
 
   } else { # If data is vector
 
@@ -113,7 +125,7 @@ group <- function(data, n, method = 'n_dist', force_equal = FALSE,
     data <- replace_col_name(data, '.TempGroupsName', col_name)
 
     # Return data grouped by the grouping factor
-    return(dplyr::group_by_(data, col_name))
+    return(dplyr::group_by(data, !! as.name(col_name)))
 
   }
 

@@ -5,26 +5,31 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 #' @title Create balanced folds for cross-validation.
 #' @description Divides data into groups by a range of methods.
 #'  Balances a given categorical variable between folds and keeps (if possible)
-#'  all data points with the same ID (e.g. participant_id) in the same fold.
+#'  all data points with a shared ID (e.g. participant_id) in the same fold.
 #' @details
-#'  cat_col: data is first subset by cat_col.
-#'  Subsets are folded/grouped and merged. ||
-#'  id_col: folds are created from unique IDs. ||
-#'  cat_col AND id_col: data is subset by cat_col
+#'  \code{cat_col}: data is first subset by \code{cat_col}.
+#'  Subsets are folded/grouped and merged.
+#'
+#'  \code{id_col}: folds are created from unique IDs.
+#'
+#'  \code{cat_col} AND \code{id_col}: data is subset by \code{cat_col}
 #'  and folds are created from unique IDs in each subset.
 #'  Subsets are merged.
 #' @author Ludvig Renbo Olsen, \email{r-pkgs@ludvigolsen.dk}
 #' @export
-#' @param k Number of folds, fold size, or step size (depending on chosen method)
-#'  Given as whole numbers or percentage (0 < n < 1).
+#' @param k \emph{Dependent on method.}
+#'
+#'  Number of folds (default), fold size, with more (see \code{method}).
+#'
+#'  Given as whole number(s) and/or percentage(s) (0 < n < 1).
 #' @param cat_col Categorical variable to balance between folds.
 #'
 #'  E.g. when predicting a binary variable (a or b), it is necessary to have
 #'  both represented in every fold
 #'
-#'  N.B. If also passing an id_col, cat_col should be a constant for that ID.
+#'  N.B. If also passing an id_col, cat_col should be constant within each ID.
 #' @param id_col Factor with IDs.
-#'  This will be used to keep all rows with an ID in the same fold
+#'  This will be used to keep all rows that share an ID in the same fold
 #'  (if possible).
 #'
 #'  E.g. If we have measured a participant multiple times and want to see the
@@ -66,7 +71,9 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 #' df_folded <- df_folded[order(df_folded$.folds),]
 #'
 #' @importFrom dplyr group_by_ do %>%
-fold <- function(data, k=5, cat_col = NULL, id_col = NULL, method = 'n_dist'){
+fold <- function(data, k=5, cat_col = NULL, id_col = NULL,
+                 starts_col = NULL, method = 'n_dist',
+                 remove_missing_starts = FALSE){
 
   #
   # Takes:
@@ -116,10 +123,12 @@ fold <- function(data, k=5, cat_col = NULL, id_col = NULL, method = 'n_dist'){
       # Group by new grouping factor '.folds'
 
       data <- data %>%
-        group_by_(cat_col) %>%
+        group_by(!! as.name(cat_col)) %>%
         do(group_uniques_(., k, id_col, method,
-                          col_name = '.folds')) %>%
-        group_by_('.folds')
+                          col_name = '.folds',
+                          starts_col = starts_col,
+                          remove_missing_starts = remove_missing_starts)) %>%
+        group_by(!! as.name('.folds'))
 
 
       # If id_col is NULL
@@ -130,10 +139,12 @@ fold <- function(data, k=5, cat_col = NULL, id_col = NULL, method = 'n_dist'){
       # .. and add grouping factor to data
 
       data <- data %>%
-        group_by_(cat_col) %>%
+        group_by(!! as.name(cat_col)) %>%
         do(group(., k, method = method,
                  randomize = TRUE,
-                 col_name = '.folds'))
+                 col_name = '.folds',
+                 starts_col = starts_col,
+                 remove_missing_starts = remove_missing_starts))
 
 
     }
@@ -150,7 +161,9 @@ fold <- function(data, k=5, cat_col = NULL, id_col = NULL, method = 'n_dist'){
 
       data <- data %>%
         group_uniques_(k, id_col, method,
-                       col_name = '.folds')
+                       col_name = '.folds',
+                       starts_col = starts_col,
+                       remove_missing_starts = remove_missing_starts)
 
 
       # If id_col is NULL
@@ -162,7 +175,9 @@ fold <- function(data, k=5, cat_col = NULL, id_col = NULL, method = 'n_dist'){
       data <- group(data, k,
                     method = method,
                     randomize = TRUE,
-                    col_name = '.folds')
+                    col_name = '.folds',
+                    starts_col = starts_col,
+                    remove_missing_starts = remove_missing_starts)
 
     }
 

@@ -6,9 +6,7 @@
 # Creates grouping factor from given list of window sizes
 # Under development
 
-# #' @param n List of group sizes
-# #' @export
-l_sizes <- function(v, n, fixed = FALSE){
+l_sizes_group_factor_ <- function(v, n, force_equal = FALSE, descending = FALSE){
 
   # If any elements in n are between 0-1
   # .. Convert all wholenumbers in n to percentages (0-1)
@@ -20,7 +18,7 @@ l_sizes <- function(v, n, fixed = FALSE){
   ### .... returned, containg all elements of v
   # .. Else
   # .... Let exceeding elements have their own group
-  # ..... Unless of course, specified no to (fixed_n(??) = TRUE)
+  # ..... Unless of course, specified no to (force_equal = TRUE)
   # .. Create list of group sizes
   # .. Return grouping factor from group sizes
   # Else just return the given group sizes
@@ -33,6 +31,20 @@ l_sizes <- function(v, n, fixed = FALSE){
 
   }
 
+  stopifnot(is.logical(force_equal),
+            is.logical(descending))
+
+  # If n is given as a list() object
+  # unlist n to get a c() vector
+  if (typeof(n) == 'list' && !is.data.frame(n)){
+
+    n <- unlist(n)
+
+  }
+
+
+  # If n is longer than v
+  # raise an error
   if (length(n)>length(v)){
 
     stop("n contains more values than v")
@@ -140,6 +152,13 @@ l_sizes <- function(v, n, fixed = FALSE){
   }) %>% unlist()
 
 
+  # Check that we do not create more values than is in v
+  if(length(elements) > length(v)){
+
+    stop("n creates more values than is in v")
+
+  }
+
   # Start group number at 1
   #
   # if (!isTRUE( all.equal(min(elements), 1))){
@@ -149,88 +168,64 @@ l_sizes <- function(v, n, fixed = FALSE){
   #   print('shifted group downwards')
   # }
 
-  # If fixed is TRUE
+  # If force_equal is TRUE
   # . or we have the right number of elements
   # .. return elements
   # Else
   # .. Add a new group with missing elements
 
 
-  if(isTRUE(fixed) || length(elements) == length(v)){
+  if(isTRUE(force_equal) || length(elements) == length(v)){
 
-    return(elements)
+    # If there are no elements, return NA
+    if (length(elements) == 0){
+
+      warning("No groups. Returned NA.")
+      rep(NA, length(v)) %>%
+        as.factor() %>%
+        return()
+
+    } else {
+
+      elements %>%
+        as.factor() %>%
+        return()
+
+    }
 
   } else {
 
     missing_elements <- length(v) - length(elements)
 
+
+    # If there are no elements
+    if (length(elements) == 0){
+
+      rep(2, missing_elements) %>%
+        as.factor() %>%
+        return()
+
+    } else {
+
     elements %>%
       append(rep(max(elements)+1, missing_elements)) %>%
+      as.factor() %>%
       return()
+
+    }
 
   }
 
 
 }
 
-# system.time(
-#
-#   for (i in 5:100){
-#
-#     a <- l_sizes(c(1:i), c(0.1,0.4,0.5), fixed = FALSE)
-#   }
-# )
-#
-# system.time(l_sizes(c(1:20), c(0.2, 0.2, 0.2), fixed = TRUE))
-#
-# # Create a balanced partition() function
-
-partition <- function(data, p, cat_col = NULL,
-                    id_col = NULL, fixed = FALSE) {
-
-  #
-  # Balanced partitioning
-  # data: dataframe or vector
-  # p: list of partitions given as percentage (0-1) or group sizes (wholenumber)
-  # cat_col: Categorical variable to balance by
-  # id_col: ID column to keep rows with shared IDs in the same partition
-  # fixed: Whether you only want the inputted partitions or the exceeding values gets a partition (logical)
-  #        FALSE allows you to pass "p = 0.2" and get 2 partions - 0.2 and 0.8
-  #
-
-
-  # Currently not working
-
-  return()
 
 
 
-}
-
-
-
-# test_that("c(1:7) in l_sizes with n = c(0.1,0.2,0.3,0.4)",{
-#
-#   expect_
-#
-#
-# })
-
-# system.time(
-#   a <- l_sizes(c(1:100000),
-#                c(0.2))
-# )
-#a %>% plyr::count()
-
-# method: l_starts
-# Takes values to start groups at
-# Allows skipping of values
-# Under development
-
-# #' @param v Vector
-# #' @param n List of values to start groups from
-# #' @export
-l_starts <- function(v, n){
+l_starts_group_factor_ <- function(v, n, force_equal = FALSE, descending = FALSE,
+                                   remove_missing_starts = FALSE,
+                                   return_missing_starts = FALSE,
+                                   return_missing_starts_skip_numbers = FALSE){
 
   #
   # method: l_starts
@@ -238,6 +233,29 @@ l_starts <- function(v, n){
   # Allows skipping of values
   # Under development
   #
+
+  stopifnot(is.logical(force_equal),
+            is.logical(descending))
+
+  # If we want to return the missing starts,
+  # We need to recursively remove them first
+  if (isTRUE(return_missing_starts)) remove_missing_starts <- TRUE
+
+
+  # Check if n is 'auto'
+
+  # If n is not a list
+  # N.b. because n == 'auto' on a list issues warning
+  if (!is.list(n)){
+
+    # And n is 'auto'
+    if (n[1] == 'auto'){
+
+      # Find starts
+      n <- find_starts(v)
+
+    }
+  }
 
   # For each element in n
   # .. If it has length 1, return (element, 1)
@@ -269,38 +287,53 @@ l_starts <- function(v, n){
 
     # Insert first value of v in the beginning
     # of n
-    n_list <- append(n_list, list(c(v[1],1)), 0)
+    n_list <- append(n_list, list(c(as.character(v[1]),1)), 0)
 
   }
 
-  # Initialize ind_prev
-  # This is used to make sure that we get an index
-  # further down in v, even if the value is also
-  # found above the previously found index
-  ind_prev <- 0
+  n_list_backup <- n_list
 
-  # We iterate through n and find the index for each value
-  start_indices <- plyr::llply(1:length(n_list), function(i){
+  # We use tryCatch to catch the error if a start value is not found
+  start_indices <- tryCatch({
 
-    # Get all indices of v where it has the current value of n
-    indices <- which(v == n_list[[i]][1])
+    # Find indices
+    # Put in function to enable recursion when removing
+    # start values not found
+    found <- l_starts_find_indices_(v, n_list, remove_missing_starts)
+    n_list <- found[2]
+    ind_next <- found[1]
+    # If an error was caught
+    }, error = function(e){
 
-    # Get all the indices that are larger the the index found in
-    # the previous iteration
-    indices_larger_than_prev <- indices[which(indices > ind_prev)]
+      # Raise error with
+      stop(paste("group_factor: ", e$message, sep=""))
 
-    # Get the wanted index
-    ind_next = indices_larger_than_prev[n_list[[i]][2]]
+    }
+    )
 
-    # Set ind_prev to the index we just found for use in the
-    # next iteration
-    # <<- saves to parent scope (outer function)
-    ind_prev <<- ind_next
+  if (isTRUE(return_missing_starts)) {
 
-    # Return the found index
-    return(ind_next)
+    #
+    # If what we want is the missing starts,
+    # we find the values that were recursively
+    # removed in l_starts_find_indices_.
+    # We can either return values with related skip numbers
+    # or only values.
+    #
 
-  })
+    n_list_backup <- relist_starts_(n_list_backup)
+    n_list <- relist_starts_(n_list)
+
+    missing_starts <- setdiff(n_list_backup, n_list)
+    if (isEmpty_(missing_starts)) return(NULL)
+    else if (isTRUE(return_missing_starts_skip_numbers)) return(missing_starts)
+    else {
+      missing_values <- missing_starts %>% extract_start_values_()
+      return(missing_values)
+    }
+
+  }
+
 
   # Get the group sizes by taking the difference
   # between each index (so indices 1,5,7,8 get group sizes 4,2,1)
@@ -313,17 +346,8 @@ l_starts <- function(v, n){
   group_sizes <- append(group_sizes, (length(v)-sum(group_sizes)))
 
   # Return the grouping factor
-  return(l_sizes(group_sizes))
+  return(l_sizes_group_factor_(c(1:sum(group_sizes)),group_sizes))
 
 }
 
-# sampleData <- rep(sample(1:1000, 1000),100)
-#length(sampleData)
-#
-# system.time(
-#   l_starts(sampleData, n=sample(1:1000,100))
-# )
-#
-# system.time(
-#   group_factor(sampleData, 100)
-# )
+

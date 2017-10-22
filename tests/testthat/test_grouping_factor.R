@@ -223,6 +223,188 @@ test_that("group sizes works with group_factor with method staircase", {
 
 })
 
+test_that("group sizes works with group_factor with method primes", {
+
+  group_counts <- function(v, n){
+
+    gf <- group_factor(v, n, method = 'primes')
+    counts <- plyr::count(gf)
+    return(counts$freq)
+
+  }
+
+  count_groups <- function(v, n){
+
+    gf <- group_factor(v, n, method = 'primes')
+    counts <- plyr::count(gf)
+    return(length(counts$freq))
+
+  }
+
+  group_counts_sum <- function(v, n){
+
+    gf <- group_factor(v, n, method = 'primes')
+    counts <- plyr::count(gf)
+    return(sum(counts$freq))
+
+  }
+
+  v <- c(1:57)
+
+  expect_equal(group_counts(v, 3), c(3,5,7,11,13,17,1))
+  expect_equal(group_counts(v, 5), c(5,7,11,13,17,4))
+  expect_equal(group_counts(v, 11), c(11,13,17,16))
+
+  expect_equal(count_groups(v, 2), 7)
+  expect_equal(count_groups(v, 3), 7)
+  expect_equal(count_groups(v, 5), 6)
+
+  expect_equal(group_counts_sum(v, 2), 57)
+  expect_equal(group_counts_sum(v, 3), 57)
+  expect_equal(group_counts_sum(v, 5), 57)
+  expect_equal(group_counts_sum(v, 17), 57)
+  expect_equal(group_counts_sum(v, 0.2), 57)
+
+  v <- c(1:100)
+
+  expect_error(group_counts_sum(v, 0.003), "n > 0 is not TRUE", fixed=TRUE)
+
+  v <- c(1:3)
+
+  expect_error(group_counts(v, 4), "length(data) >= n is not TRUE", fixed=TRUE)
+  expect_error(group_counts(v, 0), "n > 0 is not TRUE", fixed=TRUE)
+  expect_equal(group_counts(v, 2), c(2,1))
+  expect_equal(group_counts(v, 0.67), c(2,1))
+
+
+})
+
+test_that("group sizes works with group_factor with method l_sizes", {
+
+  group_f <- function(v, n){
+
+    return(group_factor(v, n, method='l_sizes'))
+
+  }
+
+  group_counts <- function(v, n){
+
+    gf <- group_factor(v, n, method = 'l_sizes')
+    counts <- plyr::count(gf)
+    return(counts$freq)
+
+  }
+
+  expect_equal(group_f(c(1:10),c(0.2)),factor(c(1,1,2,2,2,2,2,2,2,2)))
+  expect_equal(group_f(c(1:11),c(0.2)),factor(c(1,1,2,2,2,2,2,2,2,2,2)))
+  expect_equal(group_f(c(1:14),c(0.2)),factor(c(1,1,2,2,2,2,2,2,2,2,2,2,2,2)))
+  expect_equal(group_f(c(1:15),c(0.2)),factor(c(1,1,1,2,2,2,2,2,2,2,2,2,2,2,2)))
+
+  expect_equal(group_f(c(1:2),c(0.2,0.5)),factor(c(2,3)))
+
+  expect_equal(group_counts(c(1:200),c(20,20,40,40)),c(20,20,40,40,80))
+  expect_equal(group_counts(c(1:200),c(0.5)),c(100,100))
+  expect_equal(group_counts(c(1:200),c(0.55)),c(110,90))
+  expect_equal(group_counts(c(1:200),c(0.555)),c(111,89))
+
+})
+
+test_that("group sizes works with group_factor with method l_starts", {
+
+  group_f <- function(v, n){
+
+    return(group_factor(v, n, method='l_starts'))
+
+  }
+
+  expect_equal(group_f(c(1:10),list(3,5,7)),
+               factor(c(1,1,2,2,3,3,4,4,4,4)))
+
+  expect_equal(group_f(rep(c(1:5),2),list(3,c(4,2))),
+               factor(c(1,1,2,2,2,2,2,2,3,3)))
+
+  expect_equal(group_f(rep(c(1:5),2),list(1,3,c(4,2))),
+               factor(c(1,1,2,2,2,2,2,2,3,3)))
+
+  expect_equal(group_f(c("a","b","a","b","a","b"),
+                       list("a",c("b",2),"b")),
+               factor(c(1,1,1,2,2,3)))
+
+  expect_equal(group_f(c("a","b","a","b","a","b"),
+                       list(c("b",2),"b")),
+               factor(c(1,1,1,2,2,3)))
+
+  # n = 'auto'
+
+  expect_equal(group_f(c(1:10),'auto'),
+               factor(c(1,2,3,4,5,6,7,8,9,10)))
+
+  expect_equal(group_f(c(1,1,2,2,3,3,4,5,1,1,2,2),'auto'),
+               factor(c(1,1,2,2,3,3,4,5,6,6,7,7)))
+
+  expect_equal(group_f(c('a','a','b','b','c','3','4','4','c'),'auto'),
+               factor(c(1,1,2,2,3,4,5,5,6)))
+
+
+  # If factor
+  expect_equal(group_f(factor(c(1:10)),
+                       list(3,5,7)),
+               factor(c(1,1,2,2,3,3,4,4,4,4)))
+
+  expect_equal(group_f(factor(rep(c(1:5),2)),
+                       list(3,c(4,2))),
+               factor(c(1,1,2,2,2,2,2,2,3,3)))
+
+  expect_equal(group_f(factor(rep(c(1:5),2)),
+                       list(1,3,c(4,2))),
+               factor(c(1,1,2,2,2,2,2,2,3,3)))
+
+  expect_equal(group_f(factor(c("a","b","a","b","a","b")),
+                       list("a",c("b",2),"b")),
+               factor(c(1,1,1,2,2,3)))
+
+  expect_equal(group_f(factor(c("a","b","a","b","a","b")),
+                       list(c("b",2),"b")),
+               factor(c(1,1,1,2,2,3)))
+
+  # n = 'auto'
+  # Raises warning because find_starts converts factor to string
+
+  expect_warning(
+    expect_equal(group_f(factor(c('a','a','b','b','c','3','4','4','c')),'auto'),
+                 factor(c(1,1,2,2,3,4,5,5,6))),
+    "data is factor. Using as character.", fixed = TRUE)
+
+  expect_warning(
+    expect_equal(group_f(factor(c(1,1,2,2,3,4,4,5,5,5)),'auto'),
+                 factor(c(1,1,2,2,3,4,4,5,5,5))),
+    "data is factor. Using as character.", fixed = TRUE)
+
+})
+
+test_that("l_starts raises error correctly when value is not found", {
+
+  expect_error(group(c(1:5), c(1,3,6), method = 'l_starts'),
+               "Start value \"6\" not found in vector", fixed = TRUE)
+
+  expect_error(group(c("a","b","c","d"), n = c(1,3,6), method = 'l_starts'),
+               "Start value \"1\" not found in vector", fixed = TRUE)
+
+  expect_error(group(c("a","b","c","d"), n = c("b","d","e"), method = 'l_starts'),
+               "Start value \"e\" not found in vector", fixed = TRUE)
+
+  expect_error(group(c(3,4,5,6), n = c(2,4,5), method = 'l_starts'),
+               "Start value \"2\" not found in vector", fixed = TRUE)
+
+  df <- data.frame('a' = c(1,2,3,4),
+                   'b' = c(4,5,6,7))
+
+  expect_error(group(df, n = c(2,4), method = 'l_starts',
+                     starts_col = 'c'),
+               "starts_col 'c' not found in data.frame.", fixed = TRUE)
+
+})
+
 test_that("force_equal works with group_factor with all methods",{
 
   group_counts <- function(v, n, method){
@@ -292,6 +474,16 @@ test_that("force_equal works with group_factor with all methods",{
   expect_equal(group_counts(v, 13, 'staircase'), c(13,26))
   expect_equal(group_counts(v, 3, 'staircase'), c(3,6,9,12,15))
 
+  expect_equal(group_counts(v, 11, 'primes'), c(11,13,17))
+  expect_equal(group_counts(v, 23, 'primes'), c(23,29))
+  expect_equal(group_counts(v, 29, 'primes'), c(29))
+  expect_equal(group_counts(v, 2, 'primes'), c(2,3,5,7,11,13))
+
+  expect_equal(group_counts(v, 2, 'l_sizes'), c(2))
+  expect_equal(group_counts(v, 0.2, 'l_sizes'), c(11))
+  expect_equal(group_counts(v, list(0.2,0.3), 'l_sizes'), c(11,17))
+  expect_equal(group_counts(v, c(0.2,0.3), 'l_sizes'), c(11,17))
+
 })
 
 test_that("allow_zero works with group_factor", {
@@ -303,6 +495,14 @@ test_that("allow_zero works with group_factor", {
   expect_equal(group_factor(1, 0, allow_zero = TRUE), NA)
 
 })
+
+test_that("l_sizes works with no groups",{
+
+  expect_equal(group_factor(c(1:3), 0.2, method = 'l_sizes'), factor(c(2,2,2)))
+  expect_warning(group_factor(c(1:3), 0.2, method = 'l_sizes', force_equal = TRUE), "No groups. Returned NA.", fixed = TRUE)
+
+})
+
 
 # Test descending when it has been implemented in all relevant methods
 

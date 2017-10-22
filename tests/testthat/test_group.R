@@ -122,3 +122,53 @@ test_that("col_name can be set correctly in group()",{
   expect_equal(set_col_name(df), '.cats')
 
 })
+
+test_that("l_starts can take n = auto", {
+
+  df <- data.frame("x"=c(1:12),
+                   "species" = rep(c('cat','cat', 'human', 'human'), 3),
+                   "age" = c(5,65,34,54,32,54,23,65,23,65,87,98),
+                   stringsAsFactors = FALSE)
+
+  expect_equal(group(df, n = 'auto', method = 'l_starts',
+                     starts_col = 'species')$.groups,
+               factor(c(1,1,2,2,3,3,4,4,5,5,6,6)))
+
+  expect_error(group(df, n = 'auto', method = 'l_sizes',
+                     starts_col = 'species')$.groups,
+               "!is.character(n) is not TRUE",
+               fixed = TRUE
+              )
+
+})
+
+test_that("l_starts can take starts_col = index / .index", {
+
+  df <- data.frame("x"=c(1:12))
+
+  # index
+  expect_equal(group(df, c(1,4,7), method = 'l_starts',
+                     starts_col = 'index')$.groups,
+               factor(c(1,1,1,2,2,2,3,3,3,3,3,3)))
+
+  # .index
+  expect_equal(group(df, c(1,4,7), method = 'l_starts',
+                     starts_col = '.index')$.groups,
+               factor(c(1,1,1,2,2,2,3,3,3,3,3,3)))
+
+  df2 <- data.frame("x"=c(1:12),
+                    'index' = c(2:13),
+                    '.index' = c(3:14))
+
+  expect_warning(expect_equal(group(df2, c(2,7,11), method = 'l_starts',
+                     starts_col = '.index')$.groups,
+               factor(c(1,2,2,2,2,2,3,3,3,3,4,4))),
+               "data contains column named \'.index\' but this is ignored.", fixed = TRUE)
+
+  expect_warning(expect_equal(group(df2, c(2,7,11), method = 'l_starts',
+                                    starts_col = 'index')$.groups,
+                              factor(c(1,1,1,1,1,2,2,2,2,3,3,3))),
+                 "data contains column named \'index\'. This is used as starts_col instead", fixed = TRUE)
+
+
+})
