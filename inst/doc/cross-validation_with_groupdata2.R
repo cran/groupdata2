@@ -15,7 +15,7 @@ library(broom) #tidy()
 library(hydroGOF) # rmse()
 
 
-# Create dataframe
+# Create data frame
 df <- data.frame("participant" = factor(as.integer(
                                         rep(c('1','2', '3', '4', '5', 
                                         '6', '7', '8', '9', '10'), 3))),
@@ -27,7 +27,7 @@ df <- data.frame("participant" = factor(as.integer(
                             45,67,40,78,62,30,41,44,66,81)) # for 3rd session
 
 # Order by participant
-df <- df[order(df$participant),] 
+df <- df %>% arrange(participant)
 
 # Remove index
 rownames(df) <- NULL
@@ -35,7 +35,7 @@ rownames(df) <- NULL
 # Add session info
 df$session <- as.integer(rep(c('1','2', '3'), 10))
 
-# Show the dataframe
+# Show the data frame
 kable(df, align = 'c')
 
 
@@ -79,7 +79,7 @@ set.seed(1) # For reproducibility
 train_set <- fold(train_set, k = 4, cat_col = 'diagnosis', id_col = 'participant')
 
 # Order by .folds
-train_set <- train_set[order(train_set$.folds),]
+train_set <- train_set %>% arrange(.folds)
 
 train_set %>% kable()
 
@@ -90,11 +90,11 @@ train_set %>%
 
 ## ------------------------------------------------------------------------
 crossvalidate <- function(data, k, model, dependent, random = FALSE){
-  # data is the training set with the ".folds" column
-  # k is the number of folds we have
-  # model is a string describing a linear regression model formula
-  # dependent is a string with the name of the score column we want to predict
-  # random is a logical; do we have random effects in the model?
+  # 'data' is the training set with the ".folds" column
+  # 'k' is the number of folds we have
+  # 'model' is a string describing a linear regression model formula
+  # 'dependent' is a string with the name of the score column we want to predict
+  # 'random' is a logical; do we have random effects in the model?
   
   # Initialize empty list for recording performances
   performances <- c()
@@ -119,12 +119,12 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
     if (isTRUE(random)){
 
       # Train linear mixed effects model on training set
-      model <-  lmer(model, training_set, REML=FALSE)
+      model <- lmer(model, training_set, REML=FALSE)
 
     } else {
 
       # Train linear model on training set
-      model <-  lm(model, training_set)
+      model <- lm(model, training_set)
 
     }
 
@@ -162,7 +162,7 @@ m4 <- 'score~diagnosis*session+(1|participant)'
 m5 <- 'score~diagnosis*session+age+(1|participant)'
 
 
-## ------------------------------------------------------------------------
+## ----message=FALSE-------------------------------------------------------
 m0
 crossvalidate(train_set, k=4, model=m0, dependent='score', random=TRUE)
 

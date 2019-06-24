@@ -46,8 +46,9 @@ df %>% kable(align = 'c')
 
 
 ## ------------------------------------------------------------------------
-aggregate(df[, 3], list(df$groups), mean) %>% 
-  rename(group = Group.1, mean_age = x) %>%
+df %>% 
+  group_by(groups) %>% 
+  summarize(mean_age = mean(age)) %>% 
   kable(align = 'c')
 
 
@@ -89,7 +90,7 @@ df_grouped %>% kable(align = 'c')
 ## ------------------------------------------------------------------------
 df_means <- df %>%
   group(5, method = 'n_dist') %>%
-  dplyr::summarise(mean_age = mean(age))
+  summarise(mean_age = mean(age))
 
 df_means %>% kable(align = 'c')
 
@@ -146,7 +147,8 @@ df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
                 "diagnosis" = rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3),
                 "score" = sample(c(1:100), 3*6))
 
-df <- df[order(df$participant),] 
+df <- df %>% 
+  arrange(participant)
 
 # Remove index
 rownames(df) <- NULL
@@ -161,7 +163,8 @@ kable(df, align = 'c')
 df_folded <- fold(df, 3, method = 'n_dist')
 
 # Order by folds
-df_folded <- df_folded[order(df_folded$.folds),]
+df_folded <- df_folded %>% 
+  arrange(.folds)
 
 kable(df_folded, align = 'c')
 
@@ -171,20 +174,24 @@ kable(df_folded, align = 'c')
 df_folded <- fold(df, 3, cat_col = 'diagnosis', method = 'n_dist')
 
 # Order by folds
-df_folded <- df_folded[order(df_folded$.folds),] 
+df_folded <- df_folded %>% 
+  arrange(.folds)
 
 kable(df_folded, align = 'c')
 
 
 ## ------------------------------------------------------------------------
-df_folded %>% group_by(.folds) %>% count(diagnosis) %>% kable(align='c')
+df_folded %>% 
+  count(.folds, diagnosis) %>% 
+  kable(align='c')
 
 
 ## ------------------------------------------------------------------------
 df_folded <- fold(df, 3, id_col = 'participant', method = 'n_dist')
 
 # Order by folds
-df_folded <- df_folded[order(df_folded$.folds),] 
+df_folded <- df_folded %>% 
+  arrange(.folds) 
 
 # Remove index (Looks prettier in the table!)
 rownames(df_folded) <- NULL
@@ -193,20 +200,236 @@ kable(df_folded, align = 'c')
 
 
 ## ------------------------------------------------------------------------
-df_folded %>% group_by(.folds) %>% count(participant) %>% kable(align='c')
+df_folded %>% 
+  count(.folds, participant) %>% 
+  kable(align='c')
 
 
 ## ------------------------------------------------------------------------
 df_folded <- fold(df, 3, cat_col = 'diagnosis', id_col = 'participant', method = 'n_dist')
 
 # Order by folds
-df_folded <- df_folded[order(df_folded$.folds),] 
+df_folded <- df_folded %>% 
+  arrange(.folds)
 
 kable(df_folded, align = 'c')
 
 
 ## ------------------------------------------------------------------------
-df_folded %>% group_by(.folds) %>% count(diagnosis, participant) %>% kable(align='c')
+df_folded %>% 
+  count(.folds, diagnosis, participant) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
+                "age" = rep(sample(c(1:100), 6), 3),
+                "diagnosis" = rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3),
+                "score" = sample(c(1:100), 3*6))
+
+df <- df %>% arrange(participant)
+
+# Remove index
+rownames(df) <- NULL
+
+# Add session info
+df$session <- rep(c('1','2', '3'), 6)
+
+kable(df, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned <- partition(df, 0.3, list_out = FALSE)
+
+# Order by partitions
+df_partitioned <- df_partitioned %>% 
+  arrange(.partitions)
+
+# Partition Sizes
+df_partitioned %>% 
+  count(.partitions) %>% 
+  kable(align = 'c')
+
+kable(df_partitioned, align = 'c')
+
+
+
+## ------------------------------------------------------------------------
+df_partitioned <- partition(df, 0.3, cat_col = 'diagnosis', list_out = FALSE)
+
+# Order by partitions
+df_partitioned <- df_partitioned %>% 
+  arrange(.partitions)
+
+kable(df_partitioned, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned %>% 
+  count(.partitions, diagnosis) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned <- partition(df, 0.5, id_col = 'participant', list_out = FALSE)
+
+# Order by partitions
+df_partitioned <- df_partitioned %>% 
+  arrange(.partitions)
+
+kable(df_partitioned, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned %>% 
+  count(.partitions, participant) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned <- partition(df, 0.5, cat_col = 'diagnosis', id_col = 'participant', 
+                            list_out = FALSE)
+
+# Order by folds
+df_partitioned <- df_partitioned %>% 
+  arrange(.partitions)
+
+kable(df_partitioned, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_partitioned %>%
+  count(.partitions, diagnosis, participant) %>% 
+  kable(align='c')
+
+
+## ----echo=FALSE----------------------------------------------------------
+set.seed(2)
+
+## ------------------------------------------------------------------------
+df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
+                "age" = rep(sample(c(1:100), 6), 3),
+                "diagnosis" = rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3),
+                "score" = sample(c(1:100), 3*6))
+
+df <- df %>% 
+  arrange(participant)
+
+# Add session info
+df$session <- rep(c('1','2', '3'), 6)
+
+# Sample dataset to get imbalances
+df <- df %>% 
+  sample_frac(0.7) %>% 
+  arrange(participant)
+
+# Remove index
+rownames(df) <- NULL
+
+# Counts
+df %>% 
+  count(diagnosis, participant) %>% 
+  kable(align = 'c')
+df %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, "min", cat_col = "diagnosis") %>% 
+  arrange(diagnosis, participant)
+
+# Counts
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, "min", cat_col = "diagnosis", id_col = "participant", id_method = "n_rows_c") %>% 
+  arrange(diagnosis, participant)
+
+# Partition Sizes
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_balanced %>% 
+  count(diagnosis, participant) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, "max", cat_col = "diagnosis") %>% 
+  arrange(diagnosis, participant)
+
+# Counts
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, "max", cat_col = "diagnosis", 
+                       id_col = "participant", id_method = "n_rows_c") %>% 
+  arrange(diagnosis, participant)
+
+# Partition Sizes
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_balanced %>% 
+  count(diagnosis, participant) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, 3, cat_col = "diagnosis") %>% 
+  arrange(diagnosis, participant)
+
+# Counts
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+## ------------------------------------------------------------------------
+df_balanced %>% 
+  count(diagnosis, participant) %>% 
+  kable(align='c')
+
+
+## ------------------------------------------------------------------------
+df_balanced <- balance(df, 3, cat_col = "diagnosis", 
+                       id_col = "participant", id_method = "n_rows_c") %>% 
+  arrange(diagnosis, participant)
+
+# Partition Sizes
+df_balanced %>% 
+  count(diagnosis) %>% 
+  kable(align = 'c')
+
+kable(df_balanced, align = 'c')
+
+
+## ------------------------------------------------------------------------
+df_balanced %>% 
+  count(diagnosis, participant) %>% 
+  kable(align='c')
 
 
 ## ------------------------------------------------------------------------
@@ -268,7 +491,7 @@ n_meth_v57n6$forced_equal <- forced_equal$freq
 n_meth_v57n6 <- n_meth_v57n6[ , !duplicated(colnames(n_meth_v57n6))]
 
 
-# gather() dataframe for plotting
+# gather() data frame for plotting
 
 data_plot <- n_meth_v57n6 %>%
   gather(method, group_size,-1)
@@ -283,7 +506,7 @@ v57n6_plot <- ggplot(data_plot, aes(x, group_size))
 
 ## Output
 
-# Dataframe
+# Data frame
 n_meth_v57n6
 
 # Plot
@@ -344,7 +567,7 @@ n_meth_v117n11 <- n_meth_v117n11[ , !duplicated(colnames(n_meth_v117n11))]
 
 
 
-# gather() dataframe for plotting
+# gather() data frame for plotting
 
 data_plot <- n_meth_v117n11 %>%
   gather(method, group_size,-1)
@@ -357,8 +580,8 @@ lower_limit <- min(data_plot$group_size)-1
 
 
 ## Output
-
-# Dataframe
+ 
+# Data frame
 n_meth_v117n11
 
 # Plot

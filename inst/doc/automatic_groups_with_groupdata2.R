@@ -29,7 +29,7 @@ df_observations <- data.frame(
   
 )
 
-# Show the first 20 rows of dataframe
+# Show the first 20 rows of data frame
 df_observations %>% head(20) %>%  kable()
 
 df_ratings <- data.frame(
@@ -83,5 +83,5 @@ df_summarized <- merge(df_merged, avg_errors, by = 'session') %>%
 df_summarized %>% kable()
 
 ## ------------------------------------------------------------------------
-summary(lm(rating~avg_errors, df_summarized))
+cor(df_summarized$rating, df_summarized$avg_errors)
 

@@ -7,12 +7,13 @@
 \alias{split}
 \title{Create groups from your data.}
 \usage{
-group(data, n, method = "n_dist", starts_col = NULL, force_equal = FALSE,
-  allow_zero = FALSE, return_factor = FALSE, descending = FALSE,
-  randomize = FALSE, col_name = ".groups", remove_missing_starts = FALSE)
+group(data, n, method = "n_dist", starts_col = NULL,
+  force_equal = FALSE, allow_zero = FALSE, return_factor = FALSE,
+  descending = FALSE, randomize = FALSE, col_name = ".groups",
+  remove_missing_starts = FALSE)
 }
 \arguments{
-\item{data}{Dataframe or Vector.}
+\item{data}{Data frame or vector.}
 
 \item{n}{\emph{Dependent on method.}
 
@@ -97,14 +98,14 @@ group(data, n, method = "n_dist", starts_col = NULL, force_equal = FALSE,
  \code{n} is the prime number to start at}}
 
 \item{starts_col}{Name of column with values to match in method \code{l_starts}
-when data is a dataframe. Pass 'index' to use row names. (Character)}
+when data is a data frame. Pass \code{'index'} to use row names. (Character)}
 
 \item{force_equal}{Create equal groups by discarding excess data points.
 Implementation varies between methods. (Logical)}
 
-\item{allow_zero}{Whether n can be passed as \code{0}. (Logical)}
+\item{allow_zero}{Whether \code{n} can be passed as \code{0}. (Logical)}
 
-\item{return_factor}{Return only grouping factor (Logical)}
+\item{return_factor}{Return only grouping factor. (Logical)}
 
 \item{descending}{Change direction of method. (Not fully implemented)
 (Logical)}
@@ -119,19 +120,20 @@ For method \code{l_starts} only.
 (Logical)}
 }
 \value{
-Dataframe grouped by new grouping factor
+Data frame grouped by new grouping factor
 }
 \description{
 Divides data into groups by a range of methods.
- Creates a grouping factor with 1s for group 1, 2s for group 2, etc.
- Returns a dataframe grouped by the grouping factor for easy use in dplyr pipelines.
+ Creates a grouping factor with \code{1}s for group 1, \code{2}s for group 2, etc.
+ Returns a data frame grouped by the grouping factor for easy use in
+ \code{\link[magrittr]{\%>\%}} pipelines.
 }
 \examples{
 # Attach packages
 library(groupdata2)
 library(dplyr)
 
-# Create dataframe
+# Create data frame
 df <- data.frame("x"=c(1:12),
  "species" = rep(c('cat','pig', 'human'), 4),
  "age" = sample(c(1:100), 12))
@@ -154,15 +156,20 @@ df_grouped <- group(df,
 
 }
 \seealso{
-Other grouping functions: \code{\link{group_factor}},
+Other grouping functions: \code{\link{fold}},
+  \code{\link{group_factor}}, \code{\link{partition}},
   \code{\link{splt}}
 
 Other staircase tools: \code{\link{\%primes\%}},
   \code{\link{\%staircase\%}}, \code{\link{group_factor}}
 
-Other l_starts tools: \code{\link{find_missing_starts}},
+Other l_starts tools: \code{\link{differs_from_previous}},
+  \code{\link{find_missing_starts}},
   \code{\link{find_starts}}, \code{\link{group_factor}}
 }
 \author{
 Ludvig Renbo Olsen, \email{r-pkgs@ludvigolsen.dk}
 }
+\concept{grouping functions}
+\concept{l_starts tools}
+\concept{staircase tools}

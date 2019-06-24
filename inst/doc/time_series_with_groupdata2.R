@@ -13,7 +13,7 @@ library(knitr) # kable
 ## ------------------------------------------------------------------------
 timeSeriesFrame = data.frame('residents' = austres)
 
-# Show structure of dataframe
+# Show structure of data frame
 str(timeSeriesFrame) 
 
 # Show head of data
@@ -25,7 +25,8 @@ timeSeriesFrame %>% head(12) %>% kable()
 
 ggplot(timeSeriesFrame, aes(seq_along(residents), residents)) +
   geom_point() +
-  labs(x = 'Measurement', y = 'Residents')
+  labs(x = 'Measurement', y = 'Residents') +
+  theme_light()
 
 
 
@@ -46,7 +47,8 @@ ts %>% kable()
 
 ggplot(ts, aes(.groups, mean)) +
   geom_point() +
-  labs(x = 'Groups', y = 'Mean n of residents')
+  labs(x = 'Groups', y = 'Mean n of residents') +
+  theme_light()
 
 
 
@@ -98,7 +100,7 @@ ts %>% head(24) %>% kable()
 ts %>% tail(17) %>% kable()
 
 
-## ------------------------------------------------------------------------
+## ----warning=FALSE-------------------------------------------------------
 ts_means <- ts %>%
   
   # Convert .subgroups to an integer and then to a factor
@@ -120,7 +122,8 @@ ts_means %>% head(9) %>% kable()
 
 ggplot(ts_means, aes(seq_along(mean), mean)) +
   geom_point() +
-  labs(x = 'Subgroup', y = 'Mean n of residents')
+  labs(x = 'Subgroup', y = 'Mean n of residents') +
+  theme_light()
 
 
 
