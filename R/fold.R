@@ -97,7 +97,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 #'  N.B. When used with \code{id_col}, values for each ID are aggregated using
 #'  \code{id_aggregation_fn} before being balanced.
 #'
-#'  N.B. When passing \code{num_col}, the \code{method} parameter is not used.
+#'  N.B. When passing \code{num_col}, the \code{method} parameter is ignored.
 #' @param id_col Name of factor with IDs.
 #'  This will be used to keep all rows that share an ID in the same fold
 #'  (if possible).
@@ -359,7 +359,8 @@ fold <- function(data, k = 5, cat_col = NULL, num_col = NULL,
 
     # Handle existing fold cols as specified
     if (handle_existing_fold_cols == "remove"){
-      data <- data %>% dplyr::select(-dplyr::one_of(existing_fold_colnames))
+      # We need to ungroup the dataset, or it will be automatically included again.
+      data <- data %>% dplyr::ungroup() %>% dplyr::select(-dplyr::one_of(existing_fold_colnames))
       existing_fold_colnames <- character()
       num_existing_fold_colnames <- 0
 

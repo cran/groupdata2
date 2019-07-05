@@ -3,8 +3,10 @@
 
 # groupdata2
 
-R package: Subsetting methods for balanced cross-validation, time series
-windowing, and general grouping and splitting of data.
+R package: Methods for dividing data into groups. Create balanced
+partitions and cross-validation folds. Perform time series windowing and
+general grouping and splitting of data. Balance existing groups with up-
+and downsampling.
 
 By Ludvig R. Olsen,  
 Started in Oct. 2016
@@ -86,10 +88,10 @@ unique fold columns at once, e.g. for repeated cross-validation.
 
 ### balance()
 
-Uses up- or downsampling to fix the group sizes to the min, max, mean,
-or median group size or to a specific number of rows. Balancing can also
-happen on the ID level, e.g. to ensure the same number of IDs in each
-category.
+Uses up- and/or downsampling to fix the group sizes to the min, max,
+mean, or median group size or to a specific number of rows. Balancing
+can also happen on the ID level, e.g. to ensure the same number of IDs
+in each category.
 
 ## Grouping Methods
 
@@ -234,18 +236,18 @@ group(df, n = 5, method = 'n_dist') %>%
 
 |  x | species | age | .groups |
 | -: | :------ | --: | :------ |
-|  1 | cat     |  27 | 1       |
-|  2 | pig     |  94 | 1       |
-|  3 | human   |  95 | 2       |
-|  4 | cat     |  93 | 2       |
-|  5 | pig     |  71 | 3       |
-|  6 | human   |  22 | 3       |
-|  7 | cat     |  21 | 3       |
-|  8 | pig     |  14 | 4       |
-|  9 | human   |  74 | 4       |
-| 10 | cat     |  12 | 5       |
-| 11 | pig     |  40 | 5       |
-| 12 | human   |  80 | 5       |
+|  1 | cat     |  68 | 1       |
+|  2 | pig     |  39 | 1       |
+|  3 | human   |   1 | 2       |
+|  4 | cat     |  34 | 2       |
+|  5 | pig     |  87 | 3       |
+|  6 | human   |  43 | 3       |
+|  7 | cat     |  14 | 3       |
+|  8 | pig     |  82 | 4       |
+|  9 | human   |  59 | 4       |
+| 10 | cat     |  51 | 5       |
+| 11 | pig     |  85 | 5       |
+| 12 | human   |  21 | 5       |
 
 ``` r
 
@@ -258,11 +260,11 @@ df %>%
 
 | .groups | mean\_age |
 | :------ | --------: |
-| 1       |      60.5 |
-| 2       |      94.0 |
-| 3       |      38.0 |
-| 4       |      44.0 |
-| 5       |      44.0 |
+| 1       |  53.50000 |
+| 2       |  17.50000 |
+| 3       |  48.00000 |
+| 4       |  70.50000 |
+| 5       |  52.33333 |
 
 ``` r
 
@@ -279,18 +281,18 @@ df %>%
 
 |  x | species | age | .groups |
 | -: | :------ | --: | :------ |
-|  1 | cat     |  27 | 1       |
-|  2 | pig     |  94 | 1       |
-|  3 | human   |  95 | 1       |
-|  4 | cat     |  93 | 1       |
-|  5 | pig     |  71 | 2       |
-|  6 | human   |  22 | 2       |
-|  7 | cat     |  21 | 3       |
-|  8 | pig     |  14 | 3       |
-|  9 | human   |  74 | 3       |
-| 10 | cat     |  12 | 3       |
-| 11 | pig     |  40 | 3       |
-| 12 | human   |  80 | 3       |
+|  1 | cat     |  68 | 1       |
+|  2 | pig     |  39 | 1       |
+|  3 | human   |   1 | 1       |
+|  4 | cat     |  34 | 1       |
+|  5 | pig     |  87 | 2       |
+|  6 | human   |  43 | 2       |
+|  7 | cat     |  14 | 3       |
+|  8 | pig     |  82 | 3       |
+|  9 | human   |  59 | 3       |
+| 10 | cat     |  51 | 3       |
+| 11 | pig     |  85 | 3       |
+| 12 | human   |  21 | 3       |
 
 ### fold()
 
@@ -379,9 +381,10 @@ df_folded %>%
 | 2      |      28.5 | 3.834058 |
 | 3      |      24.0 | 3.286335 |
 
-**Notice** that the we now have the opportunity to include the *session*
-variable and/or use *participant* as a random effect in our model when
-doing cross-validation, as any participant will only appear in one fold.
+**Notice**, that the we now have the opportunity to include the
+*session* variable and/or use *participant* as a random effect in our
+model when doing cross-validation, as any participant will only appear
+in one fold.
 
 We also have a balance in the representation of each diagnosis, which
 could give us better, more consistent results.

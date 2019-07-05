@@ -1,7 +1,13 @@
-# groupdata2 1.1.0.0
+# groupdata2 1.1.1  
+
+* Bug fix: fold() ungroups dataset before removing existing fold columns.  
+
+* Unit tests are skipped on R versions lower than 3.6.  
+
+# groupdata2 1.1.0  
 
 * New main function: balance() used for up- and downsampling of data to balance sample size within categories and IDs. 
-Thanks for the request from @jjesusfilho (#3).
+Thanks for the request from @jjesusfilho (#3).  
 
 * New wrapper function: upsample() wraps balance() with size="max".  
 
