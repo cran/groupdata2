@@ -398,6 +398,24 @@ replace_col_name <- function(data, old_name, new_name){
   #
   # Replaces name of column in data frame
   #
+
+  # Check names
+  if (!is.character(old_name) || !is.character(new_name)){
+    stop("'old_name' and 'new_name' must both be of type character.")
+  }
+  if (length(old_name) != 1 || length(old_name) != 1){
+    stop("'old_name' and 'new_name' must both have length 1.")
+  }
+
+  if (old_name == new_name){
+    message("'old_name' and 'new_name' were identical.")
+    return(data)
+  }
+  # If new_name is already a column in data
+  # remove it, so we don't have duplicate column names
+  if (new_name %in% colnames(data)){
+    data[[new_name]] <- NULL
+  }
   colnames(data)[names(data) == old_name] <- new_name
   return(data)
 
@@ -478,7 +496,7 @@ extract_start_values_ <- function(nested_list){
 
 assign_starts_col <- function(data, starts_col) {
 
-  if(is.data.frame(data) && !is.null(starts_col)){
+  if (is.data.frame(data) && !is.null(starts_col)){
 
     # If starts_col is 'index', create column with row names for matching values
     if (starts_col == 'index'){
@@ -668,20 +686,22 @@ get_target_size <- function(data, size, cat_col){
   to_size
 }
 
-add_rows_with_sampling <- function(data, to_size){
+add_rows_with_sampling <- function(data, to_size, new_rows_col_name){
   extra_rows <- data %>%
-    dplyr::sample_n(size=to_size-nrow(.), replace = TRUE) %>%
-    dplyr::mutate(.TempNewRow = 1)
+    dplyr::sample_n(size=to_size-nrow(.), replace = TRUE)
+  extra_rows[[new_rows_col_name]] <- 1
   data %>%
     dplyr::bind_rows(extra_rows)
 }
 
 select_rows_from_ids <- function(data, balanced_ids, cat_col, id_col,
-                                 mark_new_rows, join_fn=dplyr::inner_join){
+                                 mark_new_rows, join_fn=dplyr::inner_join,
+                                 new_rows_col_name, ids_new_rows_col_name){
   # select the chosen ids in data and return
   balanced_data <- join_fn(data, balanced_ids,
                            by = c(cat_col, id_col)) %>%
-    update_TempNewRow_from_ids_method()
+    update_TempNewRow_from_ids_method(new_rows_col_name=new_rows_col_name,
+                                      ids_new_rows_col_name=ids_new_rows_col_name)
 
   # if (!isTRUE(mark_new_rows)) {
   #   balanced_data$.TempNewRow <- NULL
@@ -690,13 +710,12 @@ select_rows_from_ids <- function(data, balanced_ids, cat_col, id_col,
 }
 
 # TODO Add description of this function.
-# I've forgotten what it's for and it's very specific ;)
-# (used in select_rows_from_ids above, which is used in sampling_methods.R)
 # TODO use create_tmp_var in sampling methods to create unique tmp var instead
-update_TempNewRow_from_ids_method <- function(data){
-  data %>%
-    dplyr::mutate(.TempNewRow = dplyr::if_else(.data$.TempNewRow + .data$.ids_balanced_new_rows > 0, 1, 0)) %>%
-    dplyr::select(-c(.data$.ids_balanced_new_rows))
+update_TempNewRow_from_ids_method <- function(data, new_rows_col_name, ids_new_rows_col_name){
+  data[[new_rows_col_name]] <- dplyr::if_else(
+    data[[new_rows_col_name]] + data[[ids_new_rows_col_name]] > 0, 1, 0)
+  data[[ids_new_rows_col_name]] <- NULL
+  data
 }
 
 ## Finding and removing identical columns
@@ -751,19 +770,7 @@ find_identical_cols <- function(data, cols=NULL, exclude_comparisons=NULL,
     col_1 <- data[[column_combinations[r, 1]]]
     col_2 <- data[[column_combinations[r, 2]]]
     if (isTRUE(group_wise)){
-      d <- tibble::tibble("col_1" = as.character(col_1),
-                          "col_2" = as.character(col_2)) %>%
-        dplyr::arrange(.data$col_1) %>%
-        group(n = "auto", method = "l_starts", col_name = ".groups_1",
-              starts_col = "col_2") %>% dplyr::ungroup()
-      if (nlevels(d[[".groups_1"]]) != length(unique(d[["col_1"]]))){
-        return(FALSE)
-      } else {
-        d <- d %>%
-          group(n = "auto", method = "l_starts", col_name = ".groups_2",
-                starts_col = "col_1") %>% dplyr::ungroup()
-      return(isTRUE(dplyr::all_equal(d[[".groups_1"]], d[[".groups_2"]], ignore_row_order = FALSE)))
-      }
+      return(all_groups_identical(col_1, col_2))
     } else {
       return(isTRUE(dplyr::all_equal(col_1, col_2, ignore_row_order = FALSE)))
     }
@@ -879,9 +886,11 @@ create_rank_summary <- function(data, levels_col, num_col){
 
 
 
-# Extracts the major and minor version numbers. E.g. 3.5.
+# Extracts the major and minor version numbers.
 check_R_version <- function(){
-  as.numeric(substring(getRversion(), 1, 3))
+  major <- as.integer(R.Version()$major)
+  minor <- as.numeric(strsplit(R.Version()$minor, ".", fixed = TRUE)[[1]][[1]])
+  list("major"=major, "minor"=minor)
 }
 
 # Skips testthat test, if the R version is below 3.6.0
@@ -890,8 +899,21 @@ check_R_version <- function(){
 # It is possible to fix this by using the old generator for
 # unit tests, but that would take a long time to convert,
 # and most likely the code works the same on v3.5
-skip_test_if_old_R_version <- function(min_R_version = 3.6){
-  if(check_R_version() < min_R_version){
+skip_test_if_old_R_version <- function(min_R_version = "3.6"){
+  if(check_R_version()[["minor"]] < strsplit(min_R_version, ".", fixed = TRUE)[[1]][[2]]){
     testthat::skip(message = paste0("Skipping test as R version is < ", min_R_version, "."))
   }
+}
+
+# Wrapper for setting seed with the sample generator for R versions <3.6
+# Used for unittests
+# Partly contributed by R. Mark Sharp
+set_seed_for_R_compatibility <- function(seed = 1) {
+  version <- check_R_version()
+  if ((version[["major"]] == 3 && version[["minor"]] >= 6) || version[["major"]] > 3) {
+    args <- list(seed, sample.kind = "Rounding")
+  } else {
+    args <- list(seed)
+  }
+  suppressWarnings(do.call(set.seed, args))
 }

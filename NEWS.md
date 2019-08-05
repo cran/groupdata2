@@ -1,8 +1,19 @@
+# groupdata2 1.1.2
+
+* Adds all_groups_identical() for testing if two grouping factors contain the same groups,
+looking only at the group members, allowing for different group names / identifiers.
+
+* Unit tests were made compatible with R versions lower than 3.6.
+
+* Adds badges to README, including travis-ci status, AppVeyor status, 
+Codecov, min. required R version, CRAN version and monthly CRAN downloads. Note: Zenodo badge will be added post release.
+
 # groupdata2 1.1.1  
 
 * Bug fix: fold() ungroups dataset before removing existing fold columns.  
 
 * Unit tests are skipped on R versions lower than 3.6.  
+
 
 # groupdata2 1.1.0  
 

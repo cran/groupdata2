@@ -4,7 +4,7 @@ context("group_factor()")
 
 test_that("group sizes works with group_factor with method greedy", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_counts <- function(v, n){
 
@@ -41,7 +41,7 @@ test_that("group sizes works with group_factor with method greedy", {
 
 test_that("group sizes works with group_factor with method n_dist", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_counts <- function(v, n){
 
@@ -78,7 +78,7 @@ test_that("group sizes works with group_factor with method n_dist", {
 
 test_that("group sizes works with group_factor with method n_fill", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_counts <- function(v, n){
 
@@ -117,7 +117,7 @@ test_that("group sizes works with group_factor with method n_fill", {
 
 test_that("group sizes works with group_factor with method n_rand", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   count_groups <- function(v, n){
 
@@ -167,7 +167,7 @@ test_that("group sizes works with group_factor with method n_rand", {
 
 test_that("group sizes works with group_factor with method staircase", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_counts <- function(v, n){
 
@@ -235,27 +235,27 @@ test_that("group sizes works with group_factor with method staircase", {
 
 test_that("group sizes works with group_factor with method primes", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
-  group_counts <- function(v, n){
+  group_counts <- function(v, n, force_equal=FALSE){
 
-    gf <- group_factor(v, n, method = 'primes')
+    gf <- group_factor(v, n, method = 'primes', force_equal=force_equal)
     counts <- plyr::count(gf)
     return(counts$freq)
 
   }
 
-  count_groups <- function(v, n){
+  count_groups <- function(v, n, force_equal=FALSE){
 
-    gf <- group_factor(v, n, method = 'primes')
+    gf <- group_factor(v, n, method = 'primes', force_equal=force_equal)
     counts <- plyr::count(gf)
     return(length(counts$freq))
 
   }
 
-  group_counts_sum <- function(v, n){
+  group_counts_sum <- function(v, n, force_equal=FALSE){
 
-    gf <- group_factor(v, n, method = 'primes')
+    gf <- group_factor(v, n, method = 'primes', force_equal=force_equal)
     counts <- plyr::count(gf)
     return(sum(counts$freq))
 
@@ -288,12 +288,25 @@ test_that("group sizes works with group_factor with method primes", {
   expect_equal(group_counts(v, 2), c(2,1))
   expect_equal(group_counts(v, 0.67), c(2,1))
 
+  # force_equal
+
+  v <- c(1:83)
+
+  # Note: 83 %primes% 11 == 0, so tests force equal when no excessive elements to cut
+  expect_equal(group_counts(v, 11, force_equal = TRUE),
+               group_counts(v, 11, force_equal = FALSE))
+
+  # When excessive elements
+  expect_equal(group_counts(v, 17, force_equal = FALSE), c(17,19,23,24))
+  expect_equal(group_counts(v, 17, force_equal = TRUE), c(17,19,23))
+
+
 
 })
 
 test_that("group sizes works with group_factor with method l_sizes", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_f <- function(v, n){
 
@@ -325,7 +338,7 @@ test_that("group sizes works with group_factor with method l_sizes", {
 
 test_that("group sizes works with group_factor with method l_starts", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_f <- function(v, n){
 
@@ -400,7 +413,7 @@ test_that("group sizes works with group_factor with method l_starts", {
 
 test_that("l_starts raises error correctly when value is not found", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   expect_error(group(c(1:5), c(1,3,6), method = 'l_starts'),
                "Start value \"6\" not found in vector", fixed = TRUE)
@@ -425,7 +438,7 @@ test_that("l_starts raises error correctly when value is not found", {
 
 test_that("force_equal works with group_factor with all methods",{
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   group_counts <- function(v, n, method){
 
@@ -508,7 +521,7 @@ test_that("force_equal works with group_factor with all methods",{
 
 test_that("allow_zero works with group_factor", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   v = c(1:3)
 
@@ -520,7 +533,7 @@ test_that("allow_zero works with group_factor", {
 
 test_that("l_sizes works with no groups",{
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   expect_equal(group_factor(c(1:3), 0.2, method = 'l_sizes'), factor(c(2,2,2)))
   expect_warning(group_factor(c(1:3), 0.2, method = 'l_sizes', force_equal = TRUE), "No groups. Returned NA.", fixed = TRUE)

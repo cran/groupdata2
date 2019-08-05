@@ -3,31 +3,46 @@
 
 # groupdata2
 
+**Author:** [Ludvig R. Olsen](http://ludvigolsen.dk/) (
+<r-pkgs@ludvigolsen.dk> ) <br/> **License:**
+[MIT](https://opensource.org/licenses/MIT) <br/> **Started:** October
+2016
+
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/groupdata2)](https://cran.r-project.org/package=groupdata2)
+[![metacran
+downloads](https://cranlogs.r-pkg.org/badges/groupdata2)](https://cran.r-project.org/package=groupdata2)
+[![minimal R
+version](https://img.shields.io/badge/R%3E%3D-3.5-6666ff.svg)](https://cran.r-project.org/)
+[![Codecov test
+coverage](https://codecov.io/gh/ludvigolsen/groupdata2/branch/master/graph/badge.svg)](https://codecov.io/gh/ludvigolsen/groupdata2?branch=master)
+[![Travis build
+status](https://travis-ci.org/LudvigOlsen/groupdata2.svg?branch=master)](https://travis-ci.org/LudvigOlsen/groupdata2)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/LudvigOlsen/groupdata2?branch=master&svg=true)](https://ci.appveyor.com/project/LudvigOlsen/groupdata2)
+
+## Overview
+
 R package: Methods for dividing data into groups. Create balanced
 partitions and cross-validation folds. Perform time series windowing and
 general grouping and splitting of data. Balance existing groups with up-
 and downsampling.
 
-By Ludvig R. Olsen,  
-Started in Oct. 2016
-
-Contact at: <r-pkgs@ludvigolsen.dk>
-
 Main functions:
 
-  - group\_factor  
-  - group  
-  - splt  
-  - partition  
-  - fold  
-  - balance
+  - `group_factor()`  
+  - `group()`  
+  - `splt()`  
+  - `partition()`  
+  - `fold()`  
+  - `balance()`
 
 Other tools:
 
-  - find\_starts
-  - differs\_from\_previous
-  - %staircase%  
-  - %primes%
+  - `find_starts()`
+  - `differs_from_previous()`
+  - `all_groups_identical()`
+  - `%staircase%`  
+  - `%primes%`
 
 ## Installation
 
@@ -50,43 +65,43 @@ descriptions.
 
 ## Functions
 
-### group\_factor()
+### `group_factor()`
 
 Returns a factor with group numbers, e.g. (1,1,1,2,2,2,3,3,3).
 
 This can be used to subset, aggregate, group\_by, etc.
 
-Create equally sized groups by setting force\_equal = TRUE
+Create equally sized groups by setting `force_equal = TRUE`
 
-Randomize grouping factor by setting randomize = TRUE
+Randomize grouping factor by setting `randomize = TRUE`
 
-### group()
+### `group()`
 
 Returns the given data as a data frame with added grouping factor made
-with group\_factor(). The data frame is grouped by the grouping factor
+with `group_factor()`. The data frame is grouped by the grouping factor
 for easy use with dplyr pipelines.
 
-### splt()
+### `splt()`
 
-Creates the specified groups with group\_factor() and splits the given
-data by the grouping factor with base::split. Returns the splits in a
+Creates the specified groups with `group_factor()` and splits the given
+data by the grouping factor with `base::split`. Returns the splits in a
 list.
 
-### partition()
+### `partition()`
 
 Creates (optionally) balanced partitions (e.g. training/test sets).
 Balance partitions on one categorical variable and/or one numerical
 variable. Make sure that all datapoints sharing an ID is in the same
 partition.
 
-### fold()
+### `fold()`
 
 Creates (optionally) balanced folds for use in cross-validation. Balance
 folds on one categorical variable and/or one numerical variable. Ensure
 that all datapoints sharing an ID is in the same fold. Create multiple
 unique fold columns at once, e.g. for repeated cross-validation.
 
-### balance()
+### `balance()`
 
 Uses up- and/or downsampling to fix the group sizes to the min, max,
 mean, or median group size or to a specific number of rows. Balancing
@@ -226,7 +241,7 @@ df <- data.frame("x"=c(1:12),
   "age" = sample(c(1:100), 12))
 ```
 
-### group()
+### `group()`
 
 ``` r
 # Using group()
@@ -294,7 +309,7 @@ df %>%
 | 11 | pig     |  85 | 3       |
 | 12 | human   |  21 | 3       |
 
-### fold()
+### `fold()`
 
 ``` r
 # Create data frame
@@ -317,6 +332,8 @@ set.seed(1)
 df_folded <- fold(df, k = 3, cat_col = 'diagnosis',
                   num_col = "age", 
                   id_col = 'participant')
+#> 'old_name' and 'new_name' were identical.
+#> 'old_name' and 'new_name' were identical.
 
 # Show df_folded ordered by folds
 df_folded %>% 
@@ -389,7 +406,7 @@ in one fold.
 We also have a balance in the representation of each diagnosis, which
 could give us better, more consistent results.
 
-### balance()
+### `balance()`
 
 ``` r
 # Lets first unbalance the dataset by removing some rows

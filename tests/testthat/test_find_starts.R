@@ -3,7 +3,7 @@ context("find_starts()")
 
 test_that("find_starts() find the right starts", {
 
-  skip_test_if_old_R_version()
+  set_seed_for_R_compatibility(1)
 
   v <- c('a','a','b','c','c','d','d')
   df <- data.frame(v = v,
@@ -33,6 +33,10 @@ test_that("find_starts() find the right starts", {
   expect_warning(expect_equal(check_find_starts_df('v3', return_index = TRUE),
                               c(1,4,7)),
                  "col is factor. Using as character.", fixed = TRUE)
+
+  expect_error(find_starts(df),
+               "col must be specified when data is data frame",
+               fixed = TRUE)
 
   expect_error(find_starts(df),
                "col must be specified when data is data frame",
