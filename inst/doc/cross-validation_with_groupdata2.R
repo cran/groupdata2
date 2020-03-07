@@ -1,4 +1,4 @@
-## ----include=FALSE-------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
 
-## ----warning=FALSE,message=FALSE-----------------------------------------
+## ----warning=FALSE,message=FALSE----------------------------------------------
 # Attach some packages
 library(groupdata2)
 library(dplyr)
@@ -26,8 +26,8 @@ df <- data.frame("participant" = factor(as.integer(
                                         rep(c('1','2', '3', '4', '5', 
                                         '6', '7', '8', '9', '10'), 3))),
                 "age" = rep(c(20,23,27,21,32,31,43,21,34,32), 3),
-                "diagnosis" = rep(c('a', 'b', 'a', 'b', 'b', 
-                                    'a', 'a', 'a', 'b', 'b'), 3),
+                "diagnosis" = factor(rep(c('a', 'b', 'a', 'b', 'b', 
+                                           'a', 'a', 'a', 'b', 'b'), 3)),
                 "score" = c(10,24,15,35,24,14,11,16,33,29,  # for 1st session
                             24,40,30,50,54,25,35,32,53,55,  # for 2nd session
                             45,67,40,78,62,30,41,44,66,81)) # for 3rd session
@@ -45,7 +45,7 @@ df$session <- as.integer(rep(c('1','2', '3'), 10))
 kable(df, align = 'c')
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 set.seed(1) # For reproducibility
 
@@ -55,7 +55,7 @@ partition(df, p = 0.2, id_col = "participant") %>%
   kable()  # Pretty tables :) 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 
 set.seed(1) # For reproducibility
 
@@ -69,17 +69,17 @@ train_set <- parts[[2]]
 test_set %>% kable()
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 train_set %>% 
   count(diagnosis) %>% 
   kable(align='c')
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 train_set %>% 
   count(participant) %>% 
   kable(align='c')
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(1) # For reproducibility
 
 train_set <- fold(train_set, k = 4, cat_col = 'diagnosis', id_col = 'participant')
@@ -89,12 +89,12 @@ train_set <- train_set %>% arrange(.folds)
 
 train_set %>% kable()
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 train_set %>% 
   count(participant, diagnosis) %>% 
   kable(align='c')
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 crossvalidate <- function(data, k, model, dependent, random = FALSE){
   # 'data' is the training set with the ".folds" column
   # 'k' is the number of folds we have
@@ -154,12 +154,12 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
 }
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 lm(score~diagnosis, df) %>%
   summary() %>%
   tidy()
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 m0 <- 'score~1+(1|participant)'
 m1 <- 'score~diagnosis+(1|participant)'
 m2 <- 'score~diagnosis+age+(1|participant)'
@@ -168,7 +168,7 @@ m4 <- 'score~diagnosis*session+(1|participant)'
 m5 <- 'score~diagnosis*session+age+(1|participant)'
 
 
-## ----message=FALSE-------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 m0
 crossvalidate(train_set, k=4, model=m0, dependent='score', random=TRUE)
 
@@ -188,7 +188,7 @@ m5
 crossvalidate(train_set, k=4, model=m5, dependent='score', random=TRUE)
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Creating the model for the full training set
 model_m4 <- lmer(m4, train_set, REML = FALSE)
 
@@ -199,7 +199,7 @@ predicted <- predict(model_m4, test_set, allow.new.levels=TRUE)
 RMSE <- rmse(predicted, test_set[['score']])
 RMSE
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 model_m4 %>%
   summary()
 

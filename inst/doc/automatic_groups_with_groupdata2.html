@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2019-08-05" />
+<meta name="date" content="2020-03-07" />
 
 <title>Automatic groups with groupdata2</title>
 
@@ -128,9 +127,6 @@ padding-right: 2em;
 font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 font-size: 14px;
 line-height: 1.35;
-}
-#header {
-text-align: center;
 }
 #TOC {
 clear: both;
@@ -299,7 +295,8 @@ code > span.st { color: #d14; }
 code > span.co { color: #888888; font-style: italic; } 
 code > span.ot { color: #007020; } 
 code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
 <style type="text/css">h1 {
 font-size:190%;
@@ -332,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Automatic groups with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2019-08-05</h4>
+<h4 class="date">2020-03-07</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -371,25 +368,23 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 <p>3 participants were asked to solve a task. They had to take turns but could go for multiple runs of the task before taking a break and letting the next participant take over. They had 2 turns each. Let’s call each turn a session, i.e. there was 6 sessions. A team of experts would rate how well the participant did throughout the entire session, meaning that if the participant had some bad runs, they would have to make a choice whether to save energy for the other session or whether to try and correct the rating of the current session. For each run of the task, we recorded how many errors the participant made.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">df_observations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="st">&quot;run&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">             <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">  <span class="st">&quot;errors&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">               <span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">               <span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">               <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">  </a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">)</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co"># Show the first 20 rows of data frame</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">df_observations <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="st">&quot;run&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">             <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">  <span class="st">&quot;errors&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">               <span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">               <span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">               <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co"># Show the first 20 rows of data frame</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">df_observations <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -503,13 +498,11 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </table>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">df_ratings &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="st">&quot;session&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="st">&quot;rating&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">df_ratings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="st">&quot;session&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="st">&quot;rating&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">df_ratings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">

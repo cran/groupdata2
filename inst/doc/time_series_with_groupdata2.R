@@ -1,4 +1,4 @@
-## ----include=FALSE-------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -9,13 +9,13 @@ knitr::opts_chunk$set(
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
 
-## ----warning=FALSE,message=FALSE-----------------------------------------
+## ----warning=FALSE,message=FALSE----------------------------------------------
 library(groupdata2)
 library(dplyr) # %>%
 library(ggplot2)
 library(knitr) # kable
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 timeSeriesFrame = data.frame('residents' = austres)
 
 # Show structure of data frame
@@ -25,7 +25,7 @@ str(timeSeriesFrame)
 timeSeriesFrame %>% head(12) %>% kable()
 
 
-## ----echo=FALSE, message=FALSE-------------------------------------------
+## ----echo=FALSE, message=FALSE------------------------------------------------
 # Plot of time series
 
 ggplot(timeSeriesFrame, aes(seq_along(residents), residents)) +
@@ -35,7 +35,7 @@ ggplot(timeSeriesFrame, aes(seq_along(residents), residents)) +
 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ts = timeSeriesFrame %>%
   
   # Group data
@@ -47,7 +47,7 @@ ts = timeSeriesFrame %>%
 # Show new data
 ts %>% kable() 
 
-## ----echo=FALSE, message=FALSE-------------------------------------------
+## ----echo=FALSE, message=FALSE------------------------------------------------
 # Plot of time series
 
 ggplot(ts, aes(.groups, mean)) +
@@ -57,7 +57,7 @@ ggplot(ts, aes(.groups, mean)) +
 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ts = timeSeriesFrame %>%
   
   # Group data
@@ -70,7 +70,7 @@ ts = timeSeriesFrame %>%
 ts %>% kable() 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 main_group_size = 12
 
 # Loop through a list ranging from 1-30
@@ -87,7 +87,7 @@ for (step_size in c(1:30)){
 }
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 ts <- timeSeriesFrame %>%
   
   # Group data
@@ -100,12 +100,12 @@ ts <- timeSeriesFrame %>%
 ts %>% head(24) %>% kable() 
 
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Show tail of new data
 ts %>% tail(17) %>% kable()
 
 
-## ----warning=FALSE-------------------------------------------------------
+## ----warning=FALSE------------------------------------------------------------
 ts_means <- ts %>%
   
   # Convert .subgroups to an integer and then to a factor
@@ -122,7 +122,7 @@ ts_means <- ts %>%
 # Show head of new data
 ts_means %>% head(9) %>% kable() 
 
-## ----echo=FALSE, message=FALSE-------------------------------------------
+## ----echo=FALSE, message=FALSE------------------------------------------------
 # Plot of time series
 
 ggplot(ts_means, aes(seq_along(mean), mean)) +
