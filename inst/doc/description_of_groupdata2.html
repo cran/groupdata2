@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-03-07" />
+<meta name="date" content="2020-06-06" />
 
 <title>Description of groupdata2</title>
 
@@ -329,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Description of groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-03-07</h4>
+<h4 class="date">2020-06-06</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>groupdata2 is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.<br />
@@ -1228,7 +1228,8 @@ See the necessary attached packages for running the examples under <a href="#att
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(groups) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1496,8 +1497,9 @@ See the necessary attached packages for running the examples under <a href="#att
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">df_means &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">group</span>(<span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age))</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">df_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">df_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">

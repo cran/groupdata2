@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-03-07" />
+<meta name="date" content="2020-06-06" />
 
 <title>Time series with groupdata2</title>
 
@@ -329,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Time series with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-03-07</h4>
+<h4 class="date">2020-06-06</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -439,9 +439,10 @@ When using the method ‘greedy’, we specify the desired group size. Every gro
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="co"># Find means of each group</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(residents))</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># Show new data</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># Show new data</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -497,9 +498,10 @@ A visualization of the data.</p>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="co"># Find range of each group</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">range =</span> <span class="kw">diff</span>(<span class="kw">range</span>(residents)))</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># Show new data</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># Show new data</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -829,9 +831,10 @@ Now that we are at it, we might as well find the ranges for each subgroup as wel
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="co"># Find the mean and range of each subgroup</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(residents),</a>
 <a class="sourceLine" id="cb8-12" data-line-number="12">                   <span class="dt">range =</span> <span class="kw">diff</span>(<span class="kw">range</span>(residents)))</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co"># Show head of new data</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15">ts_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; `summarise()` regrouping output by '.groups' (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co"># Show head of new data</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">ts_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
 <table>
 <thead>
 <tr class="header">

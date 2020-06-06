@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-03-07" />
+<meta name="date" content="2020-06-06" />
 
 <title>Automatic groups with groupdata2</title>
 
@@ -329,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Automatic groups with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-03-07</h4>
+<h4 class="date">2020-06-06</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -1063,8 +1063,9 @@ If you just want the group starts, you can use the function <strong>find_starts<
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">avg_errors &lt;-<span class="st"> </span>df_merged <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(session) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="st">&quot;avg_errors&quot;</span> =<span class="st"> </span><span class="kw">mean</span>(errors))</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">avg_errors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">avg_errors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
