@@ -91,27 +91,18 @@ for (step_size in c(1:30)){
 ts <- timeSeriesFrame %>%
   
   # Group data
-  group(n = 12, method='greedy') %>%
+  group(n = 12, method = 'greedy') %>% 
   
   # Create subgroups
-  do(group(., n = 2, method='staircase', col_name = '.subgroups'))
+  group(n = 2, method = 'staircase', col_name = '.subgroups')
 
 # Show head of new data
 ts %>% head(24) %>% kable() 
 
 
-## -----------------------------------------------------------------------------
-# Show tail of new data
-ts %>% tail(17) %>% kable()
-
-
 ## ----warning=FALSE------------------------------------------------------------
 ts_means <- ts %>%
-  
-  # Convert .subgroups to an integer and then to a factor
-  mutate(.subgroups = as.integer(.subgroups),
-         .subgroups = as.factor(.subgroups)) %>%
-  
+
   # Group by first .groups, then .subgroups
   group_by(.groups, .subgroups) %>%
   

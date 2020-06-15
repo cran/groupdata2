@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-06-06" />
+<meta name="date" content="2020-06-15" />
 
 <title>Cross-validation with groupdata2</title>
 
@@ -329,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Cross-validation with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-06-06</h4>
+<h4 class="date">2020-06-15</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -1224,13 +1224,12 @@ More specifically (behind the scenes), it first subsets the full dataset by each
 <h2>Linear regression models</h2>
 <p>We could have a hypothesis that people with the diagnosis ‘b’ tend to be better at the experiment. This could be tested by a simple linear model.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">lm</span>(score<span class="op">~</span>diagnosis, df) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">summary</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">tidy</span>()</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;   term        estimate std.error statistic     p.value</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; 1 (Intercept)     27.5      4.07      6.74 0.000000253</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; 2 diagnosisb      22.6      5.76      3.92 0.000515</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>()</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;   term        estimate std.error statistic     p.value</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; 1 (Intercept)     27.5      4.07      6.74 0.000000253</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; 2 diagnosisb      22.6      5.76      3.92 0.000515</span></a></code></pre></div>
 <p>The linear model supports the hypothesis, as the average score of participants with diagnosis ‘b’ is larger than that of participants with diagnosis ‘a’, and as this difference is statistically significant, we can reasonably reject the null-hypothesis that there is no difference between the two diagnoses.</p>
 <p>To improve our model, we might want to include the information we have about <em>age</em> and <em>sessions</em>. Perhaps, the older participants do better than the younger? And perhaps, participants with the diagnosis ‘b’ are better at learning over time (session)? By including such information in our model, we might be better at predicting the score. We could also use <em>participant</em> as a random effect, to factor out the personal differences.<br />
 Let’s list a bunch of possible model formulas that we can then compare with cross-validation. The cross-validation function needs the model to be passed in the format below (a string). Instead of looking at summaries for each model, we will find the best model with cross-validation and only look at the summary for that one. Notice that when we want to compare models, we want to keep the same random effects for all the models, so we are only comparing the combination of fixed effects.</p>

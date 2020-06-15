@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-06-06" />
+<meta name="date" content="2020-06-15" />
 
 <title>Time series with groupdata2</title>
 
@@ -329,7 +329,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Time series with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-06-06</h4>
+<h4 class="date">2020-06-15</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -570,18 +570,19 @@ By creating subgroups for every greedy group, the group size will ‘start over�
 <a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; [1] 12</span></a></code></pre></div>
 <p>So our step size could be 2, 4 or 12. We pick a step size of 2, because it will yield the most subgroups for the example.</p>
 <p>Now we will first make the greedy groups like before, then we will create subgroups with the staircase method.<br />
-In order not to overwrite the ‘.groups’ column from the first use of <strong>group()</strong>, we will use the <strong>col_name</strong> argument in <strong>group()</strong>.<br />
-We will also need to use dplyr’s <strong>do()</strong> when using <strong>group()</strong> on every greedy group inside the pipeline.</p>
+In order not to overwrite the ‘.groups’ column from the first use of <strong>group()</strong>, we will use the <strong>col_name</strong> argument in <strong>group()</strong>. As <strong>group()</strong> groups the data frame by the generated grouping factor (what a sentence!), a second call to it will create subgroups within the initial groups. Note that versions previous to <code>v1.3.0</code> did not detect these groupings, why you had to run the second <strong>group()</strong> call inside dplyr’s <strong>do()</strong>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">ts &lt;-<span class="st"> </span>timeSeriesFrame <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="co"># Group data</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">group</span>(<span class="dt">n =</span> <span class="dv">12</span>, <span class="dt">method=</span><span class="st">'greedy'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">group</span>(<span class="dt">n =</span> <span class="dv">12</span>, <span class="dt">method =</span> <span class="st">'greedy'</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="co"># Create subgroups</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">do</span>(<span class="kw">group</span>(., <span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">method=</span><span class="st">'staircase'</span>, <span class="dt">col_name =</span> <span class="st">'.subgroups'</span>))</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co"># Show head of new data</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">24</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">group</span>(<span class="dt">n =</span> <span class="dv">2</span>, <span class="dt">method =</span> <span class="st">'staircase'</span>, <span class="dt">col_name =</span> <span class="st">'.subgroups'</span>)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 'group()' now detects grouped data.frames and is applied group-wise (since v1.3.0). If this is unwanted, use 'dplyr::ungroup()' before 'group()'.</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: This message is displayed once per session.</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># Show head of new data</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">24</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -713,128 +714,20 @@ We will also need to use dplyr’s <strong>do()</strong> when using <strong>grou
 </tr>
 </tbody>
 </table>
-<p>Notice the warning in the previous code.</p>
-<blockquote>
-<p>Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</p>
-</blockquote>
-<p>On some time series the do() step converts the column ‘.subgroups’ from the type <em>factor</em> into the type <em>character</em> because of unequal factor levels. This is likely because the last greedy group contains less elements than the other groups, and so we are able to make fewer subgroups. Let’s check the tail of the new data frame.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Show tail of new data</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">ts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tail</span>(<span class="dv">17</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="right">residents</th>
-<th align="left">.groups</th>
-<th align="left">.subgroups</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">16833.1</td>
-<td align="left">7</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="right">16891.6</td>
-<td align="left">7</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="right">16956.8</td>
-<td align="left">7</td>
-<td align="left">2</td>
-</tr>
-<tr class="even">
-<td align="right">17026.3</td>
-<td align="left">7</td>
-<td align="left">2</td>
-</tr>
-<tr class="odd">
-<td align="right">17085.4</td>
-<td align="left">7</td>
-<td align="left">2</td>
-</tr>
-<tr class="even">
-<td align="right">17106.9</td>
-<td align="left">7</td>
-<td align="left">2</td>
-</tr>
-<tr class="odd">
-<td align="right">17169.4</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="even">
-<td align="right">17239.4</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="odd">
-<td align="right">17292.0</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="even">
-<td align="right">17354.2</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="odd">
-<td align="right">17414.2</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="even">
-<td align="right">17447.3</td>
-<td align="left">7</td>
-<td align="left">3</td>
-</tr>
-<tr class="odd">
-<td align="right">17482.6</td>
-<td align="left">8</td>
-<td align="left">1</td>
-</tr>
-<tr class="even">
-<td align="right">17526.0</td>
-<td align="left">8</td>
-<td align="left">1</td>
-</tr>
-<tr class="odd">
-<td align="right">17568.7</td>
-<td align="left">8</td>
-<td align="left">2</td>
-</tr>
-<tr class="even">
-<td align="right">17627.1</td>
-<td align="left">8</td>
-<td align="left">2</td>
-</tr>
-<tr class="odd">
-<td align="right">17661.5</td>
-<td align="left">8</td>
-<td align="left">2</td>
-</tr>
-</tbody>
-</table>
-<p>Sure enough, the last greedy group (8) is smaller. This means that there are only 2 subgroups instead of 3. To solve this we first convert .subgroups to an integer and then to a factor.</p>
-<p>We could also get the means of each subgroup. To do this, we first group by .groups and then .subgroups. Then we find the mean number of residents for each subgroup. If we had just grouped by .subgroups, we would have taken the mean of all the datapoints in each subgroup level. This would have left us with (in this case) 3 means, instead of 1 per subgroup level per main group level.<br />
+<p>We can get the means of each subgroup. To do this, we first group by .groups and then .subgroups. Then we find the mean number of residents for each subgroup. If we had just grouped by .subgroups, we would have taken the mean of all the data points in each subgroup level. This would have left us with (in this case) 3 means, instead of 1 per subgroup level per main group level.<br />
 Now that we are at it, we might as well find the ranges for each subgroup as well.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ts_means &lt;-<span class="st"> </span>ts <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="co"># Convert .subgroups to an integer and then to a factor</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">.subgroups =</span> <span class="kw">as.integer</span>(.subgroups),</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">         <span class="dt">.subgroups =</span> <span class="kw">as.factor</span>(.subgroups)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="co"># Group by first .groups, then .subgroups</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">group_by</span>(.groups, .subgroups) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="co"># Find the mean and range of each subgroup</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(residents),</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">                   <span class="dt">range =</span> <span class="kw">diff</span>(<span class="kw">range</span>(residents)))</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; `summarise()` regrouping output by '.groups' (override with `.groups` argument)</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co"># Show head of new data</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">ts_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">ts_means &lt;-<span class="st"> </span>ts <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="co"># Group by first .groups, then .subgroups</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(.groups, .subgroups) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="co"># Find the mean and range of each subgroup</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(residents),</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">                   <span class="dt">range =</span> <span class="kw">diff</span>(<span class="kw">range</span>(residents)))</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; `summarise()` regrouping output by '.groups' (override with `.groups` argument)</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># Show head of new data</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">ts_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>() </a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
