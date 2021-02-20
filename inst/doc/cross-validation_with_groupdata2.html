@@ -12,13 +12,29 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-06-15" />
+<meta name="date" content="2021-02-20" />
 
 <title>Cross-validation with groupdata2</title>
 
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
@@ -115,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     width: 90%;
   }
 </style>
+
 
 
 <style type="text/css">body {
@@ -329,7 +346,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Cross-validation with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-06-15</h4>
+<h4 class="date">2021-02-20</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>This vignette is an introduction to the package groupdata2.<br />
@@ -670,7 +687,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="left">participant</th>
 <th align="right">age</th>
 <th align="left">diagnosis</th>
@@ -680,7 +697,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 </thead>
 <tbody>
 <tr class="odd">
-<td>13</td>
+<td align="left">13</td>
 <td align="left">4</td>
 <td align="right">21</td>
 <td align="left">b</td>
@@ -688,7 +705,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td>14</td>
+<td align="left">14</td>
 <td align="left">4</td>
 <td align="right">21</td>
 <td align="left">b</td>
@@ -696,7 +713,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td>15</td>
+<td align="left">15</td>
 <td align="left">4</td>
 <td align="right">21</td>
 <td align="left">b</td>
@@ -704,7 +721,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td>16</td>
+<td align="left">16</td>
 <td align="left">5</td>
 <td align="right">32</td>
 <td align="left">b</td>
@@ -712,7 +729,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>17</td>
+<td align="left">17</td>
 <td align="left">5</td>
 <td align="right">32</td>
 <td align="left">b</td>
@@ -720,7 +737,7 @@ If the test set results are instead somewhat similar to the cross-validation res
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td>18</td>
+<td align="left">18</td>
 <td align="left">5</td>
 <td align="right">32</td>
 <td align="left">b</td>
@@ -809,18 +826,18 @@ More specifically (behind the scenes), it first subsets the full dataset by each
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">12</td>
+<td align="center">a</td>
+<td align="center">12</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">12</td>
+<td align="center">b</td>
+<td align="center">12</td>
 </tr>
 </tbody>
 </table>
@@ -831,42 +848,42 @@ More specifically (behind the scenes), it first subsets the full dataset by each
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">7</td>
-<td align="left">3</td>
+<td align="center">7</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">8</td>
-<td align="left">3</td>
+<td align="center">8</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">9</td>
-<td align="left">3</td>
+<td align="center">9</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -1097,60 +1114,60 @@ More specifically (behind the scenes), it first subsets the full dataset by each
 <table>
 <thead>
 <tr class="header">
-<th align="left">.folds</th>
-<th align="left">participant</th>
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">.folds</th>
+<th align="center">participant</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">3</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">8</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">8</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">9</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">9</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">4</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">5</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">5</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">7</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">7</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>

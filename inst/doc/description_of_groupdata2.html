@@ -12,13 +12,29 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2020-06-15" />
+<meta name="date" content="2021-02-20" />
 
 <title>Description of groupdata2</title>
 
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
@@ -115,6 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     width: 90%;
   }
 </style>
+
 
 
 <style type="text/css">body {
@@ -329,7 +346,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Description of groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2020-06-15</h4>
+<h4 class="date">2021-02-20</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>groupdata2 is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.<br />
@@ -1228,8 +1245,7 @@ See the necessary attached packages for running the examples under <a href="#att
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(groups) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1497,9 +1513,8 @@ See the necessary attached packages for running the examples under <a href="#att
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">df_means &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">group</span>(<span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age))</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">df_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">df_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1666,7 +1681,7 @@ See the necessary attached packages for running the examples under <a href="#att
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1674,13 +1689,13 @@ See the necessary attached packages for running the examples under <a href="#att
 </thead>
 <tbody>
 <tr class="odd">
-<td>3</td>
+<td align="left">3</td>
 <td align="center">3</td>
 <td align="center">human</td>
 <td align="center">87</td>
 </tr>
 <tr class="even">
-<td>4</td>
+<td align="left">4</td>
 <td align="center">4</td>
 <td align="center">cat</td>
 <td align="center">99</td>
@@ -1692,7 +1707,7 @@ See the necessary attached packages for running the examples under <a href="#att
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1700,19 +1715,19 @@ See the necessary attached packages for running the examples under <a href="#att
 </thead>
 <tbody>
 <tr class="odd">
-<td>5</td>
+<td align="left">5</td>
 <td align="center">5</td>
 <td align="center">pig</td>
 <td align="center">75</td>
 </tr>
 <tr class="even">
-<td>6</td>
+<td align="left">6</td>
 <td align="center">6</td>
 <td align="center">human</td>
 <td align="center">81</td>
 </tr>
 <tr class="odd">
-<td>7</td>
+<td align="left">7</td>
 <td align="center">7</td>
 <td align="center">cat</td>
 <td align="center">13</td>
@@ -1724,7 +1739,7 @@ See the necessary attached packages for running the examples under <a href="#att
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1732,13 +1747,13 @@ See the necessary attached packages for running the examples under <a href="#att
 </thead>
 <tbody>
 <tr class="odd">
-<td>8</td>
+<td align="left">8</td>
 <td align="center">8</td>
 <td align="center">pig</td>
 <td align="center">40</td>
 </tr>
 <tr class="even">
-<td>9</td>
+<td align="left">9</td>
 <td align="center">9</td>
 <td align="center">human</td>
 <td align="center">89</td>
@@ -1750,7 +1765,7 @@ See the necessary attached packages for running the examples under <a href="#att
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1758,19 +1773,19 @@ See the necessary attached packages for running the examples under <a href="#att
 </thead>
 <tbody>
 <tr class="odd">
-<td>10</td>
+<td align="left">10</td>
 <td align="center">10</td>
 <td align="center">cat</td>
 <td align="center">48</td>
 </tr>
 <tr class="even">
-<td>11</td>
+<td align="left">11</td>
 <td align="center">11</td>
 <td align="center">pig</td>
 <td align="center">92</td>
 </tr>
 <tr class="odd">
-<td>12</td>
+<td align="left">12</td>
 <td align="center">12</td>
 <td align="center">human</td>
 <td align="center">23</td>
@@ -1843,7 +1858,7 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1851,13 +1866,13 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td>3</td>
+<td align="left">3</td>
 <td align="center">3</td>
 <td align="center">human</td>
 <td align="center">13</td>
 </tr>
 <tr class="even">
-<td>4</td>
+<td align="left">4</td>
 <td align="center">4</td>
 <td align="center">cat</td>
 <td align="center">22</td>
@@ -1869,7 +1884,7 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1877,13 +1892,13 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td>5</td>
+<td align="left">5</td>
 <td align="center">5</td>
 <td align="center">pig</td>
 <td align="center">93</td>
 </tr>
 <tr class="even">
-<td>6</td>
+<td align="left">6</td>
 <td align="center">6</td>
 <td align="center">human</td>
 <td align="center">28</td>
@@ -1895,7 +1910,7 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1903,13 +1918,13 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td>7</td>
+<td align="left">7</td>
 <td align="center">7</td>
 <td align="center">cat</td>
 <td align="center">48</td>
 </tr>
 <tr class="even">
-<td>8</td>
+<td align="left">8</td>
 <td align="center">8</td>
 <td align="center">pig</td>
 <td align="center">33</td>
@@ -1921,7 +1936,7 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -1929,13 +1944,13 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 </thead>
 <tbody>
 <tr class="odd">
-<td>9</td>
+<td align="left">9</td>
 <td align="center">9</td>
 <td align="center">human</td>
 <td align="center">45</td>
 </tr>
 <tr class="even">
-<td>10</td>
+<td align="left">10</td>
 <td align="center">10</td>
 <td align="center">cat</td>
 <td align="center">21</td>
@@ -1972,139 +1987,139 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">94</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">94</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">58</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">58</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">96</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">96</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">29</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">60</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">60</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">43</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">43</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">24</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">51</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">51</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">59</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">59</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">42</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">42</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">93</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">93</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">26</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">26</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">48</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">48</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">34</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">34</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">15</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">15</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">76</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">76</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2121,158 +2136,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.folds</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.folds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">58</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">58</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">96</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">96</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">24</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">59</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">59</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">26</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">94</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">94</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">60</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">60</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">93</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">93</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">48</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">48</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">29</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">43</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">43</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">51</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">51</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">42</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">42</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">15</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">15</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">76</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">76</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2289,158 +2304,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.folds</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.folds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">51</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">51</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">42</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">42</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">96</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">96</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">93</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">93</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">48</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">48</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">94</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">94</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">24</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">59</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">59</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">29</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">76</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">76</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">58</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">58</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">60</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">60</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">43</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">43</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">26</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">15</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">15</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2451,41 +2466,41 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.folds</th>
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">.folds</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2505,158 +2520,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.folds</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.folds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">96</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">96</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">29</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">15</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">15</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">76</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">76</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">94</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">94</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">58</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">58</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">51</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">51</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">59</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">59</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">42</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">42</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">60</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">60</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">43</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">43</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">24</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">93</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">93</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">26</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">48</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">48</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2667,41 +2682,41 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.folds</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">.folds</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">4</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">4</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2719,158 +2734,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.folds</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.folds</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">51</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">51</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">59</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">59</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">90</td>
-<td align="left">a</td>
-<td align="left">42</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">90</td>
+<td align="center">a</td>
+<td align="center">42</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">96</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">96</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">87</td>
-<td align="left">b</td>
-<td align="left">29</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">87</td>
+<td align="center">b</td>
+<td align="center">29</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">60</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">60</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">43</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">43</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">83</td>
-<td align="left">a</td>
-<td align="left">24</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">83</td>
+<td align="center">a</td>
+<td align="center">24</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">93</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">93</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">26</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">26</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">48</td>
-<td align="left">b</td>
-<td align="left">48</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">48</td>
+<td align="center">b</td>
+<td align="center">48</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">94</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">94</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">73</td>
-<td align="left">a</td>
-<td align="left">58</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">73</td>
+<td align="center">a</td>
+<td align="center">58</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">15</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">15</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">64</td>
-<td align="left">b</td>
-<td align="left">76</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">64</td>
+<td align="center">b</td>
+<td align="center">76</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2881,48 +2896,48 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.folds</th>
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">.folds</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">b</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -2950,139 +2965,139 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">34</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">34</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">99</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">99</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">75</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">75</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">16</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">16</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">79</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">79</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">31</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">31</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">40</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">32</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">35</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">9</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">9</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">39</td>
-<td align="left">3</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">39</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">46</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">46</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">37</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">37</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">19</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">19</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">24</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">12</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">12</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -3102,18 +3117,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.partitions</th>
-<th align="left">n</th>
+<th align="center">.partitions</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">5</td>
+<td align="center">1</td>
+<td align="center">5</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">13</td>
+<td align="center">2</td>
+<td align="center">13</td>
 </tr>
 </tbody>
 </table>
@@ -3122,158 +3137,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.partitions</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.partitions</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">16</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">79</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">79</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">31</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">31</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">46</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">46</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">99</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">99</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">75</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">75</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">40</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">32</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">35</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">9</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">9</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">39</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">39</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">37</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">37</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">19</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">19</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">24</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">12</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">12</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -3290,158 +3305,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.partitions</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.partitions</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">99</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">99</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">39</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">39</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">12</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">12</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">31</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">31</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">40</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">32</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">35</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">9</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">9</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">75</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">75</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">16</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">79</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">79</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">46</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">46</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">37</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">37</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">19</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">19</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">24</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -3452,31 +3467,31 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">.partitions</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">.partitions</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">a</td>
-<td align="left">2</td>
-<td align="left">7</td>
+<td align="center">a</td>
+<td align="center">2</td>
+<td align="center">7</td>
 </tr>
 <tr class="odd">
-<td align="left">b</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">b</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">7</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">7</td>
 </tr>
 </tbody>
 </table>
@@ -3493,158 +3508,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.partitions</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.partitions</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">99</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">99</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">35</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">9</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">9</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">39</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">39</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">46</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">46</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">37</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">37</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">75</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">75</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">16</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">79</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">79</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">31</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">31</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">40</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">32</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">19</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">19</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">24</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">12</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">12</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -3655,41 +3670,41 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.partitions</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">.partitions</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">4</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">4</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -3708,158 +3723,158 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
-<th align="left">.partitions</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
+<th align="center">.partitions</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">35</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">35</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">9</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">9</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">66</td>
-<td align="left">a</td>
-<td align="left">39</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">4</td>
+<td align="center">66</td>
+<td align="center">a</td>
+<td align="center">39</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">75</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">75</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">16</td>
-<td align="left">2</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">16</td>
+<td align="center">2</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">90</td>
-<td align="left">b</td>
-<td align="left">79</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">2</td>
+<td align="center">90</td>
+<td align="center">b</td>
+<td align="center">79</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">34</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">34</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">99</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">99</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">77</td>
-<td align="left">a</td>
-<td align="left">10</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">1</td>
+<td align="center">77</td>
+<td align="center">a</td>
+<td align="center">10</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">31</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">31</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">40</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">40</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">98</td>
-<td align="left">a</td>
-<td align="left">32</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">98</td>
+<td align="center">a</td>
+<td align="center">32</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">46</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">46</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">19</td>
-<td align="left">b</td>
-<td align="left">37</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">19</td>
+<td align="center">b</td>
+<td align="center">37</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">19</td>
-<td align="left">1</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">19</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">24</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">24</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">17</td>
-<td align="left">b</td>
-<td align="left">12</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">17</td>
+<td align="center">b</td>
+<td align="center">12</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -3870,48 +3885,48 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">.partitions</th>
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">.partitions</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">b</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -3948,41 +3963,41 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">b</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -3992,18 +4007,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">5</td>
+<td align="center">a</td>
+<td align="center">5</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">8</td>
+<td align="center">b</td>
+<td align="center">8</td>
 </tr>
 </tbody>
 </table>
@@ -4012,104 +4027,104 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">8</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">8</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">65</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">65</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">95</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">95</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">41</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">41</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">43</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">43</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -4126,18 +4141,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">5</td>
+<td align="center">a</td>
+<td align="center">5</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">5</td>
+<td align="center">b</td>
+<td align="center">5</td>
 </tr>
 </tbody>
 </table>
@@ -4146,83 +4161,83 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">65</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">65</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">95</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">95</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">41</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">41</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -4239,18 +4254,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">5</td>
+<td align="center">a</td>
+<td align="center">5</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">5</td>
+<td align="center">b</td>
+<td align="center">5</td>
 </tr>
 </tbody>
 </table>
@@ -4259,83 +4274,83 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">8</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">8</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">65</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">65</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -4346,36 +4361,36 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -4392,18 +4407,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">8</td>
+<td align="center">a</td>
+<td align="center">8</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">8</td>
+<td align="center">b</td>
+<td align="center">8</td>
 </tr>
 </tbody>
 </table>
@@ -4412,125 +4427,125 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">8</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">8</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">65</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">65</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">95</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">95</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">41</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">41</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">43</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">43</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -4548,18 +4563,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">8</td>
+<td align="center">a</td>
+<td align="center">8</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">8</td>
+<td align="center">b</td>
+<td align="center">8</td>
 </tr>
 </tbody>
 </table>
@@ -4568,125 +4583,125 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">8</td>
-<td align="left">3</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">8</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">79</td>
-<td align="left">b</td>
-<td align="left">65</td>
-<td align="left">2</td>
+<td align="center">2</td>
+<td align="center">79</td>
+<td align="center">b</td>
+<td align="center">65</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">95</td>
-<td align="left">2</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">95</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">41</td>
-<td align="left">1</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">41</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">43</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">43</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -4697,41 +4712,41 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">6</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">6</td>
 </tr>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">2</td>
-<td align="left">2</td>
+<td align="center">b</td>
+<td align="center">2</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">b</td>
-<td align="left">5</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -4748,18 +4763,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -4768,55 +4783,55 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">85</td>
-<td align="left">a</td>
-<td align="left">63</td>
-<td align="left">3</td>
+<td align="center">1</td>
+<td align="center">85</td>
+<td align="center">a</td>
+<td align="center">63</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
-<td align="left">6</td>
-<td align="left">a</td>
-<td align="left">80</td>
-<td align="left">2</td>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">80</td>
+<td align="center">2</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
-<td align="left">32</td>
-<td align="left">b</td>
-<td align="left">43</td>
-<td align="left">3</td>
+<td align="center">5</td>
+<td align="center">32</td>
+<td align="center">b</td>
+<td align="center">43</td>
+<td align="center">3</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -4827,36 +4842,36 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">1</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">4</td>
-<td align="left">1</td>
+<td align="center">a</td>
+<td align="center">4</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">5</td>
-<td align="left">1</td>
+<td align="center">b</td>
+<td align="center">5</td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">2</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">2</td>
 </tr>
 </tbody>
 </table>
@@ -4874,18 +4889,18 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -4894,55 +4909,55 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">participant</th>
-<th align="left">age</th>
-<th align="left">diagnosis</th>
-<th align="left">score</th>
-<th align="left">session</th>
+<th align="center">participant</th>
+<th align="center">age</th>
+<th align="center">diagnosis</th>
+<th align="center">score</th>
+<th align="center">session</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">33</td>
-<td align="left">3</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">33</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">2</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
-<td align="left">70</td>
-<td align="left">a</td>
-<td align="left">81</td>
-<td align="left">1</td>
+<td align="center">3</td>
+<td align="center">70</td>
+<td align="center">a</td>
+<td align="center">81</td>
+<td align="center">1</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">55</td>
-<td align="left">2</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">55</td>
+<td align="center">2</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">38</td>
-<td align="left">3</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">38</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">6</td>
-<td align="left">8</td>
-<td align="left">b</td>
-<td align="left">50</td>
-<td align="left">1</td>
+<td align="center">6</td>
+<td align="center">8</td>
+<td align="center">b</td>
+<td align="center">50</td>
+<td align="center">1</td>
 </tr>
 </tbody>
 </table>
@@ -4953,21 +4968,21 @@ splt() uses base::split() to split the data by the grouping factor.</li>
 <table>
 <thead>
 <tr class="header">
-<th align="left">diagnosis</th>
-<th align="left">participant</th>
-<th align="left">n</th>
+<th align="center">diagnosis</th>
+<th align="center">participant</th>
+<th align="center">n</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">a</td>
-<td align="left">3</td>
-<td align="left">3</td>
+<td align="center">a</td>
+<td align="center">3</td>
+<td align="center">3</td>
 </tr>
 <tr class="even">
-<td align="left">b</td>
-<td align="left">6</td>
-<td align="left">3</td>
+<td align="center">b</td>
+<td align="center">6</td>
+<td align="center">3</td>
 </tr>
 </tbody>
 </table>
@@ -5005,7 +5020,7 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -5013,13 +5028,13 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 </thead>
 <tbody>
 <tr class="odd">
-<td>4</td>
+<td align="left">4</td>
 <td align="center">4</td>
 <td align="center">cat</td>
 <td align="center">44</td>
 </tr>
 <tr class="even">
-<td>11</td>
+<td align="left">11</td>
 <td align="center">11</td>
 <td align="center">pig</td>
 <td align="center">70</td>
@@ -5031,7 +5046,7 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -5039,13 +5054,13 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 </thead>
 <tbody>
 <tr class="odd">
-<td>3</td>
+<td align="left">3</td>
 <td align="center">3</td>
 <td align="center">human</td>
 <td align="center">63</td>
 </tr>
 <tr class="even">
-<td>8</td>
+<td align="left">8</td>
 <td align="center">8</td>
 <td align="center">pig</td>
 <td align="center">9</td>
@@ -5057,7 +5072,7 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -5065,19 +5080,19 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
+<td align="left">1</td>
 <td align="center">1</td>
 <td align="center">cat</td>
 <td align="center">77</td>
 </tr>
 <tr class="even">
-<td>5</td>
+<td align="left">5</td>
 <td align="center">5</td>
 <td align="center">pig</td>
 <td align="center">20</td>
 </tr>
 <tr class="odd">
-<td>9</td>
+<td align="left">9</td>
 <td align="center">9</td>
 <td align="center">human</td>
 <td align="center">47</td>
@@ -5089,7 +5104,7 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -5097,13 +5112,13 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 </thead>
 <tbody>
 <tr class="odd">
-<td>2</td>
+<td align="left">2</td>
 <td align="center">2</td>
 <td align="center">pig</td>
 <td align="center">71</td>
 </tr>
 <tr class="even">
-<td>6</td>
+<td align="left">6</td>
 <td align="center">6</td>
 <td align="center">human</td>
 <td align="center">28</td>
@@ -5115,7 +5130,7 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 <table>
 <thead>
 <tr class="header">
-<th></th>
+<th align="left"></th>
 <th align="center">x</th>
 <th align="center">species</th>
 <th align="center">age</th>
@@ -5123,19 +5138,19 @@ Notice that the index has been shuffled but the group sizes are the same as befo
 </thead>
 <tbody>
 <tr class="odd">
-<td>7</td>
+<td align="left">7</td>
 <td align="center">7</td>
 <td align="center">cat</td>
 <td align="center">68</td>
 </tr>
 <tr class="even">
-<td>10</td>
+<td align="left">10</td>
 <td align="center">10</td>
 <td align="center">cat</td>
 <td align="center">50</td>
 </tr>
 <tr class="odd">
-<td>12</td>
+<td align="left">12</td>
 <td align="center">12</td>
 <td align="center">human</td>
 <td align="center">54</td>
