@@ -35,9 +35,11 @@ library(knitr)
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12), 
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 ## -----------------------------------------------------------------------------
@@ -58,9 +60,11 @@ df %>%
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12),  
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 ## -----------------------------------------------------------------------------
@@ -81,9 +85,11 @@ df %>% kable(align = 'c')
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12),  
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 ## -----------------------------------------------------------------------------
@@ -101,9 +107,11 @@ df_means %>% kable(align = 'c')
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12),  
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 
@@ -115,9 +123,11 @@ df_grouped %>% kable(align = 'c')
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12),  
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 
@@ -128,16 +138,17 @@ df_list %>% kable(align = 'c')
 
 
 ## -----------------------------------------------------------------------------
-
-v = c(1:6)
+v <- c(1:6)
 
 splt(v, 3, method = 'n_dist')
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12),  
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 ## -----------------------------------------------------------------------------
@@ -147,10 +158,12 @@ df_list %>% kable(align = 'c')
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
-                "age" = rep(sample(c(1:100), 6), 3),
-                "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)),
-                "score" = sample(c(1:100), 3*6))
+df <- data.frame(
+  "participant" = factor(rep(c('1', '2', '3', '4', '5', '6'), 3)), 
+  "age" = rep(sample(c(1:100), 6), 3), 
+  "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)), 
+  "score" = sample(c(1:100), 3 * 6)
+)
 
 df <- df %>% 
   arrange(participant)
@@ -227,10 +240,12 @@ df_folded %>%
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
-                "age" = rep(sample(c(1:100), 6), 3),
-                "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)),
-                "score" = sample(c(1:100), 3*6))
+df <- data.frame(
+  "participant" = factor(rep(c('1', '2', '3', '4', '5', '6'), 3)), 
+  "age" = rep(sample(c(1:100), 6), 3), 
+  "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)), 
+  "score" = sample(c(1:100), 3 * 6)
+)
 
 df <- df %>% arrange(participant)
 
@@ -292,8 +307,13 @@ df_partitioned %>%
 
 
 ## -----------------------------------------------------------------------------
-df_partitioned <- partition(df, 0.5, cat_col = 'diagnosis', id_col = 'participant', 
-                            list_out = FALSE)
+df_partitioned <- partition(
+  data = df, 
+  p = 0.5, 
+  cat_col = 'diagnosis', 
+  id_col = 'participant', 
+  list_out = FALSE
+)
 
 # Order by folds
 df_partitioned <- df_partitioned %>% 
@@ -312,10 +332,12 @@ df_partitioned %>%
 set.seed(2)
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("participant" = factor(rep(c('1','2', '3', '4', '5', '6'), 3)),
-                "age" = rep(sample(c(1:100), 6), 3),
-                "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)),
-                "score" = sample(c(1:100), 3*6))
+df <- data.frame(
+  "participant" = factor(rep(c('1', '2', '3', '4', '5', '6'), 3)), 
+  "age" = rep(sample(c(1:100), 6), 3), 
+  "diagnosis" = factor(rep(c('a', 'b', 'a', 'a', 'b', 'b'), 3)), 
+  "score" = sample(c(1:100), 3 * 6)
+)
 
 df <- df %>% 
   arrange(participant)
@@ -438,9 +460,11 @@ df_balanced %>%
 
 
 ## -----------------------------------------------------------------------------
-df <- data.frame("x"=c(1:12), 
-                "species" = factor(rep(c('cat','pig', 'human'), 4)), 
-                "age" = sample(c(1:100), 12))
+df <- data.frame(
+  "x" = c(1:12), 
+  "species" = factor(rep(c('cat', 'pig', 'human'), 4)), 
+  "age" = sample(c(1:100), 12)
+)
 
 
 ## -----------------------------------------------------------------------------

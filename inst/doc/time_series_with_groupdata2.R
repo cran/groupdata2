@@ -16,7 +16,7 @@ library(ggplot2)
 library(knitr) # kable
 
 ## -----------------------------------------------------------------------------
-timeSeriesFrame = data.frame('residents' = austres)
+timeSeriesFrame <- data.frame('residents' = austres)
 
 # Show structure of data frame
 str(timeSeriesFrame) 
@@ -58,7 +58,7 @@ ggplot(ts, aes(.groups, mean)) +
 
 
 ## -----------------------------------------------------------------------------
-ts = timeSeriesFrame %>%
+ts <- timeSeriesFrame %>%
   
   # Group data
   group(n = 12, method = 'greedy') %>%

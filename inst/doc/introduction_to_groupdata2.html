@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2021-06-19" />
+<meta name="date" content="2021-07-03" />
 
 <title>Introduction to groupdata2</title>
 
@@ -253,13 +253,12 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Introduction to groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2021-06-19</h4>
+<h4 class="date">2021-07-03</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
-<p>This vignette is an introduction to the package groupdata2.<br />
-groupdata2 is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.<br />
- <br />
-For a more extensive description of groupdata2, please see <a href="description_of_groupdata2.html">Description of groupdata2</a>  <br />
+<p>This vignette is an introduction to the package <code>groupdata2</code>.</p>
+<p><code>groupdata2</code> is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.</p>
+<p>For a more extensive description of <code>groupdata2</code>, please see <a href="description_of_groupdata2.html">Description of groupdata2</a>  <br />
  <br />
 Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@ludvigolsen.dk</a>  <br />
  </p>
@@ -278,11 +277,12 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>When working with data you sometimes want to divide it into groups and subgroups for processing or descriptive statistics. It can help reduce the amount of information, allowing you to compare measurements on different scales - e.g. income per year instead of per month. groupdata2 is a set of tools for creating groups from your data. It consists of six, easy to use, main functions, namely <strong>group_factor</strong>(), <strong>group</strong>(), <strong>splt</strong>(), <strong>partition</strong>(), <strong>fold</strong>(), and <strong>balance</strong>().</p>
-<p><strong>group_factor</strong>() is at the heart of it all. It creates the groups and is used by the other functions. It returns a grouping factor with group numbers, i.e. 1s for all elements in group 1, 2s for group 2, etc. So if you ask it to create 2 groups from a vector (‘Hans’,‘Dorte’,‘Mikkel’,‘Leif’) it will return a factor (1,1,2,2).</p>
-<p><strong>group</strong>() takes in either a data frame or vector and returns a data frame with a grouping factor added to it. The data frame is grouped by the grouping factor (using dplyr::group_by), which makes it very easy to use in dplyr pipelines.<br />
-If, for instance, you have a column in a data frame with quarterly measurements, and you would like to see the average measurement per year, you can simply create groups with a size of 4, and take the mean of each group, all within a 3-line pipeline.</p>
-<p><strong>splt</strong>() takes in either a data frame or vector, creates a grouping factor, and splits the given data by this factor using base::split. Often it will be faster to use <strong>group</strong>() instead of <strong>splt</strong>(). I also find it easier to work with the output of <strong>group</strong>() .</p>
+<p>When working with data you sometimes want to divide it into groups and subgroups for processing or descriptive statistics. It can help reduce the amount of information, allowing you to compare measurements on different scales - e.g. income per year instead of per month.</p>
+<p><code>groupdata2</code> is a set of tools for creating groups from your data. It consists of six, easy to use, main functions, namely <code>group_factor()</code>, <code>group()</code>, <code>splt()</code>, <code>partition()</code>, <code>fold()</code>, and <code>balance()</code>.</p>
+<p><strong>group_factor</strong>() is at the heart of it all. It creates the groups and is used by the other functions. It returns a grouping factor with group numbers, i.e. 1s for all elements in group 1, 2s for group 2, etc. So if you ask it to create 2 groups from a <code>vector</code> <code>('Hans', 'Dorte', 'Mikkel', 'Leif')</code> it will return a factor <code>(1, 1, 2, 2)</code>.</p>
+<p><strong>group</strong>() takes in either a <code>data frame</code> or <code>vector</code> and returns a <code>data frame</code> with a grouping factor added to it. The <code>data frame</code> is grouped by the grouping factor (using <code>dplyr::group_by</code>), which makes it very easy to use in <code>dplyr</code>/<code>magrittr</code> pipelines.</p>
+<p>If, for instance, you have a column in a <code>data frame</code> with quarterly measurements, and you would like to see the average measurement per year, you can simply create groups with a size of 4, and take the mean of each group, all within a 3-line pipeline.</p>
+<p><strong>splt</strong>() takes in either a <code>data frame</code> or <code>vector</code>, creates a grouping factor, and splits the given data by this factor using <code>base::split</code>. Often it will be faster to use <code>group()</code> instead of <code>splt()</code>. I also find it easier to work with the output of <code>group()</code>.</p>
 <p><strong>partition</strong>() creates (optionally) balanced partitions (e.g. train/test sets) from given group sizes. It can balance partitions on one categorical variable and/or one numerical variable. It is able to keep all datapoints with a shared ID in the same partition.</p>
 <p><strong>fold</strong>() creates (optionally) balanced folds for cross-validation. It can balance folds on one categorical variable and/or one numerical variable. It is able to keep all datapoints with a shared ID in the same fold.</p>
 <p><strong>balance</strong>() uses up- or downsampling to fix the size of all groups to the min, max, mean, or median group size or to a specific number of rows. Balancing can also happen on the ID level, e.g. to ensure the same number of IDs in each category.</p>
@@ -290,18 +290,18 @@ If, for instance, you have a column in a data frame with quarterly measurements,
 <h2>Use cases</h2>
 <p>I came up with too many use cases to present them all neatly in one vignette. To give each example more space I instead aim to create vignettes for each of them. For now, these are the available vignettes dealing with each their topic:</p>
 <p><a href="cross-validation_with_groupdata2.html">Cross-validation with groupdata2</a><br />
-In this vignette, we go through the basics of cross-validation, such as creating balanced train/test sets with <strong>partition</strong>() and balanced folds with <strong>fold</strong>(). We also write up a simple cross-validation function and compare multiple linear regression models.</p>
+In this vignette, we go through the basics of cross-validation, such as creating balanced train/test sets with <code>partition()</code> and balanced folds with <code>fold()</code>. We also write up a simple cross-validation function and compare multiple linear regression models.</p>
 <p><a href="time_series_with_groupdata2.html">Time series with groupdata2</a><br />
-In this vignette, we divide up a time series into groups (windows) and subgroups using <strong>group</strong>() with the ‘greedy’ and ‘staircase’ methods. We do some basic descriptive stats of each group and use them to reduce the data size.</p>
+In this vignette, we divide up a time series into groups (windows) and subgroups using <code>group()</code> with the <code>greedy</code> and <code>staircase</code> methods. We do some basic descriptive stats of each group and use them to reduce the data size.</p>
 <p><a href="automatic_groups_with_groupdata2.html">Automatic groups with groupdata2</a><br />
-In this vignette, we will use the ‘l_starts’ method with <strong>group</strong>() to allow transferring of information from one dataset to another. We will use the automatic grouping function that finds group starts all by itself.</p>
-<p>For a more extensive description of the features in groupdata2, see <a href="description_of_groupdata2.html">Description of groupdata2</a>.</p>
+In this vignette, we will use the <code>l_starts</code> method with <code>group()</code> to allow transferring of information from one dataset to another. We will use the automatic grouping function that finds group starts all by itself.</p>
+<p>For a more extensive description of the features in <code>groupdata2</code>, see <a href="description_of_groupdata2.html">Description of groupdata2</a>.</p>
 </div>
 </div>
 <div id="outro" class="section level1">
 <h1>Outro</h1>
-<p>Well done, you made it to the end of this introduction to groupdata2! If you want to know more about the various methods and arguments, you can read the <a href="description_of_groupdata2.html">Description of groupdata2</a>.<br />
-If you have any questions or comments to this vignette (tutorial) or groupdata2, please send them to me at<br />
+<p>Well done, you made it to the end of this introduction to <code>groupdata2</code>! If you want to know more about the various methods and arguments, you can read the <a href="description_of_groupdata2.html">Description of groupdata2</a>.</p>
+<p>If you have any questions or comments to this vignette (tutorial) or <code>groupdata2</code>, please send them to me at<br />
 <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@ludvigolsen.dk</a>, or open an issue on the github page <a href="https://github.com/LudvigOlsen/groupdata2" class="uri">https://github.com/LudvigOlsen/groupdata2</a> so I can make improvements.</p>
 <p>   </p>
 </div>

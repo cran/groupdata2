@@ -47,7 +47,7 @@ kable(df, align = 'c')
 
 ## -----------------------------------------------------------------------------
 
-set.seed(1) # For reproducibility
+xpectr::set_test_seed(1) # For reproducibility
 
 # Split data in 20/80 (percentage)
 partition(df, p = 0.2, id_col = "participant") %>% 
@@ -57,7 +57,7 @@ partition(df, p = 0.2, id_col = "participant") %>%
 
 ## -----------------------------------------------------------------------------
 
-set.seed(1) # For reproducibility
+xpectr::set_test_seed(1) # For reproducibility
 
 # Split data in 20/80 (percentage)
 parts <- partition(df, p = 0.2, id_col = "participant", cat_col = 'diagnosis')
@@ -72,15 +72,15 @@ test_set %>% kable()
 ## -----------------------------------------------------------------------------
 train_set %>% 
   count(diagnosis) %>% 
-  kable(align='c')
+  kable(align = 'c')
 
 ## -----------------------------------------------------------------------------
 train_set %>% 
   count(participant) %>% 
-  kable(align='c')
+  kable(align = 'c')
 
 ## -----------------------------------------------------------------------------
-set.seed(1) # For reproducibility
+xpectr::set_test_seed(1) # For reproducibility
 
 train_set <- fold(train_set, k = 4, cat_col = 'diagnosis', id_col = 'participant')
 
@@ -92,7 +92,7 @@ train_set %>% kable()
 ## -----------------------------------------------------------------------------
 train_set %>% 
   count(participant, diagnosis) %>% 
-  kable(align='c')
+  kable(align = 'c')
 
 ## -----------------------------------------------------------------------------
 crossvalidate <- function(data, k, model, dependent, random = FALSE){
@@ -100,7 +100,7 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
   # 'k' is the number of folds we have
   # 'model' is a string describing a linear regression model formula
   # 'dependent' is a string with the name of the score column we want to predict
-  # 'random' is a logical; do we have random effects in the model?
+  # 'random' is a logical (TRUE/FALSE); do we have random effects in the model?
   
   # Initialize empty list for recording performances
   performances <- c()
@@ -125,7 +125,7 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
     if (isTRUE(random)){
 
       # Train linear mixed effects model on training set
-      model <- lmer(model, training_set, REML=FALSE)
+      model <- lmer(model, training_set, REML = FALSE)
 
     } else {
 
@@ -137,7 +137,7 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
     ## Test model
 
     # Predict the dependent variable in the testing_set with the trained model
-    predicted <- predict(model, testing_set, allow.new.levels=TRUE)
+    predicted <- predict(model, testing_set, allow.new.levels = TRUE)
 
     # Get the Root Mean Square Error between the predicted and the observed
     RMSE <- rmse(predicted, testing_set[[dependent]])
@@ -155,44 +155,44 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
 
 
 ## -----------------------------------------------------------------------------
-lm(score~diagnosis, df) %>%
+lm(score ~ diagnosis, df) %>% 
   tidy()
 
 ## -----------------------------------------------------------------------------
-m0 <- 'score~1+(1|participant)'
-m1 <- 'score~diagnosis+(1|participant)'
-m2 <- 'score~diagnosis+age+(1|participant)'
-m3 <- 'score~diagnosis+session+(1|participant)'
-m4 <- 'score~diagnosis*session+(1|participant)'
-m5 <- 'score~diagnosis*session+age+(1|participant)'
+m0 <- 'score ~ 1 + (1 | participant)'
+m1 <- 'score ~ diagnosis + (1 | participant)'
+m2 <- 'score ~ diagnosis + age + (1 | participant)'
+m3 <- 'score ~ diagnosis + session + (1 | participant)'
+m4 <- 'score ~ diagnosis * session + (1 | participant)'
+m5 <- 'score ~ diagnosis * session + age + (1 | participant)'
 
 
 ## ----message=FALSE------------------------------------------------------------
 m0
-crossvalidate(train_set, k=4, model=m0, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m0, dependent = 'score', random = TRUE)
 
 m1
-crossvalidate(train_set, k=4, model=m1, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m1, dependent = 'score', random = TRUE)
 
 m2
-crossvalidate(train_set, k=4, model=m2, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m2, dependent = 'score', random = TRUE)
 
 m3
-crossvalidate(train_set, k=4, model=m3, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m3, dependent = 'score', random = TRUE)
 
 m4
-crossvalidate(train_set, k=4, model=m4, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m4, dependent = 'score', random = TRUE)
 
 m5
-crossvalidate(train_set, k=4, model=m5, dependent='score', random=TRUE)
+crossvalidate(train_set, k = 4, model = m5, dependent = 'score', random = TRUE)
 
 
 ## -----------------------------------------------------------------------------
-# Creating the model for the full training set
+# Training the model on the full training set
 model_m4 <- lmer(m4, train_set, REML = FALSE)
 
-# Predict the dependent variable in the test_set with the trained model
-predicted <- predict(model_m4, test_set, allow.new.levels=TRUE)
+# Predict the dependent variable in the test set with the trained model
+predicted <- predict(model_m4, test_set, allow.new.levels = TRUE)
 
 # Get the Root Mean Square Error between the predicted and the observed
 RMSE <- rmse(predicted, test_set[['score']])

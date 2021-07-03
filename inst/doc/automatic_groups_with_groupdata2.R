@@ -17,26 +17,28 @@ library(knitr) # kable
 
 df_observations <- data.frame(
   "run" = 1:30,
-  "participant" = c(1,1,1,1,
-             2,2,2,2,2,2,
-             3,3,3,3,
-             1,1,1,1,1,1,1,
-             2,2,2,
-             3,3,3,3,3,3),
-  "errors" = c(3,2,5,3,
-               0,0,1,1,0,1,
-               6,4,3,1,
-               2,1,3,2,1,1,0,
-               0,0,1,
-               3,3,4,2,2,1)
+  "participant" = c(
+    1, 1, 1, 1, 
+    2, 2, 2, 2, 2, 2, 
+    3, 3, 3, 3, 
+    1, 1, 1, 1, 1, 1, 1, 
+    2, 2, 2, 
+    3, 3, 3, 3, 3, 3), 
+  "errors" = c(
+    3, 2, 5, 3, 
+    0, 0, 1, 1, 0, 1, 
+    6, 4, 3, 1,
+    2, 1, 3, 2, 1, 1, 0, 
+    0, 0, 1,
+    3, 3, 4, 2, 2, 1)
 )
 
 # Show the first 20 rows of data frame
 df_observations %>% head(20) %>%  kable()
 
 df_ratings <- data.frame(
-  "session" = c(1:6),
-  "rating" = c(3,8,2,5,9,4)
+  "session" = c(1:6), 
+  "rating" = c(3, 8, 2, 5, 9, 4)
 )
 
 df_ratings %>% kable()
@@ -44,16 +46,24 @@ df_ratings %>% kable()
 
 ## -----------------------------------------------------------------------------
 
-group(df_observations, n = c(1,2,3,1,2,3), method = 'l_starts', 
-      starts_col = 'participant', col_name = 'session') %>% 
+group(
+  data = df_observations,
+  n = c(1, 2, 3, 1, 2, 3),  # Starting values
+  method = 'l_starts',
+  starts_col = 'participant',
+  col_name = 'session'
+) %>%
   kable()
 
 
 ## -----------------------------------------------------------------------------
-df_observations <- group(df_observations, n = 'auto', 
-                         method = 'l_starts',
-                         starts_col = 'participant', 
-                         col_name = 'session') 
+df_observations <- group(
+  data = df_observations,
+  n = 'auto',
+  method = 'l_starts',
+  starts_col = 'participant',
+  col_name = 'session'
+) 
 
 df_observations %>% 
   kable()
@@ -67,8 +77,8 @@ df_merged %>% head(15) %>% kable()
 
 
 ## -----------------------------------------------------------------------------
-avg_errors <- df_merged %>% 
-  group_by(session) %>% 
+avg_errors <- df_merged %>%
+  group_by(session) %>%
   dplyr::summarize("avg_errors" = mean(errors))
 
 avg_errors %>% kable()
@@ -77,7 +87,7 @@ avg_errors %>% kable()
 ## -----------------------------------------------------------------------------
 df_summarized <- merge(df_merged, avg_errors, by = 'session') %>% 
   group_by(session) %>%  # For each session
-  filter(row_number()==1) %>%  # Get first row
+  filter(row_number() == 1) %>%  # Get first row
   select(-errors) # Remove errors column as we use avg_errors now
 
 df_summarized %>% kable()

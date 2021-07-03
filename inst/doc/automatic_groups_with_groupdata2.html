@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2021-06-19" />
+<meta name="date" content="2021-07-03" />
 
 <title>Automatic groups with groupdata2</title>
 
@@ -346,14 +346,12 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Automatic groups with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2021-06-19</h4>
+<h4 class="date">2021-07-03</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
-<p>This vignette is an introduction to the package groupdata2.<br />
-groupdata2 is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.<br />
-We will go through finding and creating groups automatically with the ‘l_starts’ method.<br />
- <br />
-For a more extensive description of groupdata2, please see <a href="description_of_groupdata2.html">Description of groupdata2</a>  <br />
+<p>In this vignette, we use the R package <code>groupdata2</code> to automatically detect and create groups in a dataset using the <code>l_starts</code> method.</p>
+<p><code>groupdata2</code> is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.</p>
+<p>For a more extensive description of <code>groupdata2</code>, please see <a href="description_of_groupdata2.html">Description of groupdata2</a>  <br />
  <br />
 Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@ludvigolsen.dk</a>  <br />
  </p>
@@ -373,7 +371,7 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In this vignette, we will use the ‘l_starts’ method with <strong>group</strong>() to allow transferring of information from one dataset to another. We will use the automatic grouping function that finds group starts all by itself.</p>
+<p>In this vignette, we will use the <code>l_starts</code> method with <code>group()</code> to allow transferring of information from one dataset to another. We will use the automatic grouping function that finds <em>group starts</em> all by itself.</p>
 <div id="attach-packages" class="section level2">
 <h2>Attach packages</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(groupdata2)</a>
@@ -382,26 +380,29 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>3 participants were asked to solve a task. They had to take turns but could go for multiple runs of the task before taking a break and letting the next participant take over. They had 2 turns each. Let’s call each turn a session, i.e. there was 6 sessions. A team of experts would rate how well the participant did throughout the entire session, meaning that if the participant had some bad runs, they would have to make a choice whether to save energy for the other session or whether to try and correct the rating of the current session. For each run of the task, we recorded how many errors the participant made.</p>
+<p>3 participants were asked to solve a task. They had to take turns but could go for multiple runs of the task before taking a break and letting the next participant take over. They had 2 turns (called <em>sessions</em>) each, meaning there were 6 sessions in total with multiple runs per session. A team of experts would rate how well the participant did throughout the entire session, meaning that if the participant had some bad runs, they would have to make a choice whether to save energy for the other session or whether to try and correct the rating of the current session.</p>
+<p>For each run of the task, we recorded how many errors the participant made.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">df_observations &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="st">&quot;run&quot;</span> =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">30</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">             <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">             <span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">             <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">  <span class="st">&quot;errors&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">               <span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">               <span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">               <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">               <span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">)</a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co"># Show the first 20 rows of data frame</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">df_observations <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>), </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">  <span class="st">&quot;errors&quot;</span> =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, </a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">)</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co"># Show the first 20 rows of data frame</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">df_observations <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -515,8 +516,8 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </table>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">df_ratings &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="st">&quot;session&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="st">&quot;rating&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="st">&quot;session&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>), </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="st">&quot;rating&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">)</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">df_ratings <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
@@ -554,11 +555,17 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </tr>
 </tbody>
 </table>
-<p>We would like to get the ratings into the data frame with observations. For this we will first create a session column, and then get the ratings for the sessions. To do this we will use <strong>group</strong>() with the ‘l_starts’ method. This methods takes group start values, finds those values in a specified column, and creates groups that begin at the start values. To show this, let’s try it out with some start values before having <strong>group</strong>() find them automatically.</p>
+<p>We would like to get the expert ratings into the <code>data frame</code> with observations. For this, we will first create a session column and then get the ratings for the sessions.</p>
+<p>As the participants had differing numbers of runs, we must start a new session group whenever the participant column changes. This can be done with <code>group()</code> using the <code>l_starts</code> method. This methods takes <em>group start values</em>, finds those values in a specified column, and creates groups that begin at the start values. To show this, let’s try it out with some manually entered start values before having <code>group()</code> find them automatically.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">group</span>(df_observations, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">method =</span> <span class="st">'l_starts'</span>, </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">      <span class="dt">starts_col =</span> <span class="st">'participant'</span>, <span class="dt">col_name =</span> <span class="st">'session'</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">group</span>(</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">data =</span> df_observations,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),  <span class="co"># Starting values</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">method =</span> <span class="st">'l_starts'</span>,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">starts_col =</span> <span class="st">'participant'</span>,</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">col_name =</span> <span class="st">'session'</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -751,14 +758,19 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </tr>
 </tbody>
 </table>
-<p><strong>group</strong>() went through the participant column and found one value from <em>n</em> at a time. When it encountered the value, it noted down the row index and continued down the column searching for the next value in <em>n</em>. In the end it started groups at the found row indices from top to bottom. Since our data has the same value in the participant column for the entire session, we can actually get <strong>group</strong>() to find these group starts automatically. It will go through the given column, and whenever it encounters a new value, i.e. one that is different from the previous row, it starts a new group.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_observations &lt;-<span class="st"> </span><span class="kw">group</span>(df_observations, <span class="dt">n =</span> <span class="st">'auto'</span>, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                         <span class="dt">method =</span> <span class="st">'l_starts'</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">                         <span class="dt">starts_col =</span> <span class="st">'participant'</span>, </a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">                         <span class="dt">col_name =</span> <span class="st">'session'</span>) </a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">df_observations <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<p>Note how each session only has observations from a single participant.</p>
+<p><code>group()</code> went through the participant column and found one value from <code>n</code> at a time. When it encountered the value, it noted down the row index and continued down the column searching for the next value in <code>n</code>. In the end, it started groups at the found row indices from top to bottom.</p>
+<p>Since our data has the same value in the participant column for the entire session, we can actually get <code>group()</code> to find these group starts automatically. It will go through the given column and whenever it encounters a new value, i.e. one that is different from the previous row, it starts a new group.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_observations &lt;-<span class="st"> </span><span class="kw">group</span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="dt">data =</span> df_observations,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">n =</span> <span class="st">'auto'</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="dt">method =</span> <span class="st">'l_starts'</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="dt">starts_col =</span> <span class="st">'participant'</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="dt">col_name =</span> <span class="st">'session'</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">) </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">df_observations <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -951,9 +963,9 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 </tr>
 </tbody>
 </table>
-<p>And it works! :)<br />
-If you just want the group starts, you can use the function <strong>find_starts</strong>().</p>
-<p>Now that we have the session information, we can transfer the ratings from the ratings data frame.</p>
+<p>And it works! :)</p>
+<p>If you just want to find the group starts, you can use the <code>find_starts()</code> function. Alternatively, the <code>differs_from_previous()</code> function allows setting a threshold for how much the value must differ from the previous value.</p>
+<p>Now that we have the session information, we can transfer the ratings from the ratings <code>data frame</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df_merged &lt;-<span class="st"> </span><span class="kw">merge</span>(df_observations, df_ratings, <span class="dt">by =</span> <span class="st">'session'</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co"># Show head of df_merged</span></a>
@@ -1077,8 +1089,8 @@ If you just want the group starts, you can use the function <strong>find_starts<
 </tbody>
 </table>
 <p>Now, we can find the average number of errors per session and see if they correlate with the experts’ ratings.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">avg_errors &lt;-<span class="st"> </span>df_merged <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(session) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">avg_errors &lt;-<span class="st"> </span>df_merged <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(session) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarize</span>(<span class="st">&quot;avg_errors&quot;</span> =<span class="st"> </span><span class="kw">mean</span>(errors))</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5">avg_errors <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
@@ -1116,10 +1128,11 @@ If you just want the group starts, you can use the function <strong>find_starts<
 </tr>
 </tbody>
 </table>
-<p>Let’s transfer the averages to the merged data frame. Once again, we just use merge(). Since we have just one rating per session, we will get only the first row of each session.</p>
+<p>Let’s transfer the averages back to the merged <code>data frame</code>. Once again, we use <code>merge()</code>. Note that you may prefer to use one of the join functions from <code>dplyr</code> instead (e.g. <code>dplyr::left_join()</code>).</p>
+<p>Since we have just one average rating per session, we extract the first row of each session and remove the original error count column.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df_summarized &lt;-<span class="st"> </span><span class="kw">merge</span>(df_merged, avg_errors, <span class="dt">by =</span> <span class="st">'session'</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(session) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># For each session</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">row_number</span>()<span class="op">==</span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Get first row</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">row_number</span>() <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Get first row</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>errors) <span class="co"># Remove errors column as we use avg_errors now</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6">df_summarized <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</a></code></pre></div>
@@ -1178,8 +1191,8 @@ If you just want the group starts, you can use the function <strong>find_starts<
 </tr>
 </tbody>
 </table>
-<p>We have 1 row per session with the participant, the rating and the average errors. If we wanted to know how many runs a session contained, we could extract it from the ‘run’ column.</p>
-<p>Now let’s check if there’s a correlation between ratings and average errors.</p>
+<p>We have 1 row per session with the participant, the rating and the average number of errors. If we wanted to know how many runs a session contained, we could extract it from the <code>run</code> column.</p>
+<p>Let’s check if there’s a correlation between ratings and average errors.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">cor</span>(df_summarized<span class="op">$</span>rating, df_summarized<span class="op">$</span>avg_errors)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; [1] -0.9739425</span></a></code></pre></div>
 <p>It seems they are highly negatively correlated, so participants with fewer errors have higher ratings and vice versa.</p>
@@ -1187,8 +1200,8 @@ If you just want the group starts, you can use the function <strong>find_starts<
 </div>
 <div id="outro" class="section level1">
 <h1>Outro</h1>
-<p>Well done, you made it to the end of this introduction to groupdata2! If you want to know more about the various methods and arguments, you can read the <a href="description_of_groupdata2.html">Description of groupdata2</a>.<br />
-If you have any questions or comments to this vignette (tutorial) or groupdata2, please send them to me at<br />
+<p>Well done, you made it to the end of this introduction to <code>groupdata2</code>! If you want to know more about the various methods and arguments, you can read the <a href="description_of_groupdata2.html">Description of groupdata2</a>.</p>
+<p>If you have any questions or comments to this vignette (tutorial) or <code>groupdata2</code>, please send them to me at<br />
 <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@ludvigolsen.dk</a>, or open an issue on the github page <a href="https://github.com/LudvigOlsen/groupdata2" class="uri">https://github.com/LudvigOlsen/groupdata2</a> so I can make improvements.</p>
 <p>   </p>
 </div>
