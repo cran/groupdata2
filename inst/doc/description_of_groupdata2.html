@@ -12,10 +12,11 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2021-07-03" />
+<meta name="date" content="2021-10-24" />
 
 <title>Description of groupdata2</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -36,26 +37,28 @@
   }
 </style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -64,9 +67,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -134,205 +137,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
-</style>
-<style type="text/css">h1 {
-font-size:190%;
-padding-top:20px;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 0.5px solid #777;
-margin: 28px 0;
-}
-img {
-margin-top: 20px;
-margin-bottom: 20px;
-}
-p {
-padding-bottom:7px;
-}
-</style>
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<link rel="stylesheet" href="data:text/css,h1%20%7B%0Afont%2Dsize%3A190%25%3B%0Apadding%2Dtop%3A20px%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%200%2E5px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Aimg%20%7B%0Amargin%2Dtop%3A%2020px%3B%0Amargin%2Dbottom%3A%2020px%3B%0A%7D%0Ap%20%7B%0Apadding%2Dbottom%3A7px%3B%0A%7D%0A" type="text/css" />
 
 
 
@@ -346,10 +152,10 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Description of groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2021-07-03</h4>
+<h4 class="date">2021-10-24</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
-<p><code>groupdata2</code> is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data. Create balanced folds for cross-validation or divide a time series into windows. Balance group sizes with up- and downsampling.</p>
+<p><code>groupdata2</code> is a set of methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data. Create balanced folds for cross-validation or divide a time series into windows. Balance group sizes with up- and downsampling or collapse existing groups to fewer, balanced groups.</p>
 <p>This vignette contains descriptions of functions and methods, along with simple examples of usage. For a gentler introduction to groupdata2, please see <a href="introduction_to_groupdata2.html">Introduction to groupdata2</a>  <br />
  <br />
 Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@ludvigolsen.dk</a>    </p>
@@ -359,50 +165,61 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 
 <div id="TOC">
 <ul>
-<li><a href="#installing-groupdata2">Installing groupdata2</a><ul>
+<li><a href="#installing-groupdata2">Installing groupdata2</a>
+<ul>
 <li><a href="#cran-version">CRAN version</a></li>
 <li><a href="#github-development-version">GitHub development version</a></li>
 </ul></li>
 <li><a href="#attach-packages">Attach packages</a></li>
-<li><a href="#general-information">General information</a><ul>
+<li><a href="#general-information">General information</a>
+<ul>
 <li><a href="#group_factor">group_factor()</a></li>
 <li><a href="#group">group()</a></li>
 <li><a href="#splt">splt()</a></li>
 <li><a href="#fold">fold()</a></li>
 <li><a href="#partition">partition()</a></li>
+<li><a href="#collapse_groups">collapse_groups()</a></li>
 <li><a href="#balance">balance()</a></li>
 <li><a href="#groups-windows-or-folds">Groups, windows or folds?</a></li>
 <li><a href="#introduction-vignettes">Introduction vignettes</a></li>
 <li><a href="#use-of-kable">Use of kable()</a></li>
 </ul></li>
-<li><a href="#grouping-methods">Grouping Methods</a><ul>
+<li><a href="#grouping-methods">Grouping Methods</a>
+<ul>
 <li><a href="#method-greedy">Method: ‘greedy’</a></li>
 <li><a href="#method-n_dist-default">Method: ‘n_dist’ (Default)</a></li>
 <li><a href="#method-n_fill">Method: ‘n_fill’</a></li>
 <li><a href="#method-n_last">Method: ‘n_last’</a></li>
 <li><a href="#method-n_rand">Method: ‘n_rand’</a></li>
 <li><a href="#method-l_sizes">Method: ‘l_sizes’</a></li>
-<li><a href="#method-l_starts">Method: ‘l_starts’</a><ul>
+<li><a href="#method-l_starts">Method: ‘l_starts’</a>
+<ul>
 <li><a href="#skipping">Skipping</a></li>
 <li><a href="#automatically-find-group-starts">Automatically find group starts</a></li>
 <li><a href="#find_starts">find_starts()</a></li>
 <li><a href="#find_missing_starts">find_missing_starts()</a></li>
 </ul></li>
-<li><a href="#method-staircase">Method: ‘staircase’</a><ul>
+<li><a href="#method-every">Method: ‘every’</a></li>
+<li><a href="#method-staircase">Method: ‘staircase’</a>
+<ul>
 <li><a href="#find-remainder---staircase">Find remainder - %staircase%</a></li>
 </ul></li>
-<li><a href="#method-primes">Method: ‘primes’</a><ul>
+<li><a href="#method-primes">Method: ‘primes’</a>
+<ul>
 <li><a href="#find-remainder---primes">Find remainder - %primes%</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#balancing-id-methods">Balancing ID Methods</a><ul>
+<li><a href="#balancing-id-methods">Balancing ID Methods</a>
+<ul>
 <li><a href="#id-method-n_ids">ID method: ‘n_ids’</a></li>
 <li><a href="#id-method-n_rows_c">ID method: ‘n_rows_c’</a></li>
 <li><a href="#id-method-distributed">ID method: ‘distributed’</a></li>
 <li><a href="#id-method-nested">ID method: ‘nested’</a></li>
 </ul></li>
-<li><a href="#arguments">Arguments</a><ul>
-<li><a href="#grouping-arguments">Grouping arguments</a><ul>
+<li><a href="#arguments">Arguments</a>
+<ul>
+<li><a href="#grouping-arguments">Grouping arguments</a>
+<ul>
 <li><a href="#data">data</a></li>
 <li><a href="#n">n</a></li>
 <li><a href="#method">method</a></li>
@@ -427,7 +244,8 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 <li><a href="#parallel">parallel</a></li>
 <li><a href="#list_out">list_out</a></li>
 </ul></li>
-<li><a href="#balancing-arguments">Balancing arguments</a><ul>
+<li><a href="#balancing-arguments">Balancing arguments</a>
+<ul>
 <li><a href="#data-1">data</a></li>
 <li><a href="#size">size</a></li>
 <li><a href="#cat_col-1">cat_col</a></li>
@@ -437,35 +255,45 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 <li><a href="#new_rows_col_name">new_rows_col_name</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#using-functions">Using Functions</a><ul>
-<li><a href="#group_factor-1">group_factor()</a><ul>
+<li><a href="#using-functions">Using Functions</a>
+<ul>
+<li><a href="#group_factor-1">group_factor()</a>
+<ul>
 <li><a href="#force_equal-1">force_equal</a></li>
 </ul></li>
-<li><a href="#group-1">group()</a><ul>
+<li><a href="#group-1">group()</a>
+<ul>
 <li><a href="#force_equal-2">force_equal</a></li>
 </ul></li>
-<li><a href="#splt-1">splt()</a><ul>
+<li><a href="#splt-1">splt()</a>
+<ul>
 <li><a href="#force_equal-3">force_equal</a></li>
 </ul></li>
 <li><a href="#fold-1">fold()</a></li>
 <li><a href="#partition-1">partition()</a></li>
 <li><a href="#balance-1">balance()</a></li>
-<li><a href="#extra-arguments-showcase">Extra arguments showcase</a><ul>
+<li><a href="#extra-arguments-showcase">Extra arguments showcase</a>
+<ul>
 <li><a href="#randomize-1">randomize</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#examples-of-method-differences">Examples of method differences</a><ul>
-<li><a href="#n_-methods">n_ methods</a><ul>
+<li><a href="#examples-of-method-differences">Examples of method differences</a>
+<ul>
+<li><a href="#n_-methods">n_ methods</a>
+<ul>
 <li><a href="#vector-with-57-elements-divided-into-6-groups">Vector with 57 elements divided into 6 groups</a></li>
 <li><a href="#vector-with-117-elements-divided-into-11-groups">Vector with 117 elements divided into 11 groups</a></li>
 </ul></li>
-<li><a href="#greedy">Greedy</a><ul>
+<li><a href="#greedy">Greedy</a>
+<ul>
 <li><a href="#vector-with-100-elements-with-sizes-of-8-15-20">Vector with 100 elements with sizes of 8, 15, 20</a></li>
 </ul></li>
-<li><a href="#staircasing">Staircasing</a><ul>
+<li><a href="#staircasing">Staircasing</a>
+<ul>
 <li><a href="#vector-with-1000-elements-with-step-sizes-of-2-5-11">Vector with 1000 elements with step sizes of 2, 5, 11</a></li>
 </ul></li>
-<li><a href="#primes">Primes</a><ul>
+<li><a href="#primes">Primes</a>
+<ul>
 <li><a href="#vector-with-1000-elements-with-n-start-at-as-2-5-11">Vector with 1000 elements with n (start at) as 2, 5, 11</a></li>
 </ul></li>
 </ul></li>
@@ -478,39 +306,39 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 <p>You can either install the CRAN version or the GitHub development version.</p>
 <div id="cran-version" class="section level3">
 <h3>CRAN version</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Uncomment:</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># install.packages(&quot;groupdata2&quot;)  </span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;groupdata2&quot;)  </span></span></code></pre></div>
 </div>
 <div id="github-development-version" class="section level3">
 <h3>GitHub development version</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Uncomment:</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># install.packages(&quot;devtools&quot;)  </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># devtools::install_github(&quot;LudvigOlsen/groupdata2&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uncomment:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)  </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># devtools::install_github(&quot;LudvigOlsen/groupdata2&quot;)</span></span></code></pre></div>
 </div>
 </div>
 <div id="attach-packages" class="section level2">
 <h2>Attach packages</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># Attaching groupdata2</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">library</span>(groupdata2)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># Attaching other packages used in this vignette</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">library</span>(knitr)</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co"># We will also be using plyr a few times, but we don't attach this </span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># because of possible conflicts with dplyr. Instead we use its functions</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co"># like so: plyr::count()</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Attaching groupdata2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(groupdata2)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Attaching other packages used in this vignette</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># We will also be using plyr a few times, but we don&#39;t attach this </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># because of possible conflicts with dplyr. Instead we use its functions</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># like so: plyr::count()</span></span></code></pre></div>
 </div>
 <div id="general-information" class="section level1">
 <h1>General information</h1>
 <p><code>groupdata2</code> is a set of functions and methods for easy grouping, windowing, folding, partitioning, splitting and balancing of data.</p>
-<p>There are 6 main functions:</p>
+<p>There are 7 main functions:</p>
 <div id="group_factor" class="section level3">
 <h3>group_factor()</h3>
-<p>Returns a factor with group numbers, e.g. <code>c(1, 1, 1, 2, 2, 2, 3, 3, 3)</code>. This can be used to subset, aggregate, group_by, etc.</p>
+<p>Returns a factor with group numbers, e.g. <code>c(1, 1, 1, 2, 2, 2, 3, 3, 3)</code>. This can be used to subset, aggregate, group_by, etc.</p>
 </div>
 <div id="group" class="section level3">
 <h3>group()</h3>
@@ -527,6 +355,10 @@ Contact author at <a href="mailto:r-pkgs@ludvigolsen.dk" class="email">r-pkgs@lu
 <div id="partition" class="section level3">
 <h3>partition()</h3>
 <p>Creates (optionally) balanced partitions (e.g. training/test sets). Balance partitions on one categorical variable and/or one numerical variable. Make sure that all datapoints sharing an ID is in the same partition.</p>
+</div>
+<div id="collapse_groups" class="section level3">
+<h3>collapse_groups()</h3>
+<p>Collapses existing groups into a smaller set of groups with (optional) categorical, numerical, ID, and/or size balancing.</p>
 </div>
 <div id="balance" class="section level3">
 <h3>balance()</h3>
@@ -554,8 +386,8 @@ In this vignette, we will use the <code>l_starts</code> method with <code>group(
 </div>
 <div id="grouping-methods" class="section level1">
 <h1>Grouping Methods</h1>
-<p>There are currently 9 methods for grouping the data.</p>
-<p>It is possible to create groups based on <em>number of groups</em> (default), <em>group size</em>, <em>list of group sizes</em>, <em>list of group start positions</em>, <em>step size</em> or <em>prime number to start at</em>. These can be passed as whole number(s) or percentage(s), while method <code>l_starts</code> can also use <code>'auto'</code>.</p>
+<p>There are currently 10 methods for grouping the data.</p>
+<p>It is possible to create groups based on <em>number of groups</em> (default), <em>group size</em>, <em>list of group sizes</em>, <em>list of group start positions</em>, <em>distance between members</em>, <em>step size</em> or <em>prime number to start at</em>. These can be passed as whole number(s) or percentage(s), while method <code>l_starts</code> also accepts <code>&#39;auto&#39;</code>.</p>
 <p>Here, we will take a look at the different methods.</p>
 <div id="method-greedy" class="section level2">
 <h2>Method: ‘greedy’</h2>
@@ -696,9 +528,9 @@ Excess data points are placed in extra group at the end.</p>
 <h2>Method: ‘l_starts’</h2>
 <p><code>l_starts</code> starts new groups at specified values of vector.</p>
 <p><code>n</code> is a <code>list</code> of starting positions. Skip values by <code>c(value, skip_to_number)</code> where <code>skip_to_number</code> is the nth appearance of the value in the <code>vector</code>. Groups automatically start from first data point.</p>
-<p>If passing <code>n = 'auto'</code> the starting positions are automatically found with <code>find_starts()</code>.</p>
+<p>If passing <code>n = &#39;auto&#39;</code> the starting positions are automatically found with <code>find_starts()</code>.</p>
 <p>If data is a <code>data frame</code>, <code>starts_col</code> must be set to indicate the column to match starts.</p>
-<p>Set <code>starts_col</code> to <code>'index'</code> or <code>'.index'</code> for matching with row names. <code>'index'</code> first looks for column named <code>'index'</code> in data, while <code>'.index'</code> completely ignores any potential column in data named <code>'.index'</code>.</p>
+<p>Set <code>starts_col</code> to <code>&#39;index&#39;</code> or <code>&#39;.index&#39;</code> for matching with row names. <code>&#39;index&#39;</code> first looks for column named <code>&#39;index&#39;</code> in data, while <code>&#39;.index&#39;</code> completely ignores any potential column in data named <code>&#39;.index&#39;</code>.</p>
 <p> </p>
 <p><strong>Example</strong></p>
 <blockquote>
@@ -761,6 +593,27 @@ A group start is a value which differs from the previous value.</p>
 </blockquote>
 <p> </p>
 </div>
+</div>
+<div id="method-every" class="section level2">
+<h2>Method: ‘every’</h2>
+<p><code>every</code> greedily combines every <code>n</code>th data point.</p>
+<p> </p>
+<p><strong>Example</strong></p>
+<blockquote>
+<p>We have a vector with 57 values. We want to get back 5 groups.</p>
+<p>‘every’ with default settings would return groups with this many values in them:</p>
+<p>12, 12, 11, 11, 11</p>
+</blockquote>
+<p> </p>
+<p>By setting <code>force_equal = TRUE</code>, <code>every</code> discards the last <code>length % n</code> data points such that all groups have the same size.</p>
+<p> </p>
+<p><strong>Example</strong></p>
+<blockquote>
+<p>‘every’ with <strong>force_equal</strong> set to TRUE would return groups with this many values in them:</p>
+<p>11, 11, 11, 11, 11</p>
+<p>meaning that 2 values have been discarded.</p>
+</blockquote>
+<p> </p>
 </div>
 <div id="method-staircase" class="section level2">
 <h2>Method: ‘staircase’</h2>
@@ -878,7 +731,7 @@ This is done in 2 steps:</p>
 <p>Type: <code>integer</code>, <code>numeric</code>, <code>character</code>, or <code>list</code></p>
 <p><code>n</code> represents either number of groups (default), group size, list of group sizes, list of group starts, step size or prime number to start at, <em>depending on which method is specified</em>.<br />
 <code>n</code> can be given as a <strong>whole number(s)</strong> (n &gt; 1) or as <strong>percentage(s)</strong> (0 &lt; n &lt; 1).</p>
-<p>Method <code>l_starts</code> allows <code>n = 'auto'</code>.</p>
+<p>Method <code>l_starts</code> allows <code>n = &#39;auto&#39;</code>.</p>
 <p> </p>
 <p>Used in: <code>group_factor()</code>, <code>group()</code>, <code>splt()</code></p>
 </div>
@@ -894,7 +747,7 @@ Available methods: <code>greedy</code>, <code>n_dist</code>, <code>n_fill</code>
 <h3>starts_col</h3>
 <p>Type: <code>character</code></p>
 <p>Name of column with values to match in method <code>l_starts</code> when <code>data</code> is a <code>data frame</code>.</p>
-<p>Pass <code>'index'</code> or <code>'.index'</code> to use rownames. <code>'index'</code> first looks for column named <code>'index'</code> in <code>data</code>, while <code>'.index'</code> completely ignores any potential column in data named <code>'.index'</code>.</p>
+<p>Pass <code>&#39;index&#39;</code> or <code>&#39;.index&#39;</code> to use rownames. <code>&#39;index&#39;</code> first looks for column named <code>&#39;index&#39;</code> in <code>data</code>, while <code>&#39;.index&#39;</code> completely ignores any potential column in data named <code>&#39;.index&#39;</code>.</p>
 <p> </p>
 <p>Used in: <code>group_factor()</code>, <code>group()</code>, <code>splt()</code></p>
 </div>
@@ -1033,7 +886,7 @@ E.g. a participant must always have the same diagnosis (‘a’ or ‘b’) thro
 <h3>max_iters</h3>
 <p>Type: <code>logical</code> (<code>TRUE</code> or <code>FALSE</code>)</p>
 <p>Maximum number of attempts at reaching <code>num_fold_cols</code> <strong>unique</strong> fold columns.</p>
-<p>When only keeping the unique fold columns, we risk having fewer columns than expected. Hence, we repeatedly create the missing columns and remove those that are not unique. This is done until we have <code>num_fold_cols</code> unique fold columns, or we have attempted <code>max_iters</code> times. In some cases, it is not possible to create <code>num_fold_cols</code> unique combinations of the dataset, e.g. when specifying <code>cat_col</code>, <code>id_col</code> and <code>num_col</code>.<br />
+<p>When only keeping the unique fold columns, we risk having fewer columns than expected. Hence, we repeatedly create the missing columns and remove those that are not unique. This is done until we have <code>num_fold_cols</code> unique fold columns, or we have attempted <code>max_iters</code> times. In some cases, it is not possible to create <code>num_fold_cols</code> unique combinations of the dataset, e.g. when specifying <code>cat_col</code>, <code>id_col</code> and <code>num_col</code>.<br />
 <code>max_iters</code> specifies when to stop trying.</p>
 <p><strong>N.B.</strong> We can end up with fewer columns than specified in <code>num_fold_cols</code>.</p>
 <p><strong>N.B.</strong> Only used <code>num_fold_cols &gt; 1</code>.</p>
@@ -1134,23 +987,23 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>), </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>group_factor()</code></li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">groups &lt;-<span class="st"> </span><span class="kw">group_factor</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">groups</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;  [1] 1 1 2 2 3 3 3 4 4 5 5 5</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; Levels: 1 2 3 4 5</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">df<span class="op">$</span>groups &lt;-<span class="st"> </span>groups</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">group_factor</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>groups</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 1 1 2 2 3 3 3 4 4 5 5 5</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: 1 2 3 4 5</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>groups <span class="ot">&lt;-</span> groups</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1238,10 +1091,10 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="3" style="list-style-type: decimal">
 <li>We could get the mean age of each group</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(groups) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(groups) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1279,23 +1132,23 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),  </a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),  </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>group_factor()</code> with <code>force_equal</code></li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">groups &lt;-<span class="st"> </span><span class="kw">group_factor</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>, <span class="dt">force_equal =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">groups</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [1] 1 1 2 2 3 3 4 4 5 5</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; Levels: 1 2 3 4 5</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">plyr<span class="op">::</span><span class="kw">count</span>(groups) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">group =</span> x, <span class="dt">size =</span> freq) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">group_factor</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>, <span class="at">force_equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>groups</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 1 1 2 2 3 3 4 4 5 5</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: 1 2 3 4 5</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plyr<span class="sc">::</span><span class="fu">count</span>(groups) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">group =</span> x, <span class="at">size =</span> freq) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1330,10 +1183,10 @@ See the necessary attached packages for running the examples under <a href="#att
 <li>Combining <code>data frame</code> and grouping factor</li>
 </ol>
 <p>First we make the <code>data frame</code> the same size as the grouping factor. Then we add the grouping factor to the <code>data frame</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">head</span>(df, <span class="kw">length</span>(groups)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group =</span> groups)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">head</span>(df, <span class="fu">length</span>(groups)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> groups)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1414,17 +1267,17 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),  </a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>group()</code></li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df_grouped &lt;-<span class="st"> </span><span class="kw">group</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">df_grouped <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">&lt;-</span> <span class="fu">group</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1510,11 +1363,11 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>2.2 Using <code>group()</code> in <code>magrittr</code> pipeline to get mean age</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">df_means &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">group</span>(<span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_age =</span> <span class="kw">mean</span>(age))</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">df_means <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_means <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group</span>(<span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_age =</span> <span class="fu">mean</span>(age))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df_means <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1552,18 +1405,18 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),  </a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>group()</code> with <code>force_equal</code></li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">df_grouped &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">group</span>(<span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>, <span class="dt">force_equal =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">df_grouped <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group</span>(<span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>, <span class="at">force_equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1644,17 +1497,17 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),  </a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),  </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>splt()</code></li>
 </ol>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">df_list &lt;-<span class="st"> </span><span class="kw">splt</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">df_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_list <span class="ot">&lt;-</span> <span class="fu">splt</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df_list <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table class="kable_wrapper">
 <tbody>
 <tr>
@@ -1804,17 +1657,17 @@ See the necessary attached packages for running the examples under <a href="#att
 <li>Let’s see the format of the list created by <code>splt()</code> without using <code>kable()</code> to visualize it.<br />
 <code>splt()</code> uses <code>base::split()</code> to split the data by the grouping factor.</li>
 </ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">v &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">splt</span>(v, <span class="dv">3</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; $`1`</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; [1] 1 2</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; $`2`</span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; [1] 3 4</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; $`3`</span></a>
-<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; [1] 5 6</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">splt</span>(v, <span class="dv">3</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`1`</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 2</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`2`</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3 4</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`3`</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5 6</span></span></code></pre></div>
 <div id="force_equal-3" class="section level3">
 <h3>force_equal</h3>
 <p>Getting an equal number of elements per group with <code>splt()</code>.</p>
@@ -1822,17 +1675,17 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>),  </a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>),  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>splt()</code> with <code>force_equal</code></li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">df_list &lt;-<span class="st"> </span><span class="kw">splt</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>, <span class="dt">force_equal =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">df_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_list <span class="ot">&lt;-</span> <span class="fu">splt</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>, <span class="at">force_equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>df_list <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table class="kable_wrapper">
 <tbody>
 <tr>
@@ -1974,23 +1827,23 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'4'</span>, <span class="st">'5'</span>, <span class="st">'6'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">  <span class="st">&quot;diagnosis&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">  <span class="st">&quot;score&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb20-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="st">  </span><span class="kw">arrange</span>(participant)</a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co"># Remove index</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="kw">rownames</span>(df) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="co"># Add session info</span></a>
-<a class="sourceLine" id="cb20-15" data-line-number="15">df<span class="op">$</span>session &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>,<span class="st">'2'</span>, <span class="st">'3'</span>), <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb20-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb20-17" data-line-number="17"><span class="kw">kable</span>(df, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>, <span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>, <span class="st">&#39;4&#39;</span>, <span class="st">&#39;5&#39;</span>, <span class="st">&#39;6&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;diagnosis&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;score&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="sc">*</span> <span class="dv">6</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(participant)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove index</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add session info</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>session <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>), <span class="dv">6</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2133,13 +1986,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>fold()</code> without balancing</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">df_folded &lt;-<span class="st"> </span><span class="kw">fold</span>(df, <span class="dv">3</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co"># Order by folds</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">df_folded &lt;-<span class="st"> </span>df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.folds)</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="kw">kable</span>(df_folded, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> <span class="fu">fold</span>(df, <span class="dv">3</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by folds</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.folds)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_folded, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2301,13 +2154,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="3" style="list-style-type: decimal">
 <li>Using <code>fold()</code> with balancing but without id_col</li>
 </ol>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">df_folded &lt;-<span class="st"> </span><span class="kw">fold</span>(df, <span class="dv">3</span>, <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co"># Order by folds</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">df_folded &lt;-<span class="st"> </span>df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.folds)</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="kw">kable</span>(df_folded, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> <span class="fu">fold</span>(df, <span class="dv">3</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by folds</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.folds)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_folded, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2467,9 +2320,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each diagnosis there are in each group.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.folds, diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.folds, diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2514,16 +2367,16 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="4" style="list-style-type: decimal">
 <li>Using <code>fold()</code> with <code>id_col</code> but without balancing</li>
 </ol>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">df_folded &lt;-<span class="st"> </span><span class="kw">fold</span>(df, <span class="dv">3</span>, <span class="dt">id_col =</span> <span class="st">'participant'</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co"># Order by folds</span></a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">df_folded &lt;-<span class="st"> </span>df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.folds) </a>
-<a class="sourceLine" id="cb24-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co"># Remove index (Looks prettier in the table!)</span></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="kw">rownames</span>(df_folded) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="kw">kable</span>(df_folded, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> <span class="fu">fold</span>(df, <span class="dv">3</span>, <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by folds</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.folds) </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove index (Looks prettier in the table!)</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df_folded) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_folded, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2683,9 +2536,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s see how participants were distributed in the groups.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.folds, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.folds, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2731,13 +2584,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <li>Using <code>fold()</code> with balancing and with <code>id_col</code></li>
 </ol>
 <p><code>fold()</code> first divides up the data frame by <code>cat_col</code> and then create <code>n</code> folds for both diagnoses. As there are only 3 participants per diagnosis, we can maximally create 3 folds in this scenario.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">df_folded &lt;-<span class="st"> </span><span class="kw">fold</span>(df, <span class="dv">3</span>, <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>, <span class="dt">id_col =</span> <span class="st">'participant'</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co"># Order by folds</span></a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">df_folded &lt;-<span class="st"> </span>df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.folds)</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="kw">kable</span>(df_folded, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> <span class="fu">fold</span>(df, <span class="dv">3</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by folds</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>df_folded <span class="ot">&lt;-</span> df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.folds)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_folded, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2897,9 +2750,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each diagnosis there are in each group and find which participants are in which groups.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">df_folded <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.folds, diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df_folded <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.folds, diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -2955,22 +2808,22 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'4'</span>, <span class="st">'5'</span>, <span class="st">'6'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">  <span class="st">&quot;diagnosis&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb28-5" data-line-number="5">  <span class="st">&quot;score&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb28-8" data-line-number="8">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(participant)</a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co"># Remove index</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="kw">rownames</span>(df) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co"># Add session info</span></a>
-<a class="sourceLine" id="cb28-14" data-line-number="14">df<span class="op">$</span>session &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>,<span class="st">'2'</span>, <span class="st">'3'</span>), <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb28-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="kw">kable</span>(df, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>, <span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>, <span class="st">&#39;4&#39;</span>, <span class="st">&#39;5&#39;</span>, <span class="st">&#39;6&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;diagnosis&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;score&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="sc">*</span> <span class="dv">6</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(participant)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove index</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add session info</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>session <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>), <span class="dv">6</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3113,16 +2966,16 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>partition()</code> without balancing</li>
 </ol>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">df_partitioned &lt;-<span class="st"> </span><span class="kw">partition</span>(df, <span class="fl">0.3</span>, <span class="dt">list_out =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co"># Order by partitions</span></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">df_partitioned &lt;-<span class="st"> </span>df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.partitions)</a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co"># Partition Sizes</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8">df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="st">  </span><span class="kw">count</span>(.partitions) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, <span class="fl">0.3</span>, <span class="at">list_out =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by partitions</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.partitions)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Partition Sizes</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.partitions) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3141,8 +2994,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">kable</span>(df_partitioned, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_partitioned, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3304,13 +3157,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="3" style="list-style-type: decimal">
 <li>Using <code>partition()</code> with balancing but without <code>id_col</code></li>
 </ol>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">df_partitioned &lt;-<span class="st"> </span><span class="kw">partition</span>(df, <span class="fl">0.3</span>, <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>, <span class="dt">list_out =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co"># Order by partitions</span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4">df_partitioned &lt;-<span class="st"> </span>df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.partitions)</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="kw">kable</span>(df_partitioned, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, <span class="fl">0.3</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, <span class="at">list_out =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by partitions</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.partitions)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_partitioned, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3470,9 +3323,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each diagnosis there are in each partition.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.partitions, diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.partitions, diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3507,13 +3360,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="4" style="list-style-type: decimal">
 <li>Using <code>partition()</code> with <code>id_col</code> but without balancing</li>
 </ol>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">df_partitioned &lt;-<span class="st"> </span><span class="kw">partition</span>(df, <span class="fl">0.5</span>, <span class="dt">id_col =</span> <span class="st">'participant'</span>, <span class="dt">list_out =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co"># Order by partitions</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4">df_partitioned &lt;-<span class="st"> </span>df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(.partitions)</a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="kw">kable</span>(df_partitioned, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, <span class="fl">0.5</span>, <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>, <span class="at">list_out =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by partitions</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.partitions)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_partitioned, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3673,9 +3526,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s see how participants were distributed in the partitions.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.partitions, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.partitions, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3721,19 +3574,19 @@ See the necessary attached packages for running the examples under <a href="#att
 <li>Using <code>partition()</code> with <code>cat_col</code> and with <code>id_col</code></li>
 </ol>
 <p><code>partition()</code> first divides up the data frame by <code>cat_col</code> and then create <code>n</code> partitions for both diagnoses.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">df_partitioned &lt;-<span class="st"> </span><span class="kw">partition</span>(</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">  <span class="dt">data =</span> df, </a>
-<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="dt">p =</span> <span class="fl">0.5</span>, </a>
-<a class="sourceLine" id="cb35-4" data-line-number="4">  <span class="dt">cat_col =</span> <span class="st">'diagnosis'</span>, </a>
-<a class="sourceLine" id="cb35-5" data-line-number="5">  <span class="dt">id_col =</span> <span class="st">'participant'</span>, </a>
-<a class="sourceLine" id="cb35-6" data-line-number="6">  <span class="dt">list_out =</span> <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="co"># Order by folds</span></a>
-<a class="sourceLine" id="cb35-10" data-line-number="10">df_partitioned &lt;-<span class="st"> </span>df_partitioned <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(.partitions)</a>
-<a class="sourceLine" id="cb35-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="kw">kable</span>(df_partitioned, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> <span class="fu">partition</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.5</span>, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>, </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">list_out =</span> <span class="cn">FALSE</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by folds</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="ot">&lt;-</span> df_partitioned <span class="sc">%&gt;%</span> </span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(.partitions)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_partitioned, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3893,9 +3746,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each diagnosis there are in each group and find which participants are in which partitions.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">df_partitioned <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(.partitions, diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_partitioned <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.partitions, diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -3949,33 +3802,33 @@ See the necessary attached packages for running the examples under <a href="#att
 <div id="balance-1" class="section level2">
 <h2>balance()</h2>
 <ol style="list-style-type: decimal">
-<li>We create a <code>data frame</code></li>
+<li>We create a <code>dataframe</code></li>
 </ol>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">  <span class="st">&quot;participant&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span>, <span class="st">'4'</span>, <span class="st">'5'</span>, <span class="st">'6'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb37-3" data-line-number="3">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">  <span class="st">&quot;diagnosis&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'b'</span>), <span class="dv">3</span>)), </a>
-<a class="sourceLine" id="cb37-5" data-line-number="5">  <span class="st">&quot;score&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="op">*</span><span class="st"> </span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb37-6" data-line-number="6">)</a>
-<a class="sourceLine" id="cb37-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb37-8" data-line-number="8">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="st">  </span><span class="kw">arrange</span>(participant)</a>
-<a class="sourceLine" id="cb37-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb37-11" data-line-number="11"><span class="co"># Add session info</span></a>
-<a class="sourceLine" id="cb37-12" data-line-number="12">df<span class="op">$</span>session &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'1'</span>,<span class="st">'2'</span>, <span class="st">'3'</span>), <span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb37-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="co"># Sample dataset to get imbalances</span></a>
-<a class="sourceLine" id="cb37-15" data-line-number="15">df &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="st">  </span><span class="kw">sample_frac</span>(<span class="fl">0.7</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="st">  </span><span class="kw">arrange</span>(participant)</a>
-<a class="sourceLine" id="cb37-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb37-19" data-line-number="19"><span class="co"># Remove index</span></a>
-<a class="sourceLine" id="cb37-20" data-line-number="20"><span class="kw">rownames</span>(df) &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb37-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb37-22" data-line-number="22"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb37-23" data-line-number="23">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-24" data-line-number="24"><span class="st">  </span><span class="kw">count</span>(diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-25" data-line-number="25"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>, <span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>, <span class="st">&#39;4&#39;</span>, <span class="st">&#39;5&#39;</span>, <span class="st">&#39;6&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">6</span>), <span class="dv">3</span>), </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;diagnosis&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dv">3</span>)), </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;score&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">3</span> <span class="sc">*</span> <span class="dv">6</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(participant)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add session info</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>session <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>), <span class="dv">6</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample dataset to get imbalances</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_frac</span>(<span class="fl">0.7</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(participant)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove index</span></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4017,9 +3870,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4038,8 +3891,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">kable</span>(df, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4147,13 +4000,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="2" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for downsampling without <code>id_col</code></li>
 </ol>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="st">&quot;min&quot;</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb40-5" data-line-number="5">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="st">&quot;min&quot;</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4172,8 +4025,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4274,13 +4127,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="3" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for downsampling with <code>id_col</code> and <code>id_method</code> <code>n_rows_c</code></li>
 </ol>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="st">&quot;min&quot;</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, <span class="dt">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="dt">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="co"># Partition Sizes</span></a>
-<a class="sourceLine" id="cb42-5" data-line-number="5">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-7" data-line-number="7"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="st">&quot;min&quot;</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="at">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Partition Sizes</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4299,8 +4152,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4399,9 +4252,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each participant there are in each diagnosis.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4441,13 +4294,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="4" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for upsampling without <code>id_col</code></li>
 </ol>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="st">&quot;max&quot;</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb45-5" data-line-number="5">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="st">&quot;max&quot;</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4466,8 +4319,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4582,14 +4435,14 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="5" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for upsampling with <code>id_col</code> and <code>id_method</code> <code>n_rows_c</code></li>
 </ol>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="st">&quot;max&quot;</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, </a>
-<a class="sourceLine" id="cb47-2" data-line-number="2">                       <span class="dt">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="dt">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb47-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb47-5" data-line-number="5"><span class="co"># Partition Sizes</span></a>
-<a class="sourceLine" id="cb47-6" data-line-number="6">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb47-7" data-line-number="7"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb47-8" data-line-number="8"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="st">&quot;max&quot;</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="at">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Partition Sizes</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4608,8 +4461,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4722,9 +4575,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each participant there are in each diagnosis.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4769,13 +4622,13 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="6" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for downsampling to a specific size without <code>id_col</code></li>
 </ol>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="dv">3</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb50-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="co"># Counts</span></a>
-<a class="sourceLine" id="cb50-5" data-line-number="5">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-7" data-line-number="7"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="dv">3</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4794,8 +4647,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4852,9 +4705,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each participant there are in each diagnosis.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4899,14 +4752,14 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol start="7" style="list-style-type: decimal">
 <li>Using <code>balance()</code> for downsampling to a specific size with <code>id_col</code> and <code>id_method</code> <code>n_rows_c</code></li>
 </ol>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">df_balanced &lt;-<span class="st"> </span><span class="kw">balance</span>(df, <span class="dv">3</span>, <span class="dt">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, </a>
-<a class="sourceLine" id="cb53-2" data-line-number="2">                       <span class="dt">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="dt">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(diagnosis, participant)</a>
-<a class="sourceLine" id="cb53-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co"># Partition Sizes</span></a>
-<a class="sourceLine" id="cb53-6" data-line-number="6">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="st">  </span><span class="kw">count</span>(diagnosis) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="ot">&lt;-</span> <span class="fu">balance</span>(df, <span class="dv">3</span>, <span class="at">cat_col =</span> <span class="st">&quot;diagnosis&quot;</span>, </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="at">id_method =</span> <span class="st">&quot;n_rows_c&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diagnosis, participant)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Partition Sizes</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4925,8 +4778,8 @@ See the necessary attached packages for running the examples under <a href="#att
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">kable</span>(df_balanced, <span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df_balanced, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -4983,9 +4836,9 @@ See the necessary attached packages for running the examples under <a href="#att
 </tbody>
 </table>
 <p>Let’s count how many of each participant there are in each diagnosis.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">df_balanced <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(diagnosis, participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">align=</span><span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>df_balanced <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis, participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align=</span><span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -5021,26 +4874,26 @@ See the necessary attached packages for running the examples under <a href="#att
 <ol style="list-style-type: decimal">
 <li>We create a <code>data frame</code></li>
 </ol>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb56-2" data-line-number="2">  <span class="st">&quot;x&quot;</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">12</span>), </a>
-<a class="sourceLine" id="cb56-3" data-line-number="3">  <span class="st">&quot;species&quot;</span> =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">'cat'</span>, <span class="st">'pig'</span>, <span class="st">'human'</span>), <span class="dv">4</span>)), </a>
-<a class="sourceLine" id="cb56-4" data-line-number="4">  <span class="st">&quot;age&quot;</span> =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>), <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb56-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;x&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>), </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;species&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;cat&#39;</span>, <span class="st">&#39;pig&#39;</span>, <span class="st">&#39;human&#39;</span>), <span class="dv">4</span>)), </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>), <span class="dv">12</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>We use <code>group_factor()</code> with <code>randomize</code> set to <code>TRUE</code></li>
 </ol>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">groups &lt;-<span class="st"> </span><span class="kw">group_factor</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>, <span class="dt">randomize =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb57-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb57-3" data-line-number="3">groups</a>
-<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="co">#&gt;  [1] 3 2 1 5 4 5 1 3 2 3 5 4</span></a>
-<a class="sourceLine" id="cb57-5" data-line-number="5"><span class="co">#&gt; Levels: 1 2 3 4 5</span></a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">group_factor</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>, <span class="at">randomize =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>groups</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 3 2 1 5 4 5 1 3 2 3 5 4</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: 1 2 3 4 5</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>We use <code>splt()</code> with <code>randomize</code> set to <code>TRUE</code><br />
 Notice that the index has been shuffled but the group sizes are the same as before!</li>
 </ol>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">df_list &lt;-<span class="st"> </span><span class="kw">splt</span>(df, <span class="dv">5</span>, <span class="dt">method =</span> <span class="st">'n_dist'</span>, <span class="dt">randomize =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb58-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb58-3" data-line-number="3">df_list <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>(<span class="dt">align =</span> <span class="st">'c'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df_list <span class="ot">&lt;-</span> <span class="fu">splt</span>(df, <span class="dv">5</span>, <span class="at">method =</span> <span class="st">&#39;n_dist&#39;</span>, <span class="at">randomize =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>df_list <span class="sc">%&gt;%</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table class="kable_wrapper">
 <tbody>
 <tr>
