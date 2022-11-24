@@ -26,7 +26,7 @@ library(groupdata2)
 # Attaching other packages used in this vignette
 library(dplyr)
 library(tidyr)
-library(ggplot2)
+require(ggplot2, quietly = TRUE)  # Attach if installed
 library(knitr)
 
 # We will also be using plyr a few times, but we don't attach this 
@@ -479,7 +479,7 @@ df_list <- splt(df, 5, method = 'n_dist', randomize = TRUE)
 df_list %>% kable(align = 'c')
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 # 
 # Examples to show difference between methods
@@ -557,7 +557,7 @@ v57n6_plot +
 
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 
 
@@ -630,7 +630,7 @@ v117n11_plot +
   
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 
 vec <- c(1:100)
@@ -673,7 +673,7 @@ greedy_plot +
 
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 
 vec <- c(1:1000)
@@ -717,7 +717,7 @@ staircase_plot +
 
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 staircase_data <- staircase_data %>%
   group_by(step_size) %>%
@@ -736,7 +736,7 @@ staircase_cumulative_plot +
         axis.text.x = element_text(size=7))
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 
 vec <- c(1:1000)
@@ -779,7 +779,7 @@ primes_plot +
 
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE, eval=requireNamespace("ggplot2")-----------------------------
 
 primes_data <- primes_data %>%
   group_by(start_at) %>%

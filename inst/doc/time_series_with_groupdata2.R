@@ -12,7 +12,7 @@ options(tibble.print_min = 4L, tibble.print_max = 4L)
 ## ----warning=FALSE,message=FALSE----------------------------------------------
 library(groupdata2)
 library(dplyr) # %>%
-library(ggplot2)
+require(ggplot2, quietly = TRUE)  # Attach if installed
 library(knitr) # kable
 
 ## -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ str(timeSeriesFrame)
 timeSeriesFrame %>% head(12) %>% kable()
 
 
-## ----echo=FALSE, message=FALSE------------------------------------------------
+## ----echo=FALSE, message=FALSE, eval=requireNamespace("ggplot2")--------------
 # Plot of time series
 
 ggplot(timeSeriesFrame, aes(seq_along(residents), residents)) +
@@ -47,7 +47,7 @@ ts = timeSeriesFrame %>%
 # Show new data
 ts %>% kable() 
 
-## ----echo=FALSE, message=FALSE------------------------------------------------
+## ----echo=FALSE, message=FALSE, eval=requireNamespace("ggplot2")--------------
 # Plot of time series
 
 ggplot(ts, aes(.groups, mean)) +
@@ -113,7 +113,7 @@ ts_means <- ts %>%
 # Show head of new data
 ts_means %>% head(9) %>% kable() 
 
-## ----echo=FALSE, message=FALSE------------------------------------------------
+## ----echo=FALSE, message=FALSE, eval=requireNamespace("ggplot2")--------------
 # Plot of time series
 
 ggplot(ts_means, aes(seq_along(mean), mean)) +

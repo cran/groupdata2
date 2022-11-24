@@ -5,7 +5,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.align='center',
   dpi = 92,
-  fig.retina = 2
+  fig.retina = 2,
+  eval = requireNamespace("lmerTest")
 )
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
@@ -14,11 +15,8 @@ options(tibble.print_min = 4L, tibble.print_max = 4L)
 # Attach some packages
 library(groupdata2)
 library(dplyr)
-library(ggplot2)
 library(knitr) # kable()
 library(lmerTest) #lmer()
-library(broom) #tidy()
-library(hydroGOF) # rmse()
 
 
 # Create data frame
@@ -95,6 +93,11 @@ train_set %>%
   kable(align = 'c')
 
 ## -----------------------------------------------------------------------------
+# RMSE metric
+rmse <- function(predictions, targets){
+  sqrt(mean((predictions - targets)^2))
+}
+
 crossvalidate <- function(data, k, model, dependent, random = FALSE){
   # 'data' is the training set with the ".folds" column
   # 'k' is the number of folds we have
@@ -154,9 +157,9 @@ crossvalidate <- function(data, k, model, dependent, random = FALSE){
 }
 
 
-## -----------------------------------------------------------------------------
+## ----eval=requireNamespace("broom")-------------------------------------------
 lm(score ~ diagnosis, df) %>% 
-  tidy()
+  broom::tidy()
 
 ## -----------------------------------------------------------------------------
 m0 <- 'score ~ 1 + (1 | participant)'
