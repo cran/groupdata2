@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2023-06-18" />
+<meta name="date" content="2024-12-18" />
 
 <title>Automatic groups with groupdata2</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -368,7 +368,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Automatic groups with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2023-06-18</h4>
+<h4 class="date">2024-12-18</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>In this vignette, we use the R package <code>groupdata2</code> to
@@ -406,9 +406,9 @@ dataset to another. We will use the automatic grouping function that
 finds <em>group starts</em> all by itself.</p>
 <div id="attach-packages" class="section level2">
 <h2>Attach packages</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(groupdata2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># %&gt;%</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># kable</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(groupdata2)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># %&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># kable</span></span></code></pre></div>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
@@ -423,27 +423,27 @@ to save energy for the other session or whether to try and correct the
 rating of the current session.</p>
 <p>For each run of the task, we recorded how many errors the participant
 made.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_observations <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;run&quot;</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>), </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;errors&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the first 20 rows of data frame</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>df_observations <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>) <span class="sc">%&gt;%</span>  <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>df_observations <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="st">&quot;run&quot;</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, </span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>), </span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="st">&quot;errors&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, </span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, </span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co"># Show the first 20 rows of data frame</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>df_observations <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>) <span class="sc">%&gt;%</span>  <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -555,13 +555,13 @@ made.</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_ratings <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;session&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;rating&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">4</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df_ratings <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>df_ratings <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="st">&quot;session&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>), </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="st">&quot;rating&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">4</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>df_ratings <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -606,15 +606,15 @@ This methods takes <em>group start values</em>, finds those values in a
 specified column, and creates groups that begin at the start values. To
 show this, let’s try it out with some manually entered start values
 before having <code>group()</code> find them automatically.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">group</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df_observations,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),  <span class="co"># Starting values</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;l_starts&#39;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">starts_col =</span> <span class="st">&#39;participant&#39;</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_name =</span> <span class="st">&#39;session&#39;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">group</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="at">data =</span> df_observations,</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),  <span class="co"># Starting values</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;l_starts&#39;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">starts_col =</span> <span class="st">&#39;participant&#39;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">col_name =</span> <span class="st">&#39;session&#39;</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -819,16 +819,16 @@ entire session, we can actually get <code>group()</code> to find these
 group starts automatically. It will go through the given column and
 whenever it encounters a new value, i.e. one that is different from the
 previous row, it starts a new group.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_observations <span class="ot">&lt;-</span> <span class="fu">group</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df_observations,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="st">&#39;auto&#39;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;l_starts&#39;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">starts_col =</span> <span class="st">&#39;participant&#39;</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_name =</span> <span class="st">&#39;session&#39;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>) </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>df_observations <span class="sc">%&gt;%</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df_observations <span class="ot">&lt;-</span> <span class="fu">group</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="at">data =</span> df_observations,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="at">n =</span> <span class="st">&#39;auto&#39;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&#39;l_starts&#39;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="at">starts_col =</span> <span class="st">&#39;participant&#39;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">col_name =</span> <span class="st">&#39;session&#39;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>) </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>df_observations <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1028,10 +1028,10 @@ previous row, it starts a new group.</p>
 for how much the value must differ from the previous value.</p>
 <p>Now that we have the session information, we can transfer the ratings
 from the ratings <code>data frame</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_merged <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_observations, df_ratings, <span class="at">by =</span> <span class="st">&#39;session&#39;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Show head of df_merged</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df_merged <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df_merged <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_observations, df_ratings, <span class="at">by =</span> <span class="st">&#39;session&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># Show head of df_merged</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>df_merged <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1152,11 +1152,11 @@ from the ratings <code>data frame</code>.</p>
 </table>
 <p>Now, we can find the average number of errors per session and see if
 they correlate with the experts’ ratings.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>avg_errors <span class="ot">&lt;-</span> df_merged <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(session) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="st">&quot;avg_errors&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(errors))</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>avg_errors <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>avg_errors <span class="ot">&lt;-</span> df_merged <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">group_by</span>(session) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="st">&quot;avg_errors&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(errors))</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>avg_errors <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1198,12 +1198,12 @@ that you may prefer to use one of the join functions from
 <p>Since we have just one average rating per session, we extract the
 first row of each session and remove the original error count
 column.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_summarized <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_merged, avg_errors, <span class="at">by =</span> <span class="st">&#39;session&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(session) <span class="sc">%&gt;%</span>  <span class="co"># For each session</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span>  <span class="co"># Get first row</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>errors) <span class="co"># Remove errors column as we use avg_errors now</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>df_summarized <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>df_summarized <span class="ot">&lt;-</span> <span class="fu">merge</span>(df_merged, avg_errors, <span class="at">by =</span> <span class="st">&#39;session&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">group_by</span>(session) <span class="sc">%&gt;%</span>  <span class="co"># For each session</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span>  <span class="co"># Get first row</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>errors) <span class="co"># Remove errors column as we use avg_errors now</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>df_summarized <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1264,8 +1264,8 @@ average number of errors. If we wanted to know how many runs a session
 contained, we could extract it from the <code>run</code> column.</p>
 <p>Let’s check if there’s a correlation between ratings and average
 errors.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df_summarized<span class="sc">$</span>rating, df_summarized<span class="sc">$</span>avg_errors)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -0.9739425</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">cor</span>(df_summarized<span class="sc">$</span>rating, df_summarized<span class="sc">$</span>avg_errors)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; [1] -0.9739425</span></span></code></pre></div>
 <p>It seems they are highly negatively correlated, so participants with
 fewer errors have higher ratings and vice versa.</p>
 </div>

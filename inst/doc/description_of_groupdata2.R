@@ -10,13 +10,13 @@ options(tibble.print_min = 4L, tibble.print_max = 4L)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # Uncomment:
-#  # install.packages("groupdata2")
+# # Uncomment:
+# # install.packages("groupdata2")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # Uncomment:
-#  # install.packages("devtools")
-#  # devtools::install_github("LudvigOlsen/groupdata2")
+# # Uncomment:
+# # install.packages("devtools")
+# # devtools::install_github("LudvigOlsen/groupdata2")
 
 ## ----error=FALSE, message=FALSE, warning=FALSE--------------------------------
 

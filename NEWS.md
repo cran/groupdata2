@@ -1,4 +1,12 @@
 
+# groupdata2 2.0.5
+
+* Fixes bug in `all_groups_identical()` when there were different numbers of groups in the two input vectors.
+
+# groupdata2 2.0.4
+
+* Updates documentation.
+
 # groupdata2 2.0.3
 
 * Fixes some warnings.

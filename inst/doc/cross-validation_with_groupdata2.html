@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ludvig Renbo Olsen" />
 
-<meta name="date" content="2023-06-18" />
+<meta name="date" content="2024-12-18" />
 
 <title>Cross-validation with groupdata2</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -368,7 +368,7 @@ padding-bottom:7px;
 
 <h1 class="title toc-ignore">Cross-validation with groupdata2</h1>
 <h4 class="author">Ludvig Renbo Olsen</h4>
-<h4 class="date">2023-06-18</h4>
+<h4 class="date">2024-12-18</h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 <p>In this vignette, we go through creating balanced partitions for
@@ -492,35 +492,35 @@ along with the cross-validation results).</p>
 <p>Let’s say, we have scored 10 participants with either of two
 diagnoses <code>&#39;a&#39;</code> and <code>&#39;b&#39;</code> on a very interesting
 task, that you are free to call ‘<em>the task</em>’.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attach some packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(groupdata2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># kable()</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest) <span class="co">#lmer()</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frame</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>, <span class="st">&#39;4&#39;</span>, <span class="st">&#39;5&#39;</span>, </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&#39;6&#39;</span>, <span class="st">&#39;7&#39;</span>, <span class="st">&#39;8&#39;</span>, <span class="st">&#39;9&#39;</span>, <span class="st">&#39;10&#39;</span>), <span class="dv">3</span>))),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">23</span>,<span class="dv">27</span>,<span class="dv">21</span>,<span class="dv">32</span>,<span class="dv">31</span>,<span class="dv">43</span>,<span class="dv">21</span>,<span class="dv">34</span>,<span class="dv">32</span>), <span class="dv">3</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;diagnosis&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>, </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dv">3</span>)),</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;score&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">24</span>,<span class="dv">15</span>,<span class="dv">35</span>,<span class="dv">24</span>,<span class="dv">14</span>,<span class="dv">11</span>,<span class="dv">16</span>,<span class="dv">33</span>,<span class="dv">29</span>,  <span class="co"># for 1st session</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">24</span>,<span class="dv">40</span>,<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">54</span>,<span class="dv">25</span>,<span class="dv">35</span>,<span class="dv">32</span>,<span class="dv">53</span>,<span class="dv">55</span>,  <span class="co"># for 2nd session</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                            <span class="dv">45</span>,<span class="dv">67</span>,<span class="dv">40</span>,<span class="dv">78</span>,<span class="dv">62</span>,<span class="dv">30</span>,<span class="dv">41</span>,<span class="dv">44</span>,<span class="dv">66</span>,<span class="dv">81</span>)) <span class="co"># for 3rd session</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by participant</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(participant)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove index</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Add session info</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>session <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>), <span class="dv">10</span>))</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the data frame</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Attach some packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(groupdata2)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(knitr) <span class="co"># kable()</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lmerTest) <span class="co">#lmer()</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;participant&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">as.integer</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>                                        <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>, <span class="st">&#39;4&#39;</span>, <span class="st">&#39;5&#39;</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>                                        <span class="st">&#39;6&#39;</span>, <span class="st">&#39;7&#39;</span>, <span class="st">&#39;8&#39;</span>, <span class="st">&#39;9&#39;</span>, <span class="st">&#39;10&#39;</span>), <span class="dv">3</span>))),</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>                <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">23</span>,<span class="dv">27</span>,<span class="dv">21</span>,<span class="dv">32</span>,<span class="dv">31</span>,<span class="dv">43</span>,<span class="dv">21</span>,<span class="dv">34</span>,<span class="dv">32</span>), <span class="dv">3</span>),</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>                <span class="st">&quot;diagnosis&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>, </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>                                           <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dv">3</span>)),</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>                <span class="st">&quot;score&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">24</span>,<span class="dv">15</span>,<span class="dv">35</span>,<span class="dv">24</span>,<span class="dv">14</span>,<span class="dv">11</span>,<span class="dv">16</span>,<span class="dv">33</span>,<span class="dv">29</span>,  <span class="co"># for 1st session</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>                            <span class="dv">24</span>,<span class="dv">40</span>,<span class="dv">30</span>,<span class="dv">50</span>,<span class="dv">54</span>,<span class="dv">25</span>,<span class="dv">35</span>,<span class="dv">32</span>,<span class="dv">53</span>,<span class="dv">55</span>,  <span class="co"># for 2nd session</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>                            <span class="dv">45</span>,<span class="dv">67</span>,<span class="dv">40</span>,<span class="dv">78</span>,<span class="dv">62</span>,<span class="dv">30</span>,<span class="dv">41</span>,<span class="dv">44</span>,<span class="dv">66</span>,<span class="dv">81</span>)) <span class="co"># for 3rd session</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># Order by participant</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(participant)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co"># Remove index</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># Add session info</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>df<span class="sc">$</span>session <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;1&#39;</span>,<span class="st">&#39;2&#39;</span>, <span class="st">&#39;3&#39;</span>), <span class="dv">10</span>))</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co"># Show the data frame</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="fu">kable</span>(df, <span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -770,13 +770,13 @@ working with.</p>
 <p>So, how do we deal with this? In this case, it’s as simple as making
 sure each participant is only in one of the data sets. We can do this
 with <code>partition()</code> and the <code>id_col</code> argument.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data in 20/80 (percentage)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">partition</span>(df, <span class="at">p =</span> <span class="fl">0.2</span>, <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  .[<span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="co"># See only the test set </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()  <span class="co"># Pretty tables :) </span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Split data in 20/80 (percentage)</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">partition</span>(df, <span class="at">p =</span> <span class="fl">0.2</span>, <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  .[<span class="dv">1</span>] <span class="sc">%&gt;%</span> <span class="co"># See only the test set </span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">kable</span>()  <span class="co"># Pretty tables :) </span></span></code></pre></div>
 <table class="kable_wrapper">
 <tbody>
 <tr>
@@ -866,17 +866,17 @@ not always be exactly as specified, depending on the data. Therefore, it
 is good practice to look at the distribution of participants, classes,
 etc. in the final partitions, which we will do after trying out that
 <code>cat_col</code> argument to get our final test and train sets!</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data in 20/80 (percentage)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>parts <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, <span class="at">p =</span> <span class="fl">0.2</span>, <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> parts[[<span class="dv">1</span>]]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> parts[[<span class="dv">2</span>]]</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show test_set</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>test_set <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Split data in 20/80 (percentage)</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>parts <span class="ot">&lt;-</span> <span class="fu">partition</span>(df, <span class="at">p =</span> <span class="fl">0.2</span>, <span class="at">id_col =</span> <span class="st">&quot;participant&quot;</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>test_set <span class="ot">&lt;-</span> parts[[<span class="dv">1</span>]]</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> parts[[<span class="dv">2</span>]]</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Show test_set</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>test_set <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -935,9 +935,9 @@ etc. in the final partitions, which we will do after trying out that
 <p>Now, our test set contains 2 participants (8 and 10), and the
 diagnosis column contains 50 percent a’s and 50 percent b’s. Let’s count
 the diagnoses in the training set as well.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">count</span>(diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -960,9 +960,9 @@ the diagnoses in the training set as well.</p>
 case, we know that the rest of the participants are all “fully” in this
 dataset. But let’s count them anyway, so we will remember to do it in
 the future.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(participant) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">count</span>(participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1025,14 +1025,14 @@ we discussed previously, we want to avoid leakage between the folds. We
 would also like somewhat balanced distributions of the diagnoses between
 the folds, though this depends on the context. Let’s create our balanced
 folds:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">fold</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by .folds</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> train_set <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(.folds)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>xpectr<span class="sc">::</span><span class="fu">set_test_seed</span>(<span class="dv">1</span>) <span class="co"># For reproducibility</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> <span class="fu">fold</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">cat_col =</span> <span class="st">&#39;diagnosis&#39;</span>, <span class="at">id_col =</span> <span class="st">&#39;participant&#39;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># Order by .folds</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>train_set <span class="ot">&lt;-</span> train_set <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(.folds)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1243,9 +1243,9 @@ folds:</p>
 <code>fold()</code> groups the output <code>data frame</code> by this
 column, we can count the number of rows for each diagnosis and
 participant per fold like so:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(participant, diagnosis) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>train_set <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">count</span>(participant, diagnosis) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">&#39;c&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1339,81 +1339,81 @@ for loop, we will use it to illustrate the process. We will create a
 simple cross-validation function where we can specify the model to test,
 and whether it has random effects. The performance of the model will be
 measured with RMSE (Root Mean Square Error).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RMSE metric</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="cf">function</span>(predictions, targets){</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>((predictions <span class="sc">-</span> targets)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>crossvalidate <span class="ot">&lt;-</span> <span class="cf">function</span>(data, k, model, dependent, <span class="at">random =</span> <span class="cn">FALSE</span>){</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &#39;data&#39; is the training set with the &quot;.folds&quot; column</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &#39;k&#39; is the number of folds we have</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &#39;model&#39; is a string describing a linear regression model formula</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &#39;dependent&#39; is a string with the name of the score column we want to predict</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &#39;random&#39; is a logical (TRUE/FALSE); do we have random effects in the model?</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Initialize empty list for recording performances</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  performances <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># One iteration per fold</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (fold <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k){</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create training set for this iteration</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Subset all the datapoints where .folds does not match the current fold</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    training_set <span class="ot">&lt;-</span> data[data<span class="sc">$</span>.folds <span class="sc">!=</span> fold,]</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create test set for this iteration</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Subset all the datapoints where .folds matches the current fold</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    testing_set <span class="ot">&lt;-</span> data[data<span class="sc">$</span>.folds <span class="sc">==</span> fold,]</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Train model</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If there is a random effect,</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use lmer() to train model</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># else use lm()</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(random)){</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Train linear mixed effects model on training set</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(model, training_set, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Train linear model on training set</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">lm</span>(model, training_set)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Test model</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Predict the dependent variable in the testing_set with the trained model</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, testing_set, <span class="at">allow.new.levels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the Root Mean Square Error between the predicted and the observed</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    RMSE <span class="ot">&lt;-</span> <span class="fu">rmse</span>(predicted, testing_set[[dependent]])</span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add the RMSE to the performance list</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    performances[fold] <span class="ot">&lt;-</span> RMSE</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the mean of the recorded RMSEs</span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="st">&#39;RMSE&#39;</span> <span class="ot">=</span> <span class="fu">mean</span>(performances)))</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># RMSE metric</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>rmse <span class="ot">&lt;-</span> <span class="cf">function</span>(predictions, targets){</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">sqrt</span>(<span class="fu">mean</span>((predictions <span class="sc">-</span> targets)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>}</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>crossvalidate <span class="ot">&lt;-</span> <span class="cf">function</span>(data, k, model, dependent, <span class="at">random =</span> <span class="cn">FALSE</span>){</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="co"># &#39;data&#39; is the training set with the &quot;.folds&quot; column</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="co"># &#39;k&#39; is the number of folds we have</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="co"># &#39;model&#39; is a string describing a linear regression model formula</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="co"># &#39;dependent&#39; is a string with the name of the score column we want to predict</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="co"># &#39;random&#39; is a logical (TRUE/FALSE); do we have random effects in the model?</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  </span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="co"># Initialize empty list for recording performances</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>  performances <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  </span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>  <span class="co"># One iteration per fold</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>  <span class="cf">for</span> (fold <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k){</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>    </span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>    <span class="co"># Create training set for this iteration</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>    <span class="co"># Subset all the datapoints where .folds does not match the current fold</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>    training_set <span class="ot">&lt;-</span> data[data<span class="sc">$</span>.folds <span class="sc">!=</span> fold,]</span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>    </span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>    <span class="co"># Create test set for this iteration</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>    <span class="co"># Subset all the datapoints where .folds matches the current fold</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>    testing_set <span class="ot">&lt;-</span> data[data<span class="sc">$</span>.folds <span class="sc">==</span> fold,]</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>    </span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>    <span class="do">## Train model</span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>    <span class="co"># If there is a random effect,</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>    <span class="co"># use lmer() to train model</span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>    <span class="co"># else use lm()</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isTRUE</span>(random)){</span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>      <span class="co"># Train linear mixed effects model on training set</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">lmer</span>(model, training_set, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a>      <span class="co"># Train linear model on training set</span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a>      model <span class="ot">&lt;-</span> <span class="fu">lm</span>(model, training_set)</span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a>    }</span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a>    <span class="do">## Test model</span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a>    <span class="co"># Predict the dependent variable in the testing_set with the trained model</span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a>    predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, testing_set, <span class="at">allow.new.levels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a>    <span class="co"># Get the Root Mean Square Error between the predicted and the observed</span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a>    RMSE <span class="ot">&lt;-</span> <span class="fu">rmse</span>(predicted, testing_set[[dependent]])</span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a>    <span class="co"># Add the RMSE to the performance list</span></span>
+<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a>    performances[fold] <span class="ot">&lt;-</span> RMSE</span>
+<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a></span>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a></span>
+<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a>  }</span>
+<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a></span>
+<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a>  <span class="co"># Return the mean of the recorded RMSEs</span></span>
+<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="st">&#39;RMSE&#39;</span> <span class="ot">=</span> <span class="fu">mean</span>(performances)))</span>
+<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="linear-regression-models" class="section level2">
 <h2>Linear regression models</h2>
 <p>We could have a hypothesis that people with the diagnosis
 <code>&#39;b&#39;</code> tend to be better at the experiment. This could be
 tested by a simple linear model.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> diagnosis, df) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic     p.value</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)     27.5      4.07      6.74 0.000000253</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 diagnosisb      22.6      5.76      3.92 0.000515</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> diagnosis, df) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt;   term        estimate std.error statistic     p.value</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 1 (Intercept)     27.5      4.07      6.74 0.000000253</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 2 diagnosisb      22.6      5.76      3.92 0.000515</span></span></code></pre></div>
 <p>The linear model supports the hypothesis, as the average score of
 participants with diagnosis <code>&#39;b&#39;</code> is larger than that of
 participants with diagnosis <code>&#39;a&#39;</code>, and as this difference is
@@ -1435,65 +1435,65 @@ cross-validation and only look at the summary for that one. Notice that
 when we want to compare models, we want to keep the same random effects
 for all the models, so we are only comparing the combination of fixed
 effects.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ 1 + (1 | participant)&#39;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + (1 | participant)&#39;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + age + (1 | participant)&#39;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + session + (1 | participant)&#39;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis * session + (1 | participant)&#39;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis * session + age + (1 | participant)&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ 1 + (1 | participant)&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + (1 | participant)&#39;</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + age + (1 | participant)&#39;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis + session + (1 | participant)&#39;</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis * session + (1 | participant)&#39;</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="st">&#39;score ~ diagnosis * session + age + (1 | participant)&#39;</span></span></code></pre></div>
 <p>Now, let’s cross-validate the 6 models. If you get a message saying
 <code>&quot;boundary (singular) fit&quot;</code>, it’s because the model is too
 complex for our small dataset. To avoid this message, try removing the
 random effects from the models.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m0</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ 1 + (1 | participant)&quot;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m0, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18.27222</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>m1</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + (1 | participant)&quot;</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m1, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    RMSE </span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14.7661</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>m2</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + age + (1 | participant)&quot;</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m2, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15.28533</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>m3</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + session + (1 | participant)&quot;</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m3, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6.176477</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>m4</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis * session + (1 | participant)&quot;</span></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m4, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5.950014</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>m5</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis * session + age + (1 | participant)&quot;</span></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m5, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7.004665</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>m0</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ 1 + (1 | participant)&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m0, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; 18.27222</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>m1</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + (1 | participant)&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m1, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt;    RMSE </span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; 14.7661</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>m2</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + age + (1 | participant)&quot;</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m2, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt; 15.28533</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>m3</span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis + session + (1 | participant)&quot;</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m3, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt; 6.176477</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>m4</span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis * session + (1 | participant)&quot;</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m4, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="co">#&gt; 5.950014</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>m5</span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="co">#&gt; [1] &quot;score ~ diagnosis * session + age + (1 | participant)&quot;</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="fu">crossvalidate</span>(train_set, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">model =</span> m5, <span class="at">dependent =</span> <span class="st">&#39;score&#39;</span>, <span class="at">random =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="co">#&gt;     RMSE </span></span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="co">#&gt; 7.004665</span></span></code></pre></div>
 <p>The model <code>m4</code> has the lowest error on average and so, we
 assume that it is the best predictor of out-of-sample data. To make sure
 it doesn’t overfit the data, let’s look at the error on the test
 set.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training the model on the full training set</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_m4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(m4, train_set, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the dependent variable in the test set with the trained model</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_m4, test_set, <span class="at">allow.new.levels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the Root Mean Square Error between the predicted and the observed</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="fu">rmse</span>(predicted, test_set[[<span class="st">&#39;score&#39;</span>]])</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>RMSE</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6.418155</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Training the model on the full training set</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>model_m4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(m4, train_set, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co"># Predict the dependent variable in the test set with the trained model</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_m4, test_set, <span class="at">allow.new.levels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co"># Get the Root Mean Square Error between the predicted and the observed</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>RMSE <span class="ot">&lt;-</span> <span class="fu">rmse</span>(predicted, test_set[[<span class="st">&#39;score&#39;</span>]])</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>RMSE</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; [1] 6.418155</span></span></code></pre></div>
 <p>6.42 is a bit higher than the cross-validated average, but it’s so
 close that we’re not afraid of overfitting. Be aware that the scale of
 the RMSE is dependent on the scale of the dependent variable in our
@@ -1501,40 +1501,40 @@ dataset, so you might find some models with much higher RMSEs than this
 one. What matters is the relative difference between models, and that
 the best model will have the lowest error.</p>
 <p>Let’s look at its summary:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_m4 <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   method [lmerModLmerTest]</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Formula: m4</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Data: train_set</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      AIC      BIC   logLik deviance df.resid </span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    157.0    164.1    -72.5    145.0       18 </span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Scaled residuals: </span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -1.8723 -0.6998 -0.0137  0.7042  1.6556 </span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Groups      Name        Variance Std.Dev.</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  participant (Intercept)  3.714   1.927   </span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Residual                21.398   4.626   </span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of obs: 24, groups:  participant, 8</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fixed effects:</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                    Estimate Std. Error      df t value Pr(&gt;|t|)    </span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)          0.1667     3.6621 22.2764   0.046   0.9641    </span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; diagnosisb           9.4167     5.1790 22.2764   1.818   0.0825 .  </span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; session             13.2500     1.6355 16.0000   8.102 4.71e-07 ***</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; diagnosisb:session   6.3750     2.3129 16.0000   2.756   0.0141 *  </span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Correlation of Fixed Effects:</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             (Intr) dgnssb sessin</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; diagnosisb  -0.707              </span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; session     -0.893  0.632       </span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dgnssb:sssn  0.632 -0.893 -0.707</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>model_m4 <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite&#39;s</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;   method [lmerModLmerTest]</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; Formula: m4</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;    Data: train_set</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;      AIC      BIC   logLik deviance df.resid </span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;    157.0    164.1    -72.5    145.0       18 </span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; Scaled residuals: </span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; -1.8723 -0.6998 -0.0137  0.7042  1.6556 </span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; Random effects:</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;  Groups      Name        Variance Std.Dev.</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt;  participant (Intercept)  3.714   1.927   </span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;  Residual                21.398   4.626   </span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; Number of obs: 24, groups:  participant, 8</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; Fixed effects:</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;                    Estimate Std. Error      df t value Pr(&gt;|t|)    </span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt; (Intercept)          0.1667     3.6621 22.2764   0.046   0.9641    </span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt; diagnosisb           9.4167     5.1790 22.2764   1.818   0.0825 .  </span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; session             13.2500     1.6355 16.0000   8.102 4.71e-07 ***</span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt; diagnosisb:session   6.3750     2.3129 16.0000   2.756   0.0141 *  </span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a><span class="co">#&gt; Correlation of Fixed Effects:</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a><span class="co">#&gt;             (Intr) dgnssb sessin</span></span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a><span class="co">#&gt; diagnosisb  -0.707              </span></span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a><span class="co">#&gt; session     -0.893  0.632       </span></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; dgnssb:sssn  0.632 -0.893 -0.707</span></span></code></pre></div>
 <p>In this model, we have a significant interaction between diagnosis
 and session. The interpretation of this result would be quite different
 from that of the first model, we tried.</p>
